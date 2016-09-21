@@ -15,13 +15,13 @@ namespace Server
         {
 
             ServiceHost serviceHost = new ServiceHost(typeof(ConnectionService), new Uri("net.tcp://192.168.0.100:4444/ConnectionService"));
-            serviceHost.AddServiceEndpoint(typeof(IConnection), new NetTcpBinding(), "");
+            serviceHost.AddServiceEndpoint(typeof(IConnection), new NetTcpBinding(SecurityMode.None), "");
 
             ServiceHost serviceCommunicationHost = new ServiceHost(typeof(CommunicationService), new Uri("net.tcp://192.168.0.100:4444/CommunicationService"));
-            serviceCommunicationHost.AddServiceEndpoint(typeof(ICommunication), new NetTcpBinding(), "");
+            serviceCommunicationHost.AddServiceEndpoint(typeof(ICommunication), new NetTcpBinding(SecurityMode.None), "");
 
             ServiceHost serviceAudioHost = new ServiceHost(typeof(AudioService), new Uri("net.tcp://192.168.0.100:4444/AudioService"));
-            serviceAudioHost.AddServiceEndpoint(typeof(IAudio), new NetTcpBinding(), "");
+            serviceAudioHost.AddServiceEndpoint(typeof(IAudio), new NetTcpBinding(SecurityMode.None), "");
 
             serviceCommunicationHost.Open();
             serviceHost.Open();
@@ -30,11 +30,11 @@ namespace Server
             Console.WriteLine("Serverul a fost lansat.");
             Console.WriteLine("Apasati enter pentru a inchide serverul");
 
-            using (DataBaseContainer context = new DataBaseContainer())
+            /*using (DataBaseContainer context = new DataBaseContainer())
             {
                 foreach(User user in context.Users)
                     Console.WriteLine(user.Username);
-            }
+            }*/
 
 
             Console.ReadLine();

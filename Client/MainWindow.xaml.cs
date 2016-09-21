@@ -25,7 +25,6 @@ namespace Client
     public partial class MainWindow : Window
     {
         ICommunication connectionService;
-        IAudio audioService;
         string ConversationPartner { get; set; }
 
         public MainWindow()
@@ -40,15 +39,10 @@ namespace Client
             textBoxConversation.IsReadOnly = true;
 
             CommunicationServiceCallback callback = new CommunicationServiceCallback(this);  
-            DuplexChannelFactory<ICommunication> channelServerService = new DuplexChannelFactory<ICommunication>(callback, new NetTcpBinding(), new EndpointAddress("net.tcp://192.168.0.100:4444/CommunicationService"));
+            DuplexChannelFactory<ICommunication> channelServerService = new DuplexChannelFactory<ICommunication>(callback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/CommunicationService"));
             connectionService = channelServerService.CreateChannel();
 
-            /*AudioCallback audioCallback = new AudioCallback();
-            DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(), new EndpointAddress("net.tcp://localhost:4444/AudioService"));
-            audioService = channelAudioService.CreateChannel();*/
-
             connectionService.Subscribe(username);
-            //audioService.Subscribe(username);
 
             Title = username;
         }
