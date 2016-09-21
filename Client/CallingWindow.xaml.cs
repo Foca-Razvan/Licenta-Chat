@@ -53,7 +53,7 @@ namespace Client
             wi.DataAvailable += new EventHandler<WaveInEventArgs>(wi_DataAvailable);
 
             AudioCallback audioCallback = new AudioCallback(wi);
-            DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(), new EndpointAddress("net.tcp://localhost:4444/AudioService"));
+            DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(), new EndpointAddress("net.tcp://192.168.0.100:4444/AudioService"));
             audioService = channelAudioService.CreateChannel();
 
             audioService.Subscribe(Sender);
@@ -81,7 +81,7 @@ namespace Client
             buttonDecline.Visibility = Visibility.Hidden;
 
             AudioCallback audioCallback = new AudioCallback();
-            DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(), new EndpointAddress("net.tcp://localhost:4444/AudioService"));
+            DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(), new EndpointAddress("net.tcp://192.168.0.100:4444/AudioService"));
             audioService = channelAudioService.CreateChannel();
 
             audioService.Subscribe(Receiver);
@@ -116,7 +116,7 @@ namespace Client
         private void buttonDecline_Click(object sender, RoutedEventArgs e)
         {
             AudioCallback audioCallback = new AudioCallback();
-            DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(), new EndpointAddress("net.tcp://localhost:4444/AudioService"));
+            DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(), new EndpointAddress("net.tcp://192.168.0.100:4444/AudioService"));
             audioService = channelAudioService.CreateChannel();
 
             audioService.Confirmation(Sender, Receiver, false);

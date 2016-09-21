@@ -40,7 +40,7 @@ namespace Client
             textBoxConversation.IsReadOnly = true;
 
             CommunicationServiceCallback callback = new CommunicationServiceCallback(this);  
-            DuplexChannelFactory<ICommunication> channelServerService = new DuplexChannelFactory<ICommunication>(callback, new NetTcpBinding(), new EndpointAddress("net.tcp://localhost:4444/CommunicationService"));
+            DuplexChannelFactory<ICommunication> channelServerService = new DuplexChannelFactory<ICommunication>(callback, new NetTcpBinding(), new EndpointAddress("net.tcp://192.168.0.100:4444/CommunicationService"));
             connectionService = channelServerService.CreateChannel();
 
             /*AudioCallback audioCallback = new AudioCallback();

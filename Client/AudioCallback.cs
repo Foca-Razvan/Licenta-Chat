@@ -13,7 +13,7 @@ namespace Client
     {
         BufferedWaveProvider bwp = new BufferedWaveProvider(new WaveFormat(8000, 1));
         WaveOut wo = new WaveOut();
-        public WaveIn Wi { get; set}
+        public WaveIn Wi { get; set; }
 
         public AudioCallback(WaveIn wi)
         {

@@ -40,7 +40,7 @@ namespace Client
         {
             //callback = new CommunicationServiceCallback();
             //DuplexChannelFactory<IConnection> channelServerService = new DuplexChannelFactory<IConnection>(callback, new NetTcpBinding(), new EndpointAddress("net.tcp://localhost:4444/ConnectionService"));
-            ChannelFactory<IConnection> channelServerService = new ChannelFactory<IConnection>(new NetTcpBinding(), new EndpointAddress("net.tcp://localhost:4444/ConnectionService"));
+            ChannelFactory<IConnection> channelServerService = new ChannelFactory<IConnection>(new NetTcpBinding(), new EndpointAddress("net.tcp://192.168.0.100:4444/ConnectionService"));
             connectionService = channelServerService.CreateChannel();
         }
 
