@@ -60,8 +60,6 @@ namespace Server
         {
             UserInformation user = Subscriber.getUser(receiver);
             user.AudioCallback.StopCall(sender);
-            Unsubscribe(sender);
-            Unsubscribe(receiver);
         }
     }
 }

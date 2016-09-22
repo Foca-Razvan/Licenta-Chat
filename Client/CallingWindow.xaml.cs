@@ -30,6 +30,7 @@ namespace Client
         bool Type { get; set; }
         WaveIn wi;
         IAudio audioService;
+        AudioCallback audioCallback;
 
         public CallingWindow()
         {
@@ -52,7 +53,7 @@ namespace Client
             wi.WaveFormat = new WaveFormat(44100, 1);
             wi.DataAvailable += new EventHandler<WaveInEventArgs>(wi_DataAvailable);
 
-            AudioCallback audioCallback = new AudioCallback(wi);
+            audioCallback = new AudioCallback(wi);
             DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/AudioService"));
             audioService = channelAudioService.CreateChannel();
 
@@ -72,10 +73,14 @@ namespace Client
         }
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
-        {           
-            audioService.StopCall(Sender, Receiver);
+        {
             wi.DataAvailable += null;
             wi.StopRecording();
+            audioCallback.StopPlayingOutput();
+            if (Type)
+                audioService.StopCall(Sender, Receiver);
+            else
+                audioService.StopCall(Receiver, Sender);
             Close();
         }
 
@@ -85,17 +90,18 @@ namespace Client
             buttonCancel.Visibility = Visibility.Visible;
             buttonDecline.Visibility = Visibility.Hidden;
 
-            AudioCallback audioCallback = new AudioCallback();
+            wi = new WaveIn();
+            wi.WaveFormat = new WaveFormat(44100, 1);
+            wi.DataAvailable += new EventHandler<WaveInEventArgs>(wi_DataAvailableCallback);
+
+            audioCallback = new AudioCallback(wi);
             DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/AudioService"));
             audioService = channelAudioService.CreateChannel();
 
             audioService.Subscribe(Receiver);
             audioService.Confirmation(Sender, Receiver, true);
 
-            wi = new WaveIn();
-            wi.WaveFormat = new WaveFormat(44100, 1);
-            wi.DataAvailable += new EventHandler<WaveInEventArgs>(wi_DataAvailableCallback);
-            wi.StartRecording();
+            audioCallback.StartRecording();
 
             textBlockInfo.Text = "Audio Call with " + Sender;
         }
@@ -105,15 +111,14 @@ namespace Client
             if (Type)
             {
                 Init();
-
                 buttonAccept.Visibility = Visibility.Hidden;
+                buttonDecline.Visibility = Visibility.Hidden;
                 Title = "";
                 textBlockInfo.Text = "Calling " + Receiver + "...";
             }
             else
             {
                 buttonCancel.Visibility = Visibility.Hidden;
-
                 Title = "";
                 textBlockInfo.Text = Sender + " is calling you.";
             }

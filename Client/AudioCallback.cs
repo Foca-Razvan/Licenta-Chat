@@ -11,8 +11,8 @@ namespace Client
 {
     public class AudioCallback : IAudioCallback
     {
-        BufferedWaveProvider bwp = new BufferedWaveProvider(new WaveFormat(44100, 1));
-        WaveOut wo = new WaveOut();
+        private BufferedWaveProvider bwp = new BufferedWaveProvider(new WaveFormat(44100, 1));
+        private WaveOut wo = new WaveOut();
         public WaveIn Wi { get; set; }
 
         public AudioCallback(WaveIn wi)
@@ -20,14 +20,9 @@ namespace Client
             wo.Init(bwp);
             bwp.DiscardOnBufferOverflow = true;
             wo.Volume = 1.0f;
+
             Wi = wi;
             Wi.RecordingStopped += wi_RecordingStopped;
-        }
-        public AudioCallback()
-        {
-            wo.Init(bwp);
-            bwp.DiscardOnBufferOverflow = true;
-            wo.Volume = 1.0f;
         }
 
         public void SendVoiceCallback(byte[] voice, int bytesRecorded)
@@ -49,12 +44,25 @@ namespace Client
         public void StopCall(string receiver)
         {
             Wi.StopRecording();
+            wo.Stop();
         }
 
 
         private void wi_RecordingStopped(object sender, StoppedEventArgs e)
         {
             Wi.DataAvailable += null;
+        }
+
+        // Not part of interface
+
+        public void StopPlayingOutput()
+        {
+            wo.Stop();
+        }
+
+        public void StartRecording()
+        {
+            Wi.StartRecording();
         }
     }
 }
