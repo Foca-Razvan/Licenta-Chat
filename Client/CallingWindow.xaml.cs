@@ -90,6 +90,7 @@ namespace Client
             audioService = channelAudioService.CreateChannel();
 
             audioService.Subscribe(Receiver);
+            audioService.Confirmation(Sender, Receiver, true);
 
             wi = new WaveIn();
             wi.WaveFormat = new WaveFormat(44100, 1);
