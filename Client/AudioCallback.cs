@@ -11,7 +11,7 @@ namespace Client
 {
     public class AudioCallback : IAudioCallback
     {
-        BufferedWaveProvider bwp = new BufferedWaveProvider(new WaveFormat(8000, 1));
+        BufferedWaveProvider bwp = new BufferedWaveProvider(new WaveFormat(44100, 16, 1));
         WaveOut wo = new WaveOut();
         public WaveIn Wi { get; set; }
 
@@ -20,8 +20,8 @@ namespace Client
             wo.Init(bwp);
             bwp.DiscardOnBufferOverflow = true;
             wo.Volume = 1.0f;
-            this.Wi = wi;
-            this.Wi.RecordingStopped += wi_RecordingStopped;
+            Wi = wi;
+            Wi.RecordingStopped += wi_RecordingStopped;
         }
         public AudioCallback()
         {
