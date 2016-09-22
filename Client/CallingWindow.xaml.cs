@@ -66,6 +66,11 @@ namespace Client
             audioService.SendVoice(e.Buffer, e.BytesRecorded, Receiver);
         }
 
+        private void wi_DataAvailableCallback(object sender, WaveInEventArgs e)
+        {
+            audioService.SendVoice(e.Buffer, e.BytesRecorded, Sender);
+        }
+
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {           
             audioService.StopCall(Sender, Receiver);
@@ -88,7 +93,7 @@ namespace Client
 
             wi = new WaveIn();
             wi.WaveFormat = new WaveFormat(8000, 1);
-            wi.DataAvailable += new EventHandler<WaveInEventArgs>(wi_DataAvailable);
+            wi.DataAvailable += new EventHandler<WaveInEventArgs>(wi_DataAvailableCallback);
             wi.StartRecording();
 
             textBlockInfo.Text = "Audio Call with " + Sender;
