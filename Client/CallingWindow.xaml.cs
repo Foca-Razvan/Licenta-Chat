@@ -126,7 +126,7 @@ namespace Client
 
         private void buttonDecline_Click(object sender, RoutedEventArgs e)
         {
-            AudioCallback audioCallback = new AudioCallback();
+            AudioCallback audioCallback = new AudioCallback(new WaveIn());
             DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/AudioService"));
             audioService = channelAudioService.CreateChannel();
 
