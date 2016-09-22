@@ -17,6 +17,7 @@ using NAudio;
 using NAudio.WindowsMediaFormat;
 using NAudio.Wave;
 using NAudio.CoreAudioApi;
+using System.Diagnostics;
 
 namespace Client
 {
@@ -44,6 +45,8 @@ namespace Client
             Receiver = ConversationPartner;
             Sender = username;
             Type = type;
+
+            textBlockInfo.TextAlignment = TextAlignment.Center;
         }
 
 
@@ -54,6 +57,7 @@ namespace Client
             wi.DataAvailable += new EventHandler<WaveInEventArgs>(wi_DataAvailable);
 
             audioCallback = new AudioCallback(wi);
+            audioCallback.callingWindows = this;
             DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/AudioService"));
             audioService = channelAudioService.CreateChannel();
 
@@ -110,15 +114,20 @@ namespace Client
         {
             if (Type)
             {
-                Init();
                 buttonAccept.Visibility = Visibility.Hidden;
                 buttonDecline.Visibility = Visibility.Hidden;
+                buttonCancel.Visibility = Visibility.Hidden;           
+
                 Title = "";
                 textBlockInfo.Text = "Calling " + Receiver + "...";
+
+                Init();
+
             }
             else
             {
                 buttonCancel.Visibility = Visibility.Hidden;
+                buttonCancel2.Visibility = Visibility.Hidden;
                 Title = "";
                 textBlockInfo.Text = Sender + " is calling you.";
             }
@@ -131,6 +140,19 @@ namespace Client
             audioService = channelAudioService.CreateChannel();
 
             audioService.Confirmation(Sender, Receiver, false);
+            Close();
+        }
+
+        public void DeclinedCall()
+        {
+            textBlockInfo.Text = Receiver + " has declined your call...";
+            buttonCancel.Visibility = Visibility.Hidden;
+            buttonCancel2.Visibility = Visibility.Hidden;
+        }
+
+        private void buttonCancel2_Click(object sender, RoutedEventArgs e)
+        {
+            
             Close();
         }
     }

@@ -15,6 +15,8 @@ namespace Client
         private WaveOut wo = new WaveOut();
         public WaveIn Wi { get; set; }
 
+        public CallingWindow callingWindows { get; set; }
+
         public AudioCallback(WaveIn wi)
         {
             wo.Init(bwp);
@@ -38,7 +40,7 @@ namespace Client
 
         public void ChannelDeclined(string receiver)
         {
-           
+            callingWindows.DeclinedCall();
         }
 
         public void StopCall(string receiver)

@@ -11,10 +11,10 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="buttonCancel" Content="Cancel" HorizontalAlignment="Left" Margin="23,56,0,0" VerticalAlignment="Top" Width="75" Click="buttonCancel_Click" Grid.Column="1"/>
+        <Button x:Name="buttonCancel" Content="Cancel" HorizontalAlignment="Left" Margin="111,56,0,0" VerticalAlignment="Top" Width="75" Click="buttonCancel_Click" Grid.ColumnSpan="2"/>
         <TextBlock x:Name="textBlockInfo" HorizontalAlignment="Left" Margin="47,16,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="197"/>
         <Button x:Name="buttonAccept" Content="Accept" HorizontalAlignment="Left" Margin="47,56,0,0" VerticalAlignment="Top" Width="75" Click="buttonAccept_Click"/>
-        <Button x:Name="buttonDecline" Content="Decline" HorizontalAlignment="Left" Margin="23,56,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1" Click="buttonDecline_Click"/>
+        <Button x:Name="buttonDecline" Content="Decline" HorizontalAlignment="Left" Margin="30,56,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1" Click="buttonDecline_Click"/>
 
     </Grid>
 </Window>
