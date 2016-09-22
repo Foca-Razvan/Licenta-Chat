@@ -49,7 +49,7 @@ namespace Client
         private void Init()
         {
             wi = new WaveIn();
-            wi.WaveFormat = new WaveFormat(8000,1);
+            wi.WaveFormat = new WaveFormat(44100, 1);
             wi.DataAvailable += new EventHandler<WaveInEventArgs>(wi_DataAvailable);
 
             AudioCallback audioCallback = new AudioCallback(wi);
@@ -92,7 +92,7 @@ namespace Client
             audioService.Subscribe(Receiver);
 
             wi = new WaveIn();
-            wi.WaveFormat = new WaveFormat(8000,1);
+            wi.WaveFormat = new WaveFormat(44100, 1);
             wi.DataAvailable += new EventHandler<WaveInEventArgs>(wi_DataAvailableCallback);
             wi.StartRecording();
 
