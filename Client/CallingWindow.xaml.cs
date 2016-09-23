@@ -46,6 +46,15 @@ namespace Client
             Sender = username;
             Type = type;
 
+            audioCallback = new AudioCallback();
+            audioCallback.callingWindows = this;
+            DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/AudioService"));
+            audioService = channelAudioService.CreateChannel();
+            if (type)
+                audioService.Subscribe(Sender);
+            else
+                audioService.Subscribe(Receiver);
+
             textBlockInfo.TextAlignment = TextAlignment.Center;
         }
 
@@ -56,12 +65,9 @@ namespace Client
             wi.WaveFormat = new WaveFormat(44100, 1);
             wi.DataAvailable += new EventHandler<WaveInEventArgs>(wi_DataAvailable);
 
-            audioCallback = new AudioCallback(wi);
-            audioCallback.callingWindows = this;
-            DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/AudioService"));
-            audioService = channelAudioService.CreateChannel();
+            audioCallback.Wi = wi;
 
-            audioService.Subscribe(Sender);
+
             audioService.InitCommunication(Sender, Receiver);
 
         }
@@ -98,13 +104,8 @@ namespace Client
             wi.WaveFormat = new WaveFormat(44100, 1);
             wi.DataAvailable += new EventHandler<WaveInEventArgs>(wi_DataAvailableCallback);
 
-            audioCallback = new AudioCallback(wi);
-            DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/AudioService"));
-            audioService = channelAudioService.CreateChannel();
-
-            audioService.Subscribe(Receiver);
+            audioCallback.Wi = wi;
             audioService.Confirmation(Sender, Receiver, true);
-
             audioCallback.StartRecording();
 
             textBlockInfo.Text = "Audio Call with " + Sender;
@@ -135,24 +136,25 @@ namespace Client
 
         private void buttonDecline_Click(object sender, RoutedEventArgs e)
         {
-            AudioCallback audioCallback = new AudioCallback(new WaveIn());
-            DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/AudioService"));
-            audioService = channelAudioService.CreateChannel();
-
             audioService.Confirmation(Sender, Receiver, false);
             Close();
         }
 
         public void DeclinedCall()
         {
-            textBlockInfo.Text = Receiver + " has declined your call...";
+            if(Type)
+                textBlockInfo.Text = Receiver + " has declined your call...";
+            else
+                textBlockInfo.Text = Sender + " has declined your call...";
             buttonCancel.Visibility = Visibility.Hidden;
             buttonCancel2.Visibility = Visibility.Hidden;
+            buttonAccept.Visibility = Visibility.Hidden;
+            buttonDecline.Visibility = Visibility.Hidden;
         }
 
         private void buttonCancel2_Click(object sender, RoutedEventArgs e)
         {
-            
+            audioService.Confirmation(Receiver, Sender, false);
             Close();
         }
     }

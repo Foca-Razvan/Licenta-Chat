@@ -27,6 +27,13 @@ namespace Client
             Wi.RecordingStopped += wi_RecordingStopped;
         }
 
+        public AudioCallback()
+        {
+            wo.Init(bwp);
+            bwp.DiscardOnBufferOverflow = true;
+            wo.Volume = 1.0f;
+        }
+
         public void SendVoiceCallback(byte[] voice, int bytesRecorded)
         {
             bwp.AddSamples(voice, 0, bytesRecorded);
