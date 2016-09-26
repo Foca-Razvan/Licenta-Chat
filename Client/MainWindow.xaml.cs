@@ -91,7 +91,7 @@ namespace Client
         {
             if (ConversationPartner != null)
             {
-                CallingWindow callingWindow = new CallingWindow();
+                CallingWindow callingWindow = new CallingWindow(ConversationPartner);
                 ClientInformation.CallingWindows.Add(ConversationPartner, callingWindow);
                 callingWindow.Show();
             }         
