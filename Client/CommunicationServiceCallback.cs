@@ -39,7 +39,7 @@ namespace Client
             MainWindow.listBoxFriendList.Items.Remove(username);
         }
 
-        public void SendAudioNotification(string caller, string receiver)
+        public void SendAudioNotification(string caller)
         { 
             AnswerWindow answerWindow = new AnswerWindow();
             ClientInformation.AnswerWindows.Add(caller, answerWindow);

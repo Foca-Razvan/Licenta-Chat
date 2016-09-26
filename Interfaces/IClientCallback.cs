@@ -17,6 +17,6 @@ namespace Interfaces
         [OperationContract(IsOneWay = true)]
         void UpdateListOfContacts(string username);
         [OperationContract]
-        void SendAudioNotification(string username,string conversationPartner);
+        void SendAudioNotification(string username);
     }
 }

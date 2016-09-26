@@ -35,10 +35,10 @@ namespace Server
             user.AudioCallback = null;
         }
 
-        public void InitCommunication(string username ,string conversationPartner)
+        public void InitCommunication(string sender ,string conversationPartner)
         {
             UserInformation receiver = Subscriber.subscribers.Find(x => x.Username == conversationPartner);
-            receiver.CommunicationCallback.SendAudioNotification(username, conversationPartner);
+            receiver.CommunicationCallback.SendAudioNotification(sender);
         }
 
         public void SendVoice(byte[] voice,int byteRecorded,string conversationPartner)
