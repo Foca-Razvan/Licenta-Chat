@@ -26,7 +26,7 @@ namespace Client
     /// </summary>
     public partial class CallingWindow : Window
     {
-        string Sender { get; set; } 
+        string ConversationPartner { get; set; } 
         IAudio audioService;
         AudioCallback audioCallback;
 
@@ -38,7 +38,7 @@ namespace Client
         public CallingWindow(string conversationPartner)
         {
             InitializeComponent();
-            Sender = conversationPartner;
+            ConversationPartner = conversationPartner;
 
             audioCallback = new AudioCallback();
             DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/AudioService"));
@@ -47,6 +47,7 @@ namespace Client
             audioService.Subscribe(ClientInformation.Username);
 
             textBlockInfo.TextAlignment = TextAlignment.Center;
+            textBlockInfo.Text = "Calling " + ConversationPartner;
 
             Init();
         }
@@ -58,38 +59,38 @@ namespace Client
             wi.DataAvailable += new EventHandler<WaveInEventArgs>(wi_DataAvailableCallback);
             audioCallback.Wi = wi;
 
-            audioService.InitCommunication(Sender, ClientInformation.Username);
+            audioService.InitCommunication(ConversationPartner, ClientInformation.Username);
         }
 
         private void wi_DataAvailableCallback(object sender, WaveInEventArgs e)
         {
-            audioService.SendVoice(e.Buffer, e.BytesRecorded, Sender);
+            audioService.SendVoice(e.Buffer, e.BytesRecorded, ConversationPartner);
         }
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
             audioCallback.StopPlayingOutput();
             audioCallback.StopRecording();
-            audioService.StopCall(ClientInformation.Username, Sender);
-            ClientInformation.CallingWindows.Remove(Sender);
+            audioService.StopCall(ClientInformation.Username, ConversationPartner);
+            ClientInformation.CallingWindows.Remove(ConversationPartner);
             Close();
         }
 
         public void DeclinedCall()
         {
-            textBlockInfo.Text = Sender + " has declined your call";
+            textBlockInfo.Text = ConversationPartner + " has declined your call";
             buttonCancel.Visibility = Visibility.Hidden;
         }
 
         public void AcceptedCall()
         {
-            textBlockInfo.Text = Sender + " has accepted your call.";
+            textBlockInfo.Text = ConversationPartner + " has accepted your call.";
             audioCallback.StartRecording();
         }
 
         public void ClosedCall()
         {
-            textBlockInfo.Text = Sender + " has stopped the conversation";
+            textBlockInfo.Text = ConversationPartner + " has stopped the conversation";
             buttonCancel.Visibility = Visibility.Hidden;
         }
 
@@ -97,8 +98,8 @@ namespace Client
         {
                         audioCallback.StopPlayingOutput();
             audioCallback.StopRecording();
-            audioService.StopCall(ClientInformation.Username, Sender);
-            ClientInformation.CallingWindows.Remove(Sender);
+            audioService.StopCall(ClientInformation.Username, ConversationPartner);
+            ClientInformation.CallingWindows.Remove(ConversationPartner);
         }
     }
 }

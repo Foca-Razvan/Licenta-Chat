@@ -25,7 +25,7 @@ namespace Client
     /// </summary>
     public partial class AnswerWindow : Window
     {
-        string Sender { get; set; }
+        string ConversationPartner { get; set; }
         IAudio audioService;
         AudioCallback audioCallback;
 
@@ -40,7 +40,7 @@ namespace Client
             buttonClose.Visibility = Visibility.Hidden;
             textBlock.TextAlignment = TextAlignment.Center;
 
-            Sender = sender;
+            ConversationPartner = sender;
             textBlock.Text = sender + " is calling you.";
 
             audioCallback = new AudioCallback();
@@ -61,22 +61,22 @@ namespace Client
             wi.DataAvailable += new EventHandler<WaveInEventArgs>(wi_DataAvailableCallback);
 
             audioCallback.Wi = wi;
-            audioService.Confirmation(ClientInformation.Username, Sender, true);
+            audioService.Confirmation(ClientInformation.Username, ConversationPartner, true);
             audioCallback.StartRecording();
 
-            textBlock.Text = "Audio Call with " + Sender;
+            textBlock.Text = "Audio Call with " + ConversationPartner;
 
         }
 
         private void wi_DataAvailableCallback(object sender, WaveInEventArgs e)
         {
-            audioService.SendVoice(e.Buffer, e.BytesRecorded, Sender);
+            audioService.SendVoice(e.Buffer, e.BytesRecorded, ConversationPartner);
         }
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
-            audioService.Confirmation(ClientInformation.Username, Sender , false);
-            ClientInformation.AnswerWindows.Remove(Sender);
+            audioService.Confirmation(ClientInformation.Username, ConversationPartner , false);
+            ClientInformation.AnswerWindows.Remove(ConversationPartner);
             Close();
         }
 
@@ -84,15 +84,15 @@ namespace Client
         {
             audioCallback.StopPlayingOutput();
             audioCallback.StopRecording();
-            audioService.StopCall(ClientInformation.Username, Sender);
-            ClientInformation.AnswerWindows.Remove(Sender);
+            audioService.StopCall(ClientInformation.Username, ConversationPartner);
+            ClientInformation.AnswerWindows.Remove(ConversationPartner);
             Close();
             
         }
 
         public void ClosedCall()
         {
-            textBlock.Text = Sender + " has stopped the conversation";
+            textBlock.Text = ConversationPartner + " has stopped the conversation";
             buttonCancel.Visibility = Visibility.Hidden;
             buttonAccept.Visibility = Visibility.Hidden;
             buttonCancel.Visibility = Visibility.Hidden;
@@ -102,8 +102,8 @@ namespace Client
         {
             audioCallback.StopPlayingOutput();
             audioCallback.StopRecording();
-            audioService.StopCall(ClientInformation.Username, Sender);
-            ClientInformation.AnswerWindows.Remove(Sender);
+            audioService.StopCall(ClientInformation.Username, ConversationPartner);
+            ClientInformation.AnswerWindows.Remove(ConversationPartner);
         }
     }
 }

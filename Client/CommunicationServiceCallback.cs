@@ -43,7 +43,7 @@ namespace Client
         { 
             AnswerWindow answerWindow = new AnswerWindow();
             ClientInformation.AnswerWindows.Add(caller, answerWindow);
-            ClientInformation.AnswerWindows[caller].Show();
+            answerWindow.Show();
         }
 
     }
