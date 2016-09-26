@@ -47,7 +47,6 @@ namespace Client
             audioService.Subscribe(ClientInformation.Username);
 
             textBlockInfo.TextAlignment = TextAlignment.Center;
-            textBlockInfo.Text = "Calling " + ConversationPartner;
 
             Init();
         }
@@ -59,7 +58,9 @@ namespace Client
             wi.DataAvailable += new EventHandler<WaveInEventArgs>(wi_DataAvailableCallback);
             audioCallback.Wi = wi;
 
-            audioService.InitCommunication(ConversationPartner, ClientInformation.Username);
+            textBlockInfo.Text = "Calling " + ConversationPartner;
+
+            audioService.InitCommunication(ClientInformation.Username, ConversationPartner);
         }
 
         private void wi_DataAvailableCallback(object sender, WaveInEventArgs e)
@@ -96,7 +97,7 @@ namespace Client
 
         private void CallingWindow_ClosingEvent(object sender, System.ComponentModel.CancelEventArgs e)
         {
-                        audioCallback.StopPlayingOutput();
+            audioCallback.StopPlayingOutput();
             audioCallback.StopRecording();
             audioService.StopCall(ClientInformation.Username, ConversationPartner);
             ClientInformation.CallingWindows.Remove(ConversationPartner);
