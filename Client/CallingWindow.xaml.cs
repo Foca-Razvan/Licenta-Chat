@@ -95,7 +95,7 @@ namespace Client
 
         private void CallingWindow_ClosingEvent(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            audioCallback.StopPlayingOutput();
+                        audioCallback.StopPlayingOutput();
             audioCallback.StopRecording();
             audioService.StopCall(ClientInformation.Username, Sender);
             ClientInformation.CallingWindows.Remove(Sender);

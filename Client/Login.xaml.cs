@@ -47,7 +47,7 @@ namespace Client
             if (ok)
             {
                 ClientInformation.Username = textBoxUsername.Text;
-                MainWindow mainWindow = new MainWindow(textBoxUsername.Text);
+                MainWindow mainWindow = new MainWindow();
                 ClientInformation.MainWindow = mainWindow;
                 ClientInformation.MainWindow.Show();
                 Close();
