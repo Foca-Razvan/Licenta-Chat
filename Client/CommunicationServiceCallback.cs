@@ -40,9 +40,10 @@ namespace Client
         }
 
         public void SendAudioNotification(string caller, string receiver)
-        {           
-            CallingWindow callingWindow = new CallingWindow(caller, receiver, false);
-            callingWindow.Show();  
+        { 
+            AnswerWindow answerWindow = new AnswerWindow();
+            ClientInformation.AnswerWindows.Add(caller, answerWindow);
+            ClientInformation.AnswerWindows[caller].Show();
         }
 
     }

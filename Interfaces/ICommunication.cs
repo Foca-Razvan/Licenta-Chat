@@ -18,7 +18,5 @@ namespace Interfaces
         void SendMessage(string messagem,string to);
         [OperationContract]
         List<string> GetListOfContacts();
-        [OperationContract]
-        void InitAudio(string username);
     }
 }

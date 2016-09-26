@@ -12,53 +12,60 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.ServiceModel;
-using Interfaces;
 using NAudio;
 using NAudio.WindowsMediaFormat;
 using NAudio.Wave;
 using NAudio.CoreAudioApi;
-using System.Diagnostics;
+using Interfaces;
 
 namespace Client
 {
     /// <summary>
-    /// Interaction logic for CallingWindow.xaml
+    /// Interaction logic for AnswerWindow.xaml
     /// </summary>
-    public partial class CallingWindow : Window
+    public partial class AnswerWindow : Window
     {
-        string Sender { get; set; } 
+        string Sender { get; set; }
         IAudio audioService;
         AudioCallback audioCallback;
 
-        public CallingWindow()
+        public AnswerWindow()
         {
             InitializeComponent();
         }
 
-        public CallingWindow(string conversationPartner)
+        public AnswerWindow(string sender)
         {
             InitializeComponent();
-            Sender = conversationPartner;
+            buttonClose.Visibility = Visibility.Hidden;
+            textBlock.TextAlignment = TextAlignment.Center;
+
+            Sender = sender;
+            textBlock.Text = sender + " is calling you.";
 
             audioCallback = new AudioCallback();
             DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/AudioService"));
             audioService = channelAudioService.CreateChannel();
+        }
+
+        private void buttonAccept_Click(object sender, RoutedEventArgs e)
+        {
+            buttonAccept.Visibility = Visibility.Hidden;
+            buttonCancel.Visibility = Visibility.Hidden;
+            buttonClose.Visibility = Visibility.Visible;
 
             audioService.Subscribe(ClientInformation.Username);
 
-            textBlockInfo.TextAlignment = TextAlignment.Center;
-
-            Init();
-        }
-
-        private void Init()
-        {
             WaveIn wi = new WaveIn();
             wi.WaveFormat = new WaveFormat(8000, 1);
             wi.DataAvailable += new EventHandler<WaveInEventArgs>(wi_DataAvailableCallback);
-            audioCallback.Wi = wi;
 
-            audioService.InitCommunication(Sender, ClientInformation.Username);
+            audioCallback.Wi = wi;
+            audioService.Confirmation(ClientInformation.Username, Sender, true);
+            audioCallback.StartRecording();
+
+            textBlock.Text = "Audio Call with " + Sender;
+
         }
 
         private void wi_DataAvailableCallback(object sender, WaveInEventArgs e)
@@ -68,37 +75,35 @@ namespace Client
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
-            audioCallback.StopPlayingOutput();
-            audioCallback.StopRecording();
-            audioService.StopCall(ClientInformation.Username, Sender);
-            ClientInformation.CallingWindows.Remove(Sender);
+            audioService.Confirmation(ClientInformation.Username, Sender , false);
+            ClientInformation.AnswerWindows.Remove(Sender);
             Close();
         }
 
-        public void DeclinedCall()
+        private void buttonClose_Click(object sender, RoutedEventArgs e)
         {
-            textBlockInfo.Text = Sender + " has declined your call";
-            buttonCancel.Visibility = Visibility.Hidden;
-        }
-
-        public void AcceptedCall()
-        {
-            textBlockInfo.Text = Sender + " has accepted your call.";
-            audioCallback.StartRecording();
+            audioCallback.StopPlayingOutput();
+            audioCallback.StopRecording();
+            audioService.StopCall(ClientInformation.Username, Sender);
+            ClientInformation.AnswerWindows.Remove(Sender);
+            Close();
+            
         }
 
         public void ClosedCall()
         {
-            textBlockInfo.Text = Sender + " has stopped the conversation";
+            textBlock.Text = Sender + " has stopped the conversation";
+            buttonCancel.Visibility = Visibility.Hidden;
+            buttonAccept.Visibility = Visibility.Hidden;
             buttonCancel.Visibility = Visibility.Hidden;
         }
 
-        private void CallingWindow_ClosingEvent(object sender, System.ComponentModel.CancelEventArgs e)
+        private void AnswerWindow_ClosingEvent(object sender, System.ComponentModel.CancelEventArgs e)
         {
             audioCallback.StopPlayingOutput();
             audioCallback.StopRecording();
             audioService.StopCall(ClientInformation.Username, Sender);
-            ClientInformation.CallingWindows.Remove(Sender);
+            ClientInformation.AnswerWindows.Remove(Sender);
         }
     }
 }

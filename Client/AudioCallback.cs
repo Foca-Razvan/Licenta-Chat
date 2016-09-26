@@ -11,11 +11,9 @@ namespace Client
 {
     public class AudioCallback : IAudioCallback
     {
-        private BufferedWaveProvider bwp = new BufferedWaveProvider(new WaveFormat(44100, 1));
+        private BufferedWaveProvider bwp = new BufferedWaveProvider(new WaveFormat(8000, 1));
         private WaveOut wo = new WaveOut();
         public WaveIn Wi { get; set; }
-
-        public CallingWindow callingWindows { get; set; }
 
         public AudioCallback(WaveIn wi)
         {
@@ -42,27 +40,37 @@ namespace Client
 
         public void ChannelAccepted(string receiver)
         {
-            Wi.StartRecording();
+            ClientInformation.CallingWindows[receiver].AcceptedCall();
         }
 
         public void ChannelDeclined(string receiver)
         {
-            callingWindows.DeclinedCall();
+            ClientInformation.CallingWindows[receiver].DeclinedCall();
+           
         }
 
         public void StopCall(string receiver)
         {
+            if (ClientInformation.CallingWindows[receiver] != null)
+            {
+                ClientInformation.CallingWindows[receiver].ClosedCall();
+                //ClientInformation.CallingWindows.Remove(receiver);
+            }
+            if (ClientInformation.AnswerWindows[receiver] != null)
+            {
+                ClientInformation.AnswerWindows[receiver].ClosedCall();
+                //ClientInformation.CallingWindows.Remove(receiver);
+            }
             Wi.StopRecording();
             wo.Stop();
         }
 
+        // Not part of interface
 
         private void wi_RecordingStopped(object sender, StoppedEventArgs e)
         {
             Wi.DataAvailable += null;
-        }
-
-        // Not part of interface
+        }        
 
         public void StopPlayingOutput()
         {
@@ -72,6 +80,11 @@ namespace Client
         public void StartRecording()
         {
             Wi.StartRecording();
+        }
+
+        public void StopRecording()
+        {
+            Wi.StopRecording();
         }
     }
 }

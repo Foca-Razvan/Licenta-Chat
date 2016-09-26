@@ -27,13 +27,8 @@ namespace Client
         ICommunication connectionService;
         string ConversationPartner { get; set; }
 
-        public MainWindow()
-        {
-            InitializeComponent();
-            textBoxConversation.IsReadOnly = true;
-        }
 
-        public MainWindow(string username)
+        public MainWindow()
         {
             InitializeComponent();
             textBoxConversation.IsReadOnly = true;
@@ -42,9 +37,9 @@ namespace Client
             DuplexChannelFactory<ICommunication> channelServerService = new DuplexChannelFactory<ICommunication>(callback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/CommunicationService"));
             connectionService = channelServerService.CreateChannel();
 
-            connectionService.Subscribe(username);
+            connectionService.Subscribe(ClientInformation.Username);
 
-            Title = username;
+            Title = ClientInformation.Username;
         }
 
         private void textBoxMessage_PressEnter(object sender, KeyEventArgs e)
@@ -96,7 +91,8 @@ namespace Client
         {
             if (ConversationPartner != null)
             {
-                CallingWindow callingWindow = new CallingWindow(Title,ConversationPartner,true);
+                CallingWindow callingWindow = new CallingWindow();
+                ClientInformation.CallingWindows.Add(ConversationPartner, callingWindow);
                 callingWindow.Show();
             }         
         }

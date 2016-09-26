@@ -58,11 +58,6 @@ namespace Server
             return contacts;
         }
 
-        public void InitAudio(string username)
-        {
-            UserInformation user = Subscriber.getUser(username);
-            //user.CommunicationCallback.s
-        }
 
     }
 }

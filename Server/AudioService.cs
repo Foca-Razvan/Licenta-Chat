@@ -47,13 +47,13 @@ namespace Server
             user.AudioCallback.SendVoiceCallback(voice,byteRecorded);
         }
 
-        public void Confirmation(string sender , string receiver,bool ok)
+        public void Confirmation(string sender , string receiver, bool ok)
         {
-            UserInformation user = Subscriber.getUser(sender);
+            UserInformation user = Subscriber.getUser(receiver);
             if (ok)
-                user.AudioCallback.ChannelAccepted(receiver);
+                user.AudioCallback.ChannelAccepted(sender);
             else
-                user.AudioCallback.ChannelDeclined(receiver);
+                user.AudioCallback.ChannelDeclined(sender);
         }
 
         public void StopCall(string sender,string receiver)

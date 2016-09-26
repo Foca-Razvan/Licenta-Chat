@@ -46,8 +46,10 @@ namespace Client
             bool ok = connectionService.Login(textBoxUsername.Text, passwordBox.Password);
             if (ok)
             {
+                ClientInformation.Username = textBoxUsername.Text;
                 MainWindow mainWindow = new MainWindow(textBoxUsername.Text);
-                mainWindow.Show();
+                ClientInformation.MainWindow = mainWindow;
+                ClientInformation.MainWindow.Show();
                 Close();
             }
             else
