@@ -41,7 +41,7 @@ namespace Client
 
         public void SendAudioNotification(string caller)
         { 
-            AnswerWindow answerWindow = new AnswerWindow();
+            AnswerWindow answerWindow = new AnswerWindow(caller);
             ClientInformation.AnswerWindows.Add(caller, answerWindow);
             answerWindow.Show();
         }

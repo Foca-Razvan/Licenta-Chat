@@ -36,8 +36,7 @@ namespace Client
 
         public AnswerWindow(string sender)
         {
-            InitializeComponent();
-            buttonClose.Visibility = Visibility.Hidden;
+            InitializeComponent();            
             textBlock.TextAlignment = TextAlignment.Center;
 
             ConversationPartner = sender;
@@ -46,6 +45,8 @@ namespace Client
             audioCallback = new AudioCallback();
             DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/AudioService"));
             audioService = channelAudioService.CreateChannel();
+
+            buttonClose.Visibility = Visibility.Hidden;
         }
 
         private void buttonAccept_Click(object sender, RoutedEventArgs e)
