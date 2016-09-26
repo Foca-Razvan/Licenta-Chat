@@ -12,8 +12,8 @@ namespace Client
         public static Login Login { get; set; }
         public static MainWindow MainWindow { get; set; }
         public static SignUp SignUpWindow { get; set; }
-        public static Dictionary<string, CallingWindow> CallingWindows { get; set; }
-        public static Dictionary<string, AnswerWindow> AnswerWindows { get; set; }
+        public static Dictionary<string, CallingWindow> CallingWindows = new Dictionary<string, CallingWindow>();
+        public static Dictionary<string, AnswerWindow> AnswerWindows = new Dictionary<string, AnswerWindow>();
 
     }
 }
