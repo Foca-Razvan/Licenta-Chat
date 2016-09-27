@@ -96,7 +96,7 @@ namespace Client
             textBlock.Text = ConversationPartner + " has stopped the conversation";
             buttonCancel.Visibility = Visibility.Hidden;
             buttonAccept.Visibility = Visibility.Hidden;
-            buttonCancel.Visibility = Visibility.Hidden;
+            buttonClose.Visibility = Visibility.Hidden;
         }
 
         private void AnswerWindow_ClosingEvent(object sender, System.ComponentModel.CancelEventArgs e)

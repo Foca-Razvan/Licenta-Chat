@@ -86,6 +86,7 @@ namespace Client
         public void AcceptedCall()
         {
             textBlockInfo.Text = ConversationPartner + " has accepted your call.";
+            buttonCancel.Content = "Close";
             audioCallback.StartRecording();
         }
 
