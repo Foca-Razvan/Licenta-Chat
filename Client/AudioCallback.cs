@@ -77,7 +77,7 @@ namespace Client
 
         public void StartRecording()
         {
-            if(Wi.DeviceNumber > 0)
+            //if(Wi.DeviceNumber > 0)
                 Wi.StartRecording();
         }
 
