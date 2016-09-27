@@ -51,15 +51,13 @@ namespace Client
 
         public void StopCall(string receiver)
         {
-            if (ClientInformation.CallingWindows[receiver] != null)
+            if (ClientInformation.CallingWindows.ContainsKey(receiver))
             {
                 ClientInformation.CallingWindows[receiver].ClosedCall();
-                //ClientInformation.CallingWindows.Remove(receiver);
             }
-            if (ClientInformation.AnswerWindows[receiver] != null)
+            if (ClientInformation.AnswerWindows.ContainsKey(receiver))
             {
                 ClientInformation.AnswerWindows[receiver].ClosedCall();
-                //ClientInformation.CallingWindows.Remove(receiver);
             }
             Wi.StopRecording();
             wo.Stop();
