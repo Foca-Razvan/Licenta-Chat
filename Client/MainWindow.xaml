@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
         Title="MainWindow" Height="364.384" Width="505.822" Closing="ClosingEvent">
-    <Grid Margin="0,0,2,1">
+    <Grid Margin="0,0,2,1" Width="496" Height="333">
         <ListBox x:Name="listBoxFriendList" HorizontalAlignment="Left" Height="299" Margin="0,34,0,0" VerticalAlignment="Top" Width="100" Loaded="listBoxFriendList_Loaded" MouseDoubleClick="MouseDoubleClick_Event"/>
         <TextBox x:Name="textBoxMessage" HorizontalAlignment="Left" Height="23" Margin="105,305,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="390" KeyDown="textBoxMessage_PressEnter"/>
         <TextBox x:Name="textBoxConversation" HorizontalAlignment="Left" Height="271" Margin="105,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="390"/>
@@ -18,6 +18,7 @@
                 </MenuItem>
                 <MenuItem Header="Conversation">
                     <MenuItem Header="Call" Click="MenuItemConversationCallMouseClickEvent"/>
+                    <MenuItem Header="ShareScreen" Click="MenuItemConversationShareScreenMouseClickEvent"/>
                 </MenuItem>
             </Menu>
         </DockPanel>

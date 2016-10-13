@@ -38,28 +38,32 @@ namespace Server
         public void InitCommunication(string sender ,string conversationPartner)
         {
             UserInformation receiver = Subscriber.subscribers.Find(x => x.Username == conversationPartner);
-            receiver.CommunicationCallback.SendAudioNotification(sender);
+            if(receiver != null && receiver.CommunicationCallback != null)
+                receiver.CommunicationCallback.SendAudioNotification(sender);
         }
 
         public void SendVoice(byte[] voice,int byteRecorded,string conversationPartner)
         {
             UserInformation user = Subscriber.subscribers.Find(x => x.Username == conversationPartner);
-            user.AudioCallback.SendVoiceCallback(voice,byteRecorded);
+            if (user != null && user.AudioCallback != null)
+                user.AudioCallback.SendVoiceCallback(voice,byteRecorded);
         }
 
         public void Confirmation(string sender , string receiver, bool ok)
         {
             UserInformation user = Subscriber.getUser(receiver);
-            if (ok)
-                user.AudioCallback.ChannelAccepted(sender);
-            else
-                user.AudioCallback.ChannelDeclined(sender);
+            if (user != null && user.AudioCallback != null)
+                if (ok)
+                    user.AudioCallback.ChannelAccepted(sender);
+                else
+                    user.AudioCallback.ChannelDeclined(sender);
         }
 
         public void StopCall(string sender,string receiver)
         {
             UserInformation user = Subscriber.getUser(receiver);
-            user.AudioCallback.StopCall(sender);
+            if(user != null && user.AudioCallback != null)
+                user.AudioCallback.StopCall(sender);
         }
     }
 }

@@ -39,6 +39,8 @@ namespace Client
         {
             ChannelFactory<IConnection> channelServerService = new ChannelFactory<IConnection>(new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/ConnectionService"));
             connectionService = channelServerService.CreateChannel();
+
+            
         }
 
         private void button_Click(object sender, RoutedEventArgs e)

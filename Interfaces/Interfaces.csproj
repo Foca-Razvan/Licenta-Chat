@@ -46,6 +46,8 @@
     <Compile Include="ICommunication.cs" />
     <Compile Include="IConnection.cs" />
     <Compile Include="IClientCallback.cs" />
+    <Compile Include="IScreenShare.cs" />
+    <Compile Include="IScreenShareCallback.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

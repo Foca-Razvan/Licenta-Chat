@@ -97,5 +97,14 @@ namespace Client
             }         
         }
 
+        private void MenuItemConversationShareScreenMouseClickEvent(object sender ,RoutedEventArgs e)
+        {
+            if(ConversationPartner != null)
+            {
+                VideoWindow videoWindow = new VideoWindow();
+                videoWindow.Show();
+            }
+        }
+
     }
 }
