@@ -36,7 +36,7 @@ namespace Client
             this.Height = Screen.PrimaryScreen.Bounds.Height;
             this.Width = Screen.PrimaryScreen.Bounds.Width;
 
-            axRDPViewer1.Size =  new System.Drawing.Size(Height, Width);
+            axRDPViewer1.Size =  new System.Drawing.Size(Width, Height);
             axRDPViewer1.Visible = true;
 
             axRDPViewer1.Connect(ConnectionString, Partner, "");
