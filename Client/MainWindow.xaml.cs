@@ -39,8 +39,13 @@ namespace Client
             CommunicationServiceCallback callback = new CommunicationServiceCallback(this);  
             DuplexChannelFactory<ICommunication> channelServerService = new DuplexChannelFactory<ICommunication>(callback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/CommunicationService"));
             connectionService = channelServerService.CreateChannel();
-
             connectionService.Subscribe(ClientInformation.Username);
+
+
+            ClientInformation.scrrenShareCallback = new ScreenShareCallback();
+            DuplexChannelFactory<IScreenShare> channelScreenShare = new DuplexChannelFactory<IScreenShare>(ClientInformation.scrrenShareCallback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/ScreenShareService"));
+            screenShareService = channelScreenShare.CreateChannel();
+            screenShareService.Subscribe(ClientInformation.Username);
 
             Title = ClientInformation.Username;
         }
@@ -109,13 +114,7 @@ namespace Client
                 rdpSession.Open();
 
                 IRDPSRAPIInvitation Invitation = rdpSession.Invitations.CreateInvitation("Trial", "MyGroup", "", 10);
-
-                ScreenShareCallback callback = new ScreenShareCallback();
-                DuplexChannelFactory<IScreenShare> channelScreenShare = new DuplexChannelFactory<IScreenShare>(callback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/ScreenShareService"));
-                screenShareService = channelScreenShare.CreateChannel();
-
-                screenShareService.InitShareScreen(ClientInformation.Username, ConversationPartner,Invitation.ConnectionString);
-               
+                screenShareService.InitShareScreen(ClientInformation.Username, ConversationPartner,Invitation.ConnectionString);           
             }
         }
 

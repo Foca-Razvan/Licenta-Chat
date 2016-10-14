@@ -15,5 +15,7 @@ namespace Client
         public static Dictionary<string, CallingWindow> CallingWindows = new Dictionary<string, CallingWindow>();
         public static Dictionary<string, AnswerWindow> AnswerWindows = new Dictionary<string, AnswerWindow>();
 
+        public static ScreenShareCallback scrrenShareCallback { get; set};
+
     }
 }

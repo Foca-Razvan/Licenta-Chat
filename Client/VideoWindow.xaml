@@ -6,5 +6,10 @@
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
         Title="VideoWindow" Height="400" Width="600" MinWidth="200" MinHeight="200">
-    <Grid Width="592" Height="370" MinWidth="300" MinHeight="300"/>
+    <Grid Width="592" Height="370" MinWidth="300" MinHeight="300">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="123*"/>
+        </Grid.ColumnDefinitions>
+    </Grid>
 </Window>

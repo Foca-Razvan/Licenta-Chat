@@ -27,3 +27,9 @@ D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\AnswerWindow.g
 D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\AnswerWindow.baml
 D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\VideoWindow.g.cs
 D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\VideoWindow.baml
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\bin\Debug\Interop.RDPCOMAPILib.dll
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\bin\Debug\AxInterop.RDPCOMAPILib.dll
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\Interop.RDPCOMAPILib.dll
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\AxInterop.RDPCOMAPILib.dll
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\Client.csproj.ResolveComReference.cache
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\Client.ScrenShareForm.resources
