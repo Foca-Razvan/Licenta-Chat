@@ -16,6 +16,7 @@ using System.ServiceModel;
 using Interfaces;
 using NAudio.Wave;
 using NAudio.CoreAudioApi;
+using RDPCOMAPILib;
 
 namespace Client
 {
@@ -25,6 +26,8 @@ namespace Client
     public partial class MainWindow : Window
     {
         ICommunication connectionService;
+        RDPSession rdpSession;
+        IScreenShare screenShareService;
         string ConversationPartner { get; set; }
 
 
@@ -101,9 +104,25 @@ namespace Client
         {
             if(ConversationPartner != null)
             {
-                VideoWindow videoWindow = new VideoWindow();
-                videoWindow.Show();
+                rdpSession = new RDPSession();
+                rdpSession.OnAttendeeConnected += Incoming;
+                rdpSession.Open();
+
+                IRDPSRAPIInvitation Invitation = rdpSession.Invitations.CreateInvitation("Trial", "MyGroup", "", 10);
+
+                ScreenShareCallback callback = new ScreenShareCallback();
+                DuplexChannelFactory<IScreenShare> channelScreenShare = new DuplexChannelFactory<IScreenShare>(callback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/ScreenShareService"));
+                screenShareService = channelScreenShare.CreateChannel();
+
+                screenShareService.InitShareScreen(ClientInformation.Username, ConversationPartner,Invitation.ConnectionString);
+               
             }
+        }
+
+        private void Incoming(object partner)
+        {
+            IRDPSRAPIAttendee myGuest = (IRDPSRAPIAttendee)partner;
+            myGuest.ControlLevel = CTRL_LEVEL.CTRL_LEVEL_INTERACTIVE;
         }
 
     }

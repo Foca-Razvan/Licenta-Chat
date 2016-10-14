@@ -11,6 +11,6 @@ namespace Interfaces
     public interface IScreenShare
     {
         [OperationContract(IsOneWay = true)]
-        void InitShareScreen(string client, string partner);
+        void InitShareScreen(string client, string partner,string connectionString);
     }
 }

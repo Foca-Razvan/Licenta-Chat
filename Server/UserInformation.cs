@@ -11,6 +11,7 @@ namespace Server
     {
         public IClientCallback CommunicationCallback { get; set; }
         public IAudioCallback AudioCallback { get; set; }
+        public IScreenShareCallback ScreenShareCallback { get; set; }
         public string Username { get; set; }
 
         public UserInformation() { }
