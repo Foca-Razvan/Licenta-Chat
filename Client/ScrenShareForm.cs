@@ -40,7 +40,7 @@ namespace Client
             axRDPViewer1.Visible = true;
 
             axRDPViewer1.Connect(ConnectionString, Partner, "");
-
+            
         }
 
         private void buttonDecline_Click(object sender, EventArgs e)

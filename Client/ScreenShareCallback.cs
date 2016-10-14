@@ -9,10 +9,6 @@ namespace Client
 {
     public class ScreenShareCallback : IScreenShareCallback
     {
-        public void SendScreenImage(string client, string partner, byte image)
-        {
-        }
-
         public void ShareScrennNotification(string from,string connectionString)
         {
             ScrenShareForm screenShareForm = new ScrenShareForm(from,connectionString);

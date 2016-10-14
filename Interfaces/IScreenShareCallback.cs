@@ -11,7 +11,5 @@ namespace Interfaces
     {
         [OperationContract(IsOneWay = true)]
         void ShareScrennNotification(string from,string connectionString);
-        [OperationContract(IsOneWay = true)]
-        void SendScreenImage(string client, string partner, byte image);
     }
 }
