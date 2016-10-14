@@ -29,10 +29,14 @@ namespace Client
 
         private void buttonAccept_Click(object sender, EventArgs e)
         {
-            this.Height = 1280;
-            this.Width = 960;
+            buttonAccept.Visible = false;
+            buttonDecline.Visible = false;
+            label1.Visible = false;
 
-            axRDPViewer1.Size =  new System.Drawing.Size(1200, 900);
+            this.Height = Screen.PrimaryScreen.Bounds.Height;
+            this.Width = Screen.PrimaryScreen.Bounds.Width;
+
+            axRDPViewer1.Size =  new System.Drawing.Size(Height, Width);
             axRDPViewer1.Visible = true;
 
             axRDPViewer1.Connect(ConnectionString, Partner, "");
