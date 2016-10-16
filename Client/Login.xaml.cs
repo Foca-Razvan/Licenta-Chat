@@ -45,7 +45,17 @@ namespace Client
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            bool ok = connectionService.Login(textBoxUsername.Text, passwordBox.Password);
+            bool ok = false;
+
+            try
+            {
+                ok = connectionService.Login(textBoxUsername.Text, passwordBox.Password);
+            }
+            catch
+            {
+                textBlockError.Text = "Nu s-a putut conecta la server. Incercati din nou.";
+                return;
+            }
             if (ok)
             {
                 ClientInformation.Username = textBoxUsername.Text;
