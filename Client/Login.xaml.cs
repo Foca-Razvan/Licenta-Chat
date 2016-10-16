@@ -37,7 +37,7 @@ namespace Client
 
         public void Init()
         {
-            ChannelFactory<IConnection> channelServerService = new ChannelFactory<IConnection>(new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/ConnectionService"));
+            ChannelFactory<IConnection> channelServerService = new ChannelFactory<IConnection>(new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://86.124.188.8:4444/ConnectionService"));
             connectionService = channelServerService.CreateChannel();
 
             
@@ -56,6 +56,8 @@ namespace Client
                 textBlockError.Text = "Nu s-a putut conecta la server. Incercati din nou.";
                 return;
             }
+
+
             if (ok)
             {
                 ClientInformation.Username = textBoxUsername.Text;

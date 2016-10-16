@@ -14,7 +14,7 @@ namespace Server
         static void Main(string[] args)
         {
 
-            ServiceHost serviceHost = new ServiceHost(typeof(ConnectionService), new Uri("net.tcp://192.168.0.100:4444/ConnectionService"));
+            ServiceHost serviceHost = new ServiceHost(typeof(ConnectionService), new Uri("net.tcp://86.124.188.8:4444/ConnectionService"));
             serviceHost.AddServiceEndpoint(typeof(IConnection), new NetTcpBinding(SecurityMode.None), "");
 
             ServiceHost serviceCommunicationHost = new ServiceHost(typeof(CommunicationService), new Uri("net.tcp://192.168.0.100:4444/CommunicationService"));
