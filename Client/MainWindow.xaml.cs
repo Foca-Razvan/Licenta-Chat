@@ -37,13 +37,14 @@ namespace Client
             textBoxConversation.IsReadOnly = true;
 
             CommunicationServiceCallback callback = new CommunicationServiceCallback(this);  
-            DuplexChannelFactory<ICommunication> channelServerService = new DuplexChannelFactory<ICommunication>(callback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/CommunicationService"));
+            DuplexChannelFactory<ICommunication> channelServerService = new DuplexChannelFactory<ICommunication>(callback, new NetTcpBinding(SecurityMode.None),
+                new EndpointAddress("net.tcp://86.124.188.8:4444/CommunicationService"));
             connectionService = channelServerService.CreateChannel();
             connectionService.Subscribe(ClientInformation.Username);
 
-
             ClientInformation.scrrenShareCallback = new ScreenShareCallback();
-            DuplexChannelFactory<IScreenShare> channelScreenShare = new DuplexChannelFactory<IScreenShare>(ClientInformation.scrrenShareCallback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/ScreenShareService"));
+            DuplexChannelFactory<IScreenShare> channelScreenShare = new DuplexChannelFactory<IScreenShare>(ClientInformation.scrrenShareCallback, new NetTcpBinding(SecurityMode.None),
+                new EndpointAddress("net.tcp://86.124.188.8:4444/ScreenShareService"));
             screenShareService = channelScreenShare.CreateChannel();
             screenShareService.Subscribe(ClientInformation.Username);
 
@@ -123,6 +124,5 @@ namespace Client
             IRDPSRAPIAttendee myGuest = (IRDPSRAPIAttendee)partner;
             myGuest.ControlLevel = CTRL_LEVEL.CTRL_LEVEL_INTERACTIVE;
         }
-
     }
 }

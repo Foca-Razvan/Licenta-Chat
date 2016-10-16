@@ -43,7 +43,7 @@ namespace Client
             textBlock.Text = sender + " is calling you.";
 
             audioCallback = new AudioCallback();
-            DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://192.168.0.100:4444/AudioService"));
+            DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://86.124.188.8:4444/AudioService"));
             audioService = channelAudioService.CreateChannel();
 
             buttonClose.Visibility = Visibility.Hidden;
