@@ -30,7 +30,6 @@ namespace Client
         IScreenShare screenShareService;
         string ConversationPartner { get; set; }
 
-
         public MainWindow()
         {
             InitializeComponent();

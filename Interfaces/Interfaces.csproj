@@ -41,13 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IAudio.cs" />
-    <Compile Include="IAudioCallback.cs" />
-    <Compile Include="ICommunication.cs" />
-    <Compile Include="IConnection.cs" />
-    <Compile Include="IClientCallback.cs" />
-    <Compile Include="IScreenShare.cs" />
-    <Compile Include="IScreenShareCallback.cs" />
+    <Compile Include="Services\IAudio.cs" />
+    <Compile Include="Callback\IAudioCallback.cs" />
+    <Compile Include="Services\ICommunication.cs" />
+    <Compile Include="Services\IConnection.cs" />
+    <Compile Include="Callback\IClientCallback.cs" />
+    <Compile Include="Services\IScreenShare.cs" />
+    <Compile Include="Callback\IScreenShareCallback.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

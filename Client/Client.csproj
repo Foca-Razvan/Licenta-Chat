@@ -66,13 +66,13 @@
     <Compile Include="AnswerWindow.xaml.cs">
       <DependentUpon>AnswerWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AudioCallback.cs" />
+    <Compile Include="Services\AudioCallback.cs" />
     <Compile Include="CallingWindow.xaml.cs">
       <DependentUpon>CallingWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ClientInformation.cs" />
-    <Compile Include="CommunicationServiceCallback.cs" />
-    <Compile Include="ScreenShareCallback.cs" />
+    <Compile Include="Data\ClientInformation.cs" />
+    <Compile Include="Services\CommunicationServiceCallback.cs" />
+    <Compile Include="Services\ScreenShareCallback.cs" />
     <Compile Include="ScrenShareForm.cs">
       <SubType>Form</SubType>
     </Compile>
