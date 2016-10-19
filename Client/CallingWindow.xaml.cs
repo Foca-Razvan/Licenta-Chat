@@ -41,7 +41,13 @@ namespace Client
             ConversationPartner = conversationPartner;
 
             audioCallback = new AudioCallback();
-            DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://86.124.188.8:4444/AudioService"));
+            DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new UdpBinding(),
+                 new EndpointAddress("soap.udp://86.124.188.8:4444/AudioService"));
+
+           /* DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(SecurityMode.None),
+                new EndpointAddress("net.tcp://86.124.188.8:4444/AudioService"));*/
+
+
             audioService = channelAudioService.CreateChannel();
 
             audioService.Subscribe(ClientInformation.Username);
