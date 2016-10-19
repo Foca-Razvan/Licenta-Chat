@@ -20,11 +20,8 @@ namespace Server
             ServiceHost serviceCommunicationHost = new ServiceHost(typeof(CommunicationService), new Uri("net.tcp://192.168.0.100:4444/CommunicationService"));
             serviceCommunicationHost.AddServiceEndpoint(typeof(ICommunication), new NetTcpBinding(SecurityMode.None), "");
 
-            /*ServiceHost serviceAudioHost = new ServiceHost(typeof(AudioService), new Uri("net.tcp://192.168.0.100:4444/AudioService"));
-            serviceAudioHost.AddServiceEndpoint(typeof(IAudio), new NetTcpBinding(SecurityMode.None), "");*/
-
-            ServiceHost serviceAudioHost = new ServiceHost(typeof(AudioService), new Uri("soap.udp://192.168.0.100:4444/AudioService"));
-            serviceAudioHost.AddServiceEndpoint(typeof(IAudio), new UdpBinding(),"");
+            ServiceHost serviceAudioHost = new ServiceHost(typeof(AudioService), new Uri("net.tcp://192.168.0.100:4444/AudioService"));
+            serviceAudioHost.AddServiceEndpoint(typeof(IAudio), new NetTcpBinding(SecurityMode.None), "");
 
             ServiceHost serviceScreenShareHost = new ServiceHost(typeof(ScreenShareService), new Uri("net.tcp://192.168.0.100:4444/ScreenShareService"));
             serviceScreenShareHost.AddServiceEndpoint(typeof(IScreenShare), new NetTcpBinding(SecurityMode.None), "");
