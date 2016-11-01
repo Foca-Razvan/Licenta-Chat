@@ -17,6 +17,18 @@ namespace Interfaces
         [OperationContract(IsOneWay = true)]
         void SendMessage(string messagem,string to);
         [OperationContract]
-        List<string> GetListOfContacts();
+        List<string> GetFriendList();
+        [OperationContract(IsOneWay = true)]
+        void AddFriend(string username);
+        [OperationContract]
+        bool CheckUserExistance(string username);
+        [OperationContract(IsOneWay = true)]
+        void AcceptFriendRequest(string username);
+        [OperationContract(IsOneWay = true)]
+        void DeclineFriendRequest(string username);
+        [OperationContract(IsOneWay = true)]
+        void GetNotifications();
+        [OperationContract]
+        bool IsFriendWith(string sender, string friend);
     }
 }

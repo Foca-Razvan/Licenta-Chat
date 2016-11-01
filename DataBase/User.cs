@@ -14,9 +14,26 @@ namespace DataBase
     
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            this.Histories = new HashSet<History>();
+            this.Histories1 = new HashSet<History>();
+            this.Requests = new HashSet<Request>();
+        }
+    
         public int IdUser { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
+        public Nullable<int> Status { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<History> Histories { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<History> Histories1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Request> Requests { get; set; }
+        public virtual UserAvatar UserAvatar { get; set; }
     }
 }

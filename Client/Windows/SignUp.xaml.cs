@@ -25,12 +25,14 @@ namespace Client
         public SignUp()
         {
             InitializeComponent();
+            ResizeMode = ResizeMode.CanMinimize;
         }
 
         public SignUp(IConnection connectionService)
         {
             InitializeComponent();
             this.connectionService = connectionService;
+            ResizeMode = ResizeMode.CanMinimize;
         }
 
         private void buttonOk_Click(object sender, RoutedEventArgs e)

@@ -12,7 +12,7 @@ using NAudio.CoreAudioApi;
 
 namespace Client
 {
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
+    //[ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class CommunicationServiceCallback : IClientCallback
     {
         public MainWindow MainWindow { get; set; }

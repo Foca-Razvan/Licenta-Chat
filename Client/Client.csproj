@@ -64,41 +64,52 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AnswerWindow.xaml.cs">
+    <Compile Include="Windows\AddFriendWindow.xaml.cs">
+      <DependentUpon>AddFriendWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AnswerWindow.xaml.cs">
       <DependentUpon>AnswerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\AudioCallback.cs" />
-    <Compile Include="CallingWindow.xaml.cs">
+    <Compile Include="Windows\CallingWindow.xaml.cs">
       <DependentUpon>CallingWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\ClientInformation.cs" />
     <Compile Include="Services\CommunicationServiceCallback.cs" />
     <Compile Include="Services\ScreenShareCallback.cs" />
-    <Compile Include="ScrenShareForm.cs">
+    <Compile Include="Windows\FriendNotificationWindow.xaml.cs">
+      <DependentUpon>FriendNotificationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ScrenShareForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ScrenShareForm.Designer.cs">
+    <Compile Include="Windows\ScrenShareForm.Designer.cs">
       <DependentUpon>ScrenShareForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SignUp.xaml.cs">
+    <Compile Include="Windows\SignUp.xaml.cs">
       <DependentUpon>SignUp.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VideoWindow.xaml.cs">
-      <DependentUpon>VideoWindow.xaml</DependentUpon>
-    </Compile>
-    <Page Include="AnswerWindow.xaml">
+    <Page Include="Windows\AddFriendWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CallingWindow.xaml">
+    <Page Include="Windows\AnswerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Login.xaml">
+    <Page Include="Windows\CallingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Windows\FriendNotificationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -106,18 +117,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Login.xaml.cs">
+    <Compile Include="Windows\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="SignUp.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="VideoWindow.xaml">
+    <Page Include="Windows\SignUp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -140,7 +147,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ScrenShareForm.resx">
+    <EmbeddedResource Include="Windows\ScrenShareForm.resx">
       <DependentUpon>ScrenShareForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -176,6 +183,9 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\default_avatar.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -39,14 +39,17 @@ namespace Client
         {
             InitializeComponent();
             ConversationPartner = conversationPartner;
-
+            ResizeMode = ResizeMode.CanMinimize;
             audioCallback = new AudioCallback();
+
             DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(SecurityMode.None),
-                new EndpointAddress("net.tcp://86.124.188.8:4444/AudioService"));
+                new EndpointAddress("net.tcp://" + ClientInformation.IPAdressServer + ":4444/AudioService"));
 
             audioService = channelAudioService.CreateChannel();
             audioService.Subscribe(ClientInformation.Username);
             textBlockInfo.TextAlignment = TextAlignment.Center;
+
+            
 
             Init();
         }

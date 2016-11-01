@@ -25,9 +25,7 @@ namespace Client
     /// </summary>
     public partial class MainWindow : Window
     {
-        ICommunication connectionService;
         RDPSession rdpSession;
-        IScreenShare screenShareService;
         string ConversationPartner { get; set; }
 
         public MainWindow()
@@ -37,17 +35,26 @@ namespace Client
 
             CommunicationServiceCallback callback = new CommunicationServiceCallback(this);  
             DuplexChannelFactory<ICommunication> channelServerService = new DuplexChannelFactory<ICommunication>(callback, new NetTcpBinding(SecurityMode.None),
-                new EndpointAddress("net.tcp://86.124.188.8:4444/CommunicationService"));
-            connectionService = channelServerService.CreateChannel();
-            connectionService.Subscribe(ClientInformation.Username);
+                new EndpointAddress("net.tcp://" + ClientInformation.IPAdressServer + ":4444/CommunicationService"));
+            ClientInformation.CommunicationService = channelServerService.CreateChannel();
+            ClientInformation.CommunicationService.Subscribe(ClientInformation.Username);
 
             ClientInformation.scrrenShareCallback = new ScreenShareCallback();
             DuplexChannelFactory<IScreenShare> channelScreenShare = new DuplexChannelFactory<IScreenShare>(ClientInformation.scrrenShareCallback, new NetTcpBinding(SecurityMode.None),
-                new EndpointAddress("net.tcp://86.124.188.8:4444/ScreenShareService"));
-            screenShareService = channelScreenShare.CreateChannel();
-            screenShareService.Subscribe(ClientInformation.Username);
+                new EndpointAddress("net.tcp://" + ClientInformation.IPAdressServer + ":4444/ScreenShareService"));
+            ClientInformation.ScreenShareService = channelScreenShare.CreateChannel();
+            ClientInformation.ScreenShareService.Subscribe(ClientInformation.Username);
 
             Title = ClientInformation.Username;
+            laber_username.Content = ClientInformation.Username;
+            avatar_image.Source = new BitmapImage(new Uri(@"/Images/default_avatar.png", UriKind.Relative));
+            comboBox_status.Items.Add("Online");
+            comboBox_status.Items.Add("Away");
+            comboBox_status.Items.Add("Offline");
+            comboBox_status.SelectedItem = "Online";
+            ResizeMode = ResizeMode.CanMinimize;
+
+            ClientInformation.CommunicationService.GetNotifications();
         }
 
         private void textBoxMessage_PressEnter(object sender, KeyEventArgs e)
@@ -55,22 +62,23 @@ namespace Client
             if(e.Key == Key.Enter)
             {
                 textBoxConversation.Text += Title + ": " + textBoxMessage.Text + "\n";
-                connectionService.SendMessage(textBoxMessage.Text,ConversationPartner);
+                ClientInformation.CommunicationService.SendMessage(textBoxMessage.Text,ConversationPartner);
                 textBoxMessage.Clear();
             }
         }
 
         private void listBoxFriendList_Loaded(object sender, RoutedEventArgs e)
         {
-            List<string> list = connectionService.GetListOfContacts();
+            List<string> list = ClientInformation.CommunicationService.GetFriendList();
             foreach(string username in list)
                 listBoxFriendList.Items.Add(username);
+                
 
         }
 
         private void ClosingEvent(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            connectionService.Logout();
+            ClientInformation.CommunicationService.Logout();
         }
 
         private void MouseDoubleClick_Event(object sender, MouseButtonEventArgs e)
@@ -81,7 +89,7 @@ namespace Client
 
         private void MenuItemApplicationLogoutEvent(object sender, RoutedEventArgs e)
         {
-            if (connectionService.Logout())
+            if (ClientInformation.CommunicationService.Logout())
             {
                 Login login = new Login();
                 login.Show();
@@ -91,7 +99,7 @@ namespace Client
 
         private void MenuItemApplicationCloseClickEvent(object sender, RoutedEventArgs e)
         {
-            if(connectionService.Logout())
+            if(ClientInformation.CommunicationService.Logout())
                 Close();
         }
 
@@ -114,7 +122,7 @@ namespace Client
                 rdpSession.Open();
 
                 IRDPSRAPIInvitation Invitation = rdpSession.Invitations.CreateInvitation("Trial", "MyGroup", "", 10);
-                screenShareService.InitShareScreen(ClientInformation.Username, ConversationPartner,Invitation.ConnectionString);           
+                ClientInformation.ScreenShareService.InitShareScreen(ClientInformation.Username, ConversationPartner,Invitation.ConnectionString);           
             }
         }
 
@@ -122,6 +130,18 @@ namespace Client
         {
             IRDPSRAPIAttendee myGuest = (IRDPSRAPIAttendee)partner;
             myGuest.ControlLevel = CTRL_LEVEL.CTRL_LEVEL_INTERACTIVE;
+        }
+
+        private void listBoxFriendListMouseDown_Event(object sender, MouseButtonEventArgs e)
+        {           
+            if (listBoxFriendList.SelectedItem is string)
+                ConversationPartner = (string)listBoxFriendList.SelectedItem;
+        }
+
+        private void buttonAdd_Click(object sender, RoutedEventArgs e)
+        {
+            AddFriendWindow window = new AddFriendWindow();
+            window.Show();
         }
     }
 }

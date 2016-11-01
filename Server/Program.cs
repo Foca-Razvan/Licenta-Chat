@@ -31,6 +31,8 @@ namespace Server
             serviceAudioHost.Open();
             serviceScreenShareHost.Open();
 
+            test();
+
             Console.WriteLine("Serverul a fost lansat.");
             Console.WriteLine("Apasati enter pentru a inchide serverul");
 
@@ -40,6 +42,18 @@ namespace Server
             serviceHost.Close();
             serviceScreenShareHost.Close();
             serviceAudioHost.Close();
+        }
+
+
+        private static void test()
+        {
+            using (DataBaseContainer context = new DataBaseContainer())
+            {
+                foreach(History h in context.Histories)
+                {
+                    Console.WriteLine(h.User.Username + " and " + h.User1.Username);
+                }
+            }
         }
     }
 }

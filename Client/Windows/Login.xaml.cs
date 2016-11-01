@@ -26,21 +26,21 @@ namespace Client
     public partial class Login : Window
     {
         IConnection connectionService;
-
+        
         BufferedWaveProvider bwp;
 
         public Login()
         {
             InitializeComponent();
             Init();
+            ResizeMode = ResizeMode.CanMinimize;
         }
 
         public void Init()
         {
-            ChannelFactory<IConnection> channelServerService = new ChannelFactory<IConnection>(new NetTcpBinding(SecurityMode.None), new EndpointAddress("net.tcp://86.124.188.8:4444/ConnectionService"));
-            connectionService = channelServerService.CreateChannel();
-
-            
+            ChannelFactory<IConnection> channelServerService = new ChannelFactory<IConnection>(new NetTcpBinding(SecurityMode.None),
+                new EndpointAddress("net.tcp://"+ ClientInformation.IPAdressServer + ":4444/ConnectionService"));
+            connectionService = channelServerService.CreateChannel();      
         }
 
         private void button_Click(object sender, RoutedEventArgs e)

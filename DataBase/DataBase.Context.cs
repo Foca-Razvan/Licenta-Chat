@@ -26,5 +26,8 @@ namespace DataBase
         }
     
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<History> Histories { get; set; }
+        public virtual DbSet<Request> Requests { get; set; }
+        public virtual DbSet<UserAvatar> UserAvatars { get; set; }
     }
 }

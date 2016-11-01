@@ -36,7 +36,8 @@ namespace Client
 
         public AnswerWindow(string sender)
         {
-            InitializeComponent();            
+            InitializeComponent();
+            ResizeMode = ResizeMode.CanMinimize;
             textBlock.TextAlignment = TextAlignment.Center;
 
             ConversationPartner = sender;
@@ -44,7 +45,7 @@ namespace Client
 
             audioCallback = new AudioCallback();
             DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(SecurityMode.None),
-                new EndpointAddress("net.tcp://86.124.188.8:4444/AudioService"));
+                new EndpointAddress("net.tcp://" + ClientInformation.IPAdressServer + ":4444/AudioService"));
 
 
             audioService = channelAudioService.CreateChannel();
@@ -90,8 +91,7 @@ namespace Client
             audioCallback.StopRecording();
             audioService.StopCall(ClientInformation.Username, ConversationPartner);
             ClientInformation.AnswerWindows.Remove(ConversationPartner);
-            Close();
-            
+            Close();          
         }
 
         public void ClosedCall()

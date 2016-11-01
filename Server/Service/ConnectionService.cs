@@ -22,16 +22,16 @@ namespace Server
                 foreach (User user in context.Users)
                     if (user.Username == username && user.Password == password)
                     {
-                        foreach (UserInformation c in Subscriber.subscribers)
-                            c.CommunicationCallback.SendNotification(username);
+                        foreach(var client in Subscriber.subscribers)
+                        {                 
+                            if (client.IsFriendWith(username))
+                                client.CommunicationCallback.SendNotification(username);                          
+                        }
                         return true;
                     }                                
             }
-            return false;
-          
+            return false;        
         }
-
-
 
         public int SignUp(string username, string password , string email)
         {
