@@ -17,6 +17,8 @@ using Interfaces;
 using NAudio.Wave;
 using NAudio.CoreAudioApi;
 using RDPCOMAPILib;
+using Client.Data;
+using Client.Windows;
 
 namespace Client
 {
@@ -33,21 +35,35 @@ namespace Client
             InitializeComponent();
             textBoxConversation.IsReadOnly = true;
 
+            NetTcpBinding tcp = new NetTcpBinding(SecurityMode.None);
+            tcp.MaxReceivedMessageSize = 20000000;
+
             CommunicationServiceCallback callback = new CommunicationServiceCallback(this);  
-            DuplexChannelFactory<ICommunication> channelServerService = new DuplexChannelFactory<ICommunication>(callback, new NetTcpBinding(SecurityMode.None),
+            DuplexChannelFactory<ICommunication> channelServerService = new DuplexChannelFactory<ICommunication>(callback,tcp,
                 new EndpointAddress("net.tcp://" + ClientInformation.IPAdressServer + ":4444/CommunicationService"));
             ClientInformation.CommunicationService = channelServerService.CreateChannel();
             ClientInformation.CommunicationService.Subscribe(ClientInformation.Username);
 
+            NetTcpBinding tcp1 = new NetTcpBinding(SecurityMode.None);
+            tcp1.MaxReceivedMessageSize = 20000000;
+
             ClientInformation.scrrenShareCallback = new ScreenShareCallback();
-            DuplexChannelFactory<IScreenShare> channelScreenShare = new DuplexChannelFactory<IScreenShare>(ClientInformation.scrrenShareCallback, new NetTcpBinding(SecurityMode.None),
+            DuplexChannelFactory<IScreenShare> channelScreenShare = new DuplexChannelFactory<IScreenShare>(ClientInformation.scrrenShareCallback,tcp1,
                 new EndpointAddress("net.tcp://" + ClientInformation.IPAdressServer + ":4444/ScreenShareService"));
             ClientInformation.ScreenShareService = channelScreenShare.CreateChannel();
             ClientInformation.ScreenShareService.Subscribe(ClientInformation.Username);
 
             Title = ClientInformation.Username;
             laber_username.Content = ClientInformation.Username;
-            avatar_image.Source = new BitmapImage(new Uri(@"/Images/default_avatar.png", UriKind.Relative));
+
+            byte[] image = ClientInformation.CommunicationService.GetAvatarImage(ClientInformation.Username);
+            if (image == null)
+                avatar_image.Source = new BitmapImage(new Uri(@"/Images/default_avatar.png", UriKind.Relative));
+            else
+                avatar_image.Source = ClientInformation.ToImage(image);
+
+
+
             comboBox_status.Items.Add("Online");
             comboBox_status.Items.Add("Away");
             comboBox_status.Items.Add("Offline");
@@ -55,6 +71,7 @@ namespace Client
             ResizeMode = ResizeMode.CanMinimize;
 
             ClientInformation.CommunicationService.GetNotifications();
+            ClientInformation.CommunicationService.GetInformation(ClientInformation.Username);
         }
 
         private void textBoxMessage_PressEnter(object sender, KeyEventArgs e)
@@ -67,25 +84,11 @@ namespace Client
             }
         }
 
-        private void listBoxFriendList_Loaded(object sender, RoutedEventArgs e)
-        {
-            List<string> list = ClientInformation.CommunicationService.GetFriendList();
-            foreach(string username in list)
-                listBoxFriendList.Items.Add(username);
-                
-
-        }
-
         private void ClosingEvent(object sender, System.ComponentModel.CancelEventArgs e)
         {
             ClientInformation.CommunicationService.Logout();
         }
 
-        private void MouseDoubleClick_Event(object sender, MouseButtonEventArgs e)
-        {
-            if (listBoxFriendList.SelectedItem is string)
-                ConversationPartner = (string)listBoxFriendList.SelectedItem;
-        }
 
         private void MenuItemApplicationLogoutEvent(object sender, RoutedEventArgs e)
         {
@@ -132,16 +135,27 @@ namespace Client
             myGuest.ControlLevel = CTRL_LEVEL.CTRL_LEVEL_INTERACTIVE;
         }
 
-        private void listBoxFriendListMouseDown_Event(object sender, MouseButtonEventArgs e)
-        {           
-            if (listBoxFriendList.SelectedItem is string)
-                ConversationPartner = (string)listBoxFriendList.SelectedItem;
-        }
-
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
             AddFriendWindow window = new AddFriendWindow();
             window.Show();
+        }
+
+        private void listViewFriendList_Loaded(object sender, RoutedEventArgs e)
+        { 
+            List<string> list = ClientInformation.CommunicationService.GetFriendList();
+            foreach (string username in list)
+                listViewFriendList.Items.Add(new FriendData { Username = username,
+                    Status = new BitmapImage(new Uri(@"/Images/online_status.jpg", UriKind.Relative)),
+                    Image = ClientInformation.ToImage(ClientInformation.CommunicationService.GetAvatarImage(username))});
+
+            
+        }
+
+        private void MouseLeftButtonDown_avatarImage(object sender, MouseButtonEventArgs e)
+        {     
+            ChangeInformationWindow window = new ChangeInformationWindow();
+            window.ShowDialog();
         }
     }
 }

@@ -78,25 +78,5 @@ namespace Client
             signUpWindow.ShowDialog();
         }
 
-        private void buttonRegister_Click(object sender, RoutedEventArgs e)
-        {
-            WaveIn wi = new WaveIn();
-            WaveOut wo = new WaveOut();
-
-            wi.DataAvailable += new EventHandler<WaveInEventArgs>(wi_DataAvailable);
-
-            bwp = new BufferedWaveProvider(wi.WaveFormat);
-            bwp.DiscardOnBufferOverflow = true;
-
-            wo.Init(bwp);
-            wi.StartRecording();
-            wo.Play();
-        }
-
-        private void wi_DataAvailable(object sender, WaveInEventArgs e)
-        {
-            bwp.AddSamples(e.Buffer, 0, e.BytesRecorded);
-        }
-
     }
 }

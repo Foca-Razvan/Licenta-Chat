@@ -11,12 +11,17 @@ namespace Server
     public class ScreenShareService : IScreenShare
     {
 
-        public void Subscribe(string username)
+        public bool Subscribe(string username)
         {
             IScreenShareCallback callback = OperationContext.Current.GetCallbackChannel<IScreenShareCallback>();
+            Console.WriteLine(username + "!");
             foreach (var client in Subscriber.subscribers)
                 if (client.Username == username)
+                {
                     client.ScreenShareCallback = callback;
+                    return true;
+                }
+            return false;
         }
 
         public void InitShareScreen(string client , string partner,string connectionString)

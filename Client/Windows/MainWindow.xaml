@@ -5,16 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
-        Title="MainWindow" Height="447.809" Width="583.493" Closing="ClosingEvent">
+        Title="MainWindow" Height="439.221" Width="470.621" Closing="ClosingEvent">
+
+    <Window.Resources>
+        <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Visibility" Value="Collapsed" />
+        </Style>
+    </Window.Resources>
     <Grid Margin="0,0,2,-2">
         <Grid.RowDefinitions>
             <RowDefinition Height="307*"/>
             <RowDefinition Height="25*"/>
             <RowDefinition Height="88*"/>
         </Grid.RowDefinitions>
-        <ListBox x:Name="listBoxFriendList" HorizontalAlignment="Left" Height="307" Margin="0,101,0,0" VerticalAlignment="Top" Width="128" Loaded="listBoxFriendList_Loaded" MouseDoubleClick="MouseDoubleClick_Event" Grid.RowSpan="3" MouseLeftButtonDown="listBoxFriendListMouseDown_Event"/>
-        <TextBox x:Name="textBoxMessage" HorizontalAlignment="Left" Height="23" Margin="133,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="430" KeyDown="textBoxMessage_PressEnter" Grid.Row="2"/>
-        <TextBox x:Name="textBoxConversation" HorizontalAlignment="Left" Height="271" Margin="133,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="430" Grid.RowSpan="3"/>
+        <TextBox x:Name="textBoxMessage" HorizontalAlignment="Left" Height="23" Margin="239,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="219" KeyDown="textBoxMessage_PressEnter" Grid.Row="2"/>
+        <TextBox x:Name="textBoxConversation" HorizontalAlignment="Left" Height="271" Margin="239,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="219" Grid.RowSpan="3"/>
         <DockPanel Margin="0,0,0,279.74">
             <Menu DockPanel.Dock="Top" Height="25">
                 <MenuItem Header="Application">
@@ -27,9 +32,34 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <Image x:Name="avatar_image" HorizontalAlignment="Left" Height="54" Margin="10,32,0,0" VerticalAlignment="Top" Width="54" RenderTransformOrigin="0.281,0.56"/>
-        <Label x:Name="laber_username" Content="" HorizontalAlignment="Left" Margin="69,33,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.089,0.311" Width="114"/>
+        <Image x:Name="avatar_image" HorizontalAlignment="Left" Height="54" Margin="10,32,0,0" VerticalAlignment="Top" Width="54" RenderTransformOrigin="0.281,0.56" MouseLeftButtonDown="MouseLeftButtonDown_avatarImage"/>
+        <Label x:Name="laber_username" Content="" HorizontalAlignment="Left" Margin="69,33,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.089,0.311" Width="165"/>
         <ComboBox x:Name="comboBox_status" HorizontalAlignment="Left" Margin="69,64,0,0" VerticalAlignment="Top" Width="74"/>
-        <Button x:Name="buttonAdd" Content="Add" HorizontalAlignment="Left" Margin="488,64,0,0" VerticalAlignment="Top" Width="75" Click="buttonAdd_Click"/>
+        <Button x:Name="buttonAdd" Content="Add" HorizontalAlignment="Left" Margin="159,64,0,0" VerticalAlignment="Top" Width="75" Click="buttonAdd_Click"/>
+        <ListView x:Name="listViewFriendList" HorizontalAlignment="Left" Height="307" Margin="10,101,0,0" VerticalAlignment="Top" Width="224" Grid.RowSpan="3" Loaded="listViewFriendList_Loaded" FontSize="18">
+            <ListView.View>
+                <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="24" Height="24" Source="{Binding Image}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="12" Height="12" Source="{Binding Status}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Username" DisplayMemberBinding="{Binding Username}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>

@@ -12,8 +12,8 @@ namespace Interfaces
     {
         [OperationContract]
         bool Logout();
-        [OperationContract(IsOneWay = true)]
-        void Subscribe(string username);
+        [OperationContract]
+        bool Subscribe(string username);
         [OperationContract(IsOneWay = true)]
         void SendMessage(string messagem,string to);
         [OperationContract]
@@ -30,5 +30,11 @@ namespace Interfaces
         void GetNotifications();
         [OperationContract]
         bool IsFriendWith(string sender, string friend);
+        [OperationContract]
+        void GetInformation(string username);
+        [OperationContract(IsOneWay = true)]
+        void UpdateProfile(string username,string email, string password, byte[] image);
+        [OperationContract]
+        byte[] GetAvatarImage(string username);
     }
 }

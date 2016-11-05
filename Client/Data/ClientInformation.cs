@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Interfaces;
+using System.Windows.Media.Imaging;
 
 namespace Client
 {
@@ -11,6 +12,9 @@ namespace Client
     {
         public static string IPAdressServer = "79.112.103.21";
         public static string Username { get; set; }
+        public static string Password { get; set; }
+        public static string Email { get; set; }
+        public static byte[] Image { get; set; }
         public static Login Login { get; set; }
         public static MainWindow MainWindow { get; set; }
         public static SignUp SignUpWindow { get; set; }
@@ -24,5 +28,23 @@ namespace Client
 
         public static ScreenShareCallback scrrenShareCallback { get; set; }
 
+
+
+        public static BitmapImage ToImage(byte[] data)
+        {
+            if (data != null)
+            {
+                using (var ms = new System.IO.MemoryStream(data))
+                {
+                    var image = new BitmapImage();
+                    image.BeginInit();
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.StreamSource = ms;
+                    image.EndInit();
+                    return image;
+                }
+            }
+            return null;
+        }
     }
 }

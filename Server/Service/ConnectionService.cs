@@ -23,9 +23,12 @@ namespace Server
                     if (user.Username == username && user.Password == password)
                     {
                         foreach(var client in Subscriber.subscribers)
-                        {                 
+                        {
                             if (client.IsFriendWith(username))
-                                client.CommunicationCallback.SendNotification(username);                          
+                                if (user.UserAvatar != null)
+                                    client.CommunicationCallback.SendNotification(username, user.UserAvatar.Image);
+                                else
+                                    client.CommunicationCallback.SendNotification(username, null);                          
                         }
                         return true;
                     }                                

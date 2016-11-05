@@ -10,8 +10,8 @@ namespace Interfaces
     [ServiceContract (CallbackContract = typeof(IScreenShareCallback))]
     public interface IScreenShare
     {
-        [OperationContract(IsOneWay = true)]
-        void Subscribe(string username);
+        [OperationContract]
+        bool Subscribe(string username);
         [OperationContract(IsOneWay = true)]
         void InitShareScreen(string client, string partner,string connectionString);
     }

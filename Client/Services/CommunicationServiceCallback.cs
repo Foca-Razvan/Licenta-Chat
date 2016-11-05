@@ -9,6 +9,8 @@ using System.ServiceModel.Channels;
 using System.Windows.Controls;
 using NAudio.Wave;
 using NAudio.CoreAudioApi;
+using Client.Data;
+using System.Windows.Media.Imaging;
 
 namespace Client
 {
@@ -29,14 +31,23 @@ namespace Client
             MainWindow.textBoxConversation.Text += to + ": " + meessage + "\n";
         }
 
-        public void SendNotification(string username)
+        public void SendNotification(string username,byte[] image)
         {
-            MainWindow.listBoxFriendList.Items.Add(username);
+            MainWindow.listViewFriendList.Items.Add(new FriendData { Username = username,
+                Status = new BitmapImage(new Uri(@"/Images/online_status.jpg", UriKind.Relative)),
+                Image =  ClientInformation.ToImage(image)});
         }
 
         public void UpdateListOfContacts(string username)
         {
-            MainWindow.listBoxFriendList.Items.Remove(username);
+           foreach(FriendData data in MainWindow.listViewFriendList.Items)
+            {
+                if (data.Username == username)
+                {
+                    MainWindow.listViewFriendList.Items.Remove(data);
+                    break;
+                }
+            }
         }
 
         public void SendAudioNotification(string caller)
@@ -44,6 +55,13 @@ namespace Client
             AnswerWindow answerWindow = new AnswerWindow(caller);
             ClientInformation.AnswerWindows.Add(caller, answerWindow);
             answerWindow.Show();
+        }
+
+        public void SendProfileInformation(string password ,string email , byte[] Image)
+        {
+            ClientInformation.Password = password;
+            ClientInformation.Image = Image;
+            ClientInformation.Email = email;
         }
 
     }

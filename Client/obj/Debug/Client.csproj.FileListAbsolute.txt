@@ -35,3 +35,5 @@ D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\Windows\Friend
 D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\Windows\Login.baml
 D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\Windows\MainWindow.baml
 D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\Windows\SignUp.baml
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\Windows\ChangeInformationWindow.g.cs
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\Windows\ChangeInformationWindow.baml

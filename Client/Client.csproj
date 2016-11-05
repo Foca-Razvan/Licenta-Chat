@@ -64,6 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\FriendData.cs" />
     <Compile Include="Windows\AddFriendWindow.xaml.cs">
       <DependentUpon>AddFriendWindow.xaml</DependentUpon>
     </Compile>
@@ -77,6 +78,9 @@
     <Compile Include="Data\ClientInformation.cs" />
     <Compile Include="Services\CommunicationServiceCallback.cs" />
     <Compile Include="Services\ScreenShareCallback.cs" />
+    <Compile Include="Windows\ChangeInformationWindow.xaml.cs">
+      <DependentUpon>ChangeInformationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\FriendNotificationWindow.xaml.cs">
       <DependentUpon>FriendNotificationWindow.xaml</DependentUpon>
     </Compile>
@@ -98,6 +102,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\CallingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ChangeInformationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -186,6 +194,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\default_avatar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\online_status.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\offline_circle.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\away_status.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

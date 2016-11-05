@@ -12,11 +12,18 @@ namespace Server
 {
     public class CommunicationService : ICommunication
     {
-        public void Subscribe(string username)
+        public bool Subscribe(string username)
         {
-            IClientCallback callback = OperationContext.Current.GetCallbackChannel<IClientCallback>();
-            Subscriber.Subscribe(callback,username);
-
+            try
+            {
+                IClientCallback callback = OperationContext.Current.GetCallbackChannel<IClientCallback>();
+                Subscriber.Subscribe(callback, username);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }          
         }
 
         public bool Logout()
@@ -152,6 +159,52 @@ namespace Server
                 foreach (Request request in context.Requests)
                     if (request.User.Username == user.Username)
                         user.ScreenShareCallback.SendFriendNotification(request.FromUsername);
+            }
+        }
+
+        public void GetInformation(string username)
+        {
+            IClientCallback callback = OperationContext.Current.GetCallbackChannel<IClientCallback>();
+            UserInformation client = Subscriber.subscribers.Find(x => x.CommunicationCallback == callback);
+            using (DataBaseContainer context = new DataBaseContainer())
+            {
+                User user = context.Users.ToList().Find(x => x.Username == username);
+                if (user != null)
+                    if (user.UserAvatar != null)
+                        client.ScreenShareCallback.SendProfileInformation(user.Password, user.Email, user.UserAvatar.Image);
+                    else
+                        client.ScreenShareCallback.SendProfileInformation(user.Password, user.Email, null);
+                
+            }
+        }
+
+
+        public void UpdateProfile(string username,string email,string password,byte[] image)
+        {
+            using (DataBaseContainer context = new DataBaseContainer())
+            {
+                User user = context.Users.ToList().Find(x => x.Username == username);
+                user.Email = email;
+                user.Password = password;
+                UserAvatar avatar = new UserAvatar();
+                avatar.Image = image;
+                user.UserAvatar = avatar;
+                context.SaveChanges();
+            }
+        }
+
+        public byte[] GetAvatarImage(string username)
+        {
+            byte[] image;
+            using (DataBaseContainer context = new DataBaseContainer())
+            {
+                User user = context.Users.ToList().Find(x => x.Username == username);
+                if (user.UserAvatar != null)
+                {
+                    image = user.UserAvatar.Image;
+                    return image;
+                }
+                return null;
             }
         }
     }

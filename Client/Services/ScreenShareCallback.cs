@@ -21,5 +21,12 @@ namespace Client
             FriendNotificationWindow window = new FriendNotificationWindow(username);
             window.Show();
         }
+
+        public void SendProfileInformation(string password , string email,byte[] image)
+        {
+            ClientInformation.Password = password;
+            ClientInformation.Email = email;
+            ClientInformation.Image = image;
+        }
     }
 }
