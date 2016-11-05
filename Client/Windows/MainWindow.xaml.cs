@@ -61,13 +61,6 @@ namespace Client
                 avatar_image.Source = new BitmapImage(new Uri(@"/Images/default_avatar.png", UriKind.Relative));
             else
                 avatar_image.Source = ClientInformation.ToImage(image);
-
-
-
-            comboBox_status.Items.Add("Online");
-            comboBox_status.Items.Add("Away");
-            comboBox_status.Items.Add("Offline");
-            comboBox_status.SelectedItem = "Online";
             ResizeMode = ResizeMode.CanMinimize;
 
             ClientInformation.CommunicationService.GetNotifications();
@@ -142,14 +135,28 @@ namespace Client
         }
 
         private void listViewFriendList_Loaded(object sender, RoutedEventArgs e)
-        { 
-            List<string> list = ClientInformation.CommunicationService.GetFriendList();
-            foreach (string username in list)
-                listViewFriendList.Items.Add(new FriendData { Username = username,
-                    Status = new BitmapImage(new Uri(@"/Images/online_status.jpg", UriKind.Relative)),
-                    Image = ClientInformation.ToImage(ClientInformation.CommunicationService.GetAvatarImage(username))});
-
+        {
+            GridViewColumn column = new GridViewColumn();
+            Dictionary<string, int> list = ClientInformation.CommunicationService.GetFriendList();
             
+           
+            foreach (KeyValuePair<string, int> item in list)
+            {
+                if(item.Value == 1)
+                    listViewFriendList.Items.Add(new FriendData
+                    {
+                        Username = item.Key,
+                        Status = new BitmapImage(new Uri(@"/Images/online_status.jpg", UriKind.Relative)),
+                        Image = ClientInformation.ToImage(ClientInformation.CommunicationService.GetAvatarImage(item.Key))
+                    });
+                else
+                    listViewFriendList.Items.Add(new FriendData
+                    {
+                        Username = item.Key,
+                        Status = new BitmapImage(new Uri(@"/Images/offline_circle.jpg", UriKind.Relative)),
+                        Image = ClientInformation.ToImage(ClientInformation.CommunicationService.GetAvatarImage(item.Key))
+                    });
+            }
         }
 
         private void MouseLeftButtonDown_avatarImage(object sender, MouseButtonEventArgs e)

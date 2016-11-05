@@ -40,6 +40,13 @@ namespace Server
                     if (client.IsFriendWith(user.Username) && user.CommunicationCallback != client.CommunicationCallback)
                         client.CommunicationCallback.UpdateListOfContacts(user.Username);
                 }
+
+                using (DataBaseContainer context = new DataBaseContainer())
+                {
+                    User client = context.Users.ToList().Find(x => x.Username == user.Username);
+                    client.Status = 0;
+                    context.SaveChanges();
+                }
                 return true;
             }
             catch
@@ -58,20 +65,18 @@ namespace Server
                     user.CommunicationCallback.Send(message, information.Username);
         }
 
-        public List<string> GetFriendList()
+        public Dictionary<string,int> GetFriendList()
         {
-            List<string> contacts = new List<string>();
+            Dictionary<string, int> contacts = new Dictionary<string, int>();
             IClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<IClientCallback>();
             UserInformation client = Subscriber.subscribers.Find(x => x.CommunicationCallback == clientCallback);
 
-            foreach(UserInformation user in Subscriber.subscribers)
+            using (DataBaseContainer context = new DataBaseContainer())
             {
-                if(user != client && user.IsFriendWith(client.Username))
-                    contacts.Add(user.Username);
+                foreach (User u in context.Users)
+                    if (client.IsFriendWith(u.Username) && u.Username != client.Username)
+                        contacts.Add(u.Username, (int)u.Status);
             }
-            
-                    
-
             return contacts;
         }
 

@@ -17,7 +17,7 @@ namespace Interfaces
         [OperationContract(IsOneWay = true)]
         void SendMessage(string messagem,string to);
         [OperationContract]
-        List<string> GetFriendList();
+        Dictionary<string, int> GetFriendList();
         [OperationContract(IsOneWay = true)]
         void AddFriend(string username);
         [OperationContract]

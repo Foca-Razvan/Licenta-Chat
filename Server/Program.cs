@@ -57,8 +57,9 @@ namespace Server
             {
                 foreach(User user in context.Users)
                 {
-                    Console.WriteLine(user.Username + "!");
+                    user.Status = 0;
                 }
+                context.SaveChanges();
             }
         }
     }

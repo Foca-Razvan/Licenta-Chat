@@ -34,8 +34,7 @@
         </DockPanel>
         <Image x:Name="avatar_image" HorizontalAlignment="Left" Height="54" Margin="10,32,0,0" VerticalAlignment="Top" Width="54" RenderTransformOrigin="0.281,0.56" MouseLeftButtonDown="MouseLeftButtonDown_avatarImage"/>
         <Label x:Name="laber_username" Content="" HorizontalAlignment="Left" Margin="69,33,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.089,0.311" Width="165"/>
-        <ComboBox x:Name="comboBox_status" HorizontalAlignment="Left" Margin="69,64,0,0" VerticalAlignment="Top" Width="74"/>
-        <Button x:Name="buttonAdd" Content="Add" HorizontalAlignment="Left" Margin="159,64,0,0" VerticalAlignment="Top" Width="75" Click="buttonAdd_Click"/>
+        <Button x:Name="buttonAdd" Content="Add" HorizontalAlignment="Left" Margin="69,70,0,0" VerticalAlignment="Top" Width="75" Click="buttonAdd_Click"/>
         <ListView x:Name="listViewFriendList" HorizontalAlignment="Left" Height="307" Margin="10,101,0,0" VerticalAlignment="Top" Width="224" Grid.RowSpan="3" Loaded="listViewFriendList_Loaded" FontSize="18">
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
@@ -43,7 +42,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Image Width="24" Height="24" Source="{Binding Image}"/>
+                                    <Image Width="24" Height="24" Source="{Binding Image}" />
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

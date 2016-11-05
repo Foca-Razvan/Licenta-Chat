@@ -19,19 +19,21 @@ namespace Server
 
             using (DataBaseContainer context = new DataBaseContainer())
             {
-                foreach (User user in context.Users)
-                    if (user.Username == username && user.Password == password)
+                User user = context.Users.ToList().Find(x => x.Username == username && x.Password == password);
+                if (user != null)
+                {
+                    user.Status = 1;
+                    foreach (var client in Subscriber.subscribers)
                     {
-                        foreach(var client in Subscriber.subscribers)
-                        {
-                            if (client.IsFriendWith(username))
-                                if (user.UserAvatar != null)
-                                    client.CommunicationCallback.SendNotification(username, user.UserAvatar.Image);
-                                else
-                                    client.CommunicationCallback.SendNotification(username, null);                          
-                        }
-                        return true;
-                    }                                
+                        if (client.IsFriendWith(username))
+                            if (user.UserAvatar != null)
+                                client.CommunicationCallback.SendNotification(username, user.UserAvatar.Image);
+                            else
+                                client.CommunicationCallback.SendNotification(username, null);
+                    }
+                    context.SaveChanges();
+                    return true;
+                }
             }
             return false;        
         }
@@ -48,6 +50,7 @@ namespace Server
                 user.Username = username;
                 user.Password = password;
                 user.Email = email;
+                user.Status = 0;
 
                 try
                 {

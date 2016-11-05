@@ -14,7 +14,6 @@ using System.Windows.Media.Imaging;
 
 namespace Client
 {
-    //[ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class CommunicationServiceCallback : IClientCallback
     {
         public MainWindow MainWindow { get; set; }
@@ -33,21 +32,28 @@ namespace Client
 
         public void SendNotification(string username,byte[] image)
         {
-            MainWindow.listViewFriendList.Items.Add(new FriendData { Username = username,
-                Status = new BitmapImage(new Uri(@"/Images/online_status.jpg", UriKind.Relative)),
-                Image =  ClientInformation.ToImage(image)});
+            foreach(FriendData item in MainWindow.listViewFriendList.Items)
+            {
+                if (item.Username == username)
+                {
+                    item.Status = new BitmapImage(new Uri(@"/Images/online_status.jpg", UriKind.Relative));
+                    break;
+                }
+            }
+            MainWindow.listViewFriendList.Items.Refresh();
         }
 
         public void UpdateListOfContacts(string username)
         {
-           foreach(FriendData data in MainWindow.listViewFriendList.Items)
+           foreach(FriendData item in MainWindow.listViewFriendList.Items)
             {
-                if (data.Username == username)
+                if (item.Username == username)
                 {
-                    MainWindow.listViewFriendList.Items.Remove(data);
+                    item.Status = new BitmapImage(new Uri(@"/Images/offline_circle.jpg", UriKind.Relative));
                     break;
                 }
             }
+            MainWindow.listViewFriendList.Items.Refresh();
         }
 
         public void SendAudioNotification(string caller)
