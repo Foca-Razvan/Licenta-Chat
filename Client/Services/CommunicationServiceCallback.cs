@@ -11,6 +11,9 @@ using NAudio.Wave;
 using NAudio.CoreAudioApi;
 using Client.Data;
 using System.Windows.Media.Imaging;
+using System.Media;
+using System.Windows.Media;
+using System.Threading;
 
 namespace Client
 {
@@ -31,29 +34,34 @@ namespace Client
         }
 
         public void SendNotification(string username,byte[] image)
-        {
-            foreach(FriendData item in MainWindow.listViewFriendList.Items)
+        { 
+            ListViewItem row = new ListViewItem();
+            foreach(FriendData item in MainWindow.Friends.Items)
             {
-                if (item.Username == username)
+                if(item.Username == username)
                 {
-                    item.Status = new BitmapImage(new Uri(@"/Images/online_status.jpg", UriKind.Relative));
+                    row = MainWindow.listViewFriendList.ItemContainerGenerator.ContainerFromItem(item) as ListViewItem;
+                    row.Opacity = 1;
+                    item.StatusImage = new BitmapImage(new Uri(@"/Images/online_status.jpg", UriKind.Relative));
                     break;
                 }
-            }
-            MainWindow.listViewFriendList.Items.Refresh();
+            }           
         }
 
         public void UpdateListOfContacts(string username)
         {
-           foreach(FriendData item in MainWindow.listViewFriendList.Items)
+            ListViewItem row = new ListViewItem();
+            FriendData _item = new FriendData();
+            foreach (FriendData item in MainWindow.Friends.Items)
             {
                 if (item.Username == username)
-                {
-                    item.Status = new BitmapImage(new Uri(@"/Images/offline_circle.jpg", UriKind.Relative));
+                {                    
+                    item.StatusImage = new BitmapImage(new Uri(@"/Images/offline_circle.jpg", UriKind.Relative));
+                    row = MainWindow.listViewFriendList.ItemContainerGenerator.ContainerFromItem(item) as ListViewItem;
+                    row.Opacity = 0.3;
                     break;
                 }
-            }
-            MainWindow.listViewFriendList.Items.Refresh();
+            } 
         }
 
         public void SendAudioNotification(string caller)

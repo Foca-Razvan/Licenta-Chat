@@ -19,6 +19,7 @@ using NAudio.CoreAudioApi;
 using RDPCOMAPILib;
 using Client.Data;
 using Client.Windows;
+using System.Collections.ObjectModel;
 
 namespace Client
 {
@@ -29,6 +30,8 @@ namespace Client
     {
         RDPSession rdpSession;
         string ConversationPartner { get; set; }
+        public FriendDataView Friends { get; set; }
+
 
         public MainWindow()
         {
@@ -65,6 +68,57 @@ namespace Client
 
             ClientInformation.CommunicationService.GetNotifications();
             ClientInformation.CommunicationService.GetInformation(ClientInformation.Username);
+            listViewFriendListLoad();
+        }
+
+        private void listViewFriendListLoad()
+        {
+            Dictionary<string, int> list = ClientInformation.CommunicationService.GetFriendList();
+
+            /*foreach (KeyValuePair<string, int> item in list)
+            {
+                FriendData data = new FriendData();
+                data.Username = item.Key;
+                data.AvatarImage = ClientInformation.ToImage(ClientInformation.CommunicationService.GetAvatarImage(item.Key));
+
+                if (item.Value == 1)
+                {
+                    data.StatusImage = new BitmapImage(new Uri(@"/Images/online_status.jpg", UriKind.Relative));
+                    data.Status = true;
+                    listViewFriendList.Items.Add(data);
+                    
+                }
+                else
+                {
+                    data.StatusImage = new BitmapImage(new Uri(@"/Images/offline_circle.jpg", UriKind.Relative));
+                    data.Status = false;
+                    listViewFriendList.Items.Add(data);
+                }
+
+            }*/
+
+            Friends = new FriendDataView();
+
+            listViewFriendList.DataContext = Friends.Items;
+            foreach (KeyValuePair<string, int> item in list)
+            {
+                FriendData data = new FriendData();
+                data.Username = item.Key;
+                data.AvatarImage = ClientInformation.ToImage(ClientInformation.CommunicationService.GetAvatarImage(item.Key));
+
+                if (item.Value == 1)
+                {
+                    data.StatusImage = new BitmapImage(new Uri(@"/Images/online_status.jpg", UriKind.Relative));
+                    data.Status = true;
+                    Friends.Items.Add(data);
+                }
+                else
+                {
+                    data.StatusImage = new BitmapImage(new Uri(@"/Images/offline_circle.jpg", UriKind.Relative));
+                    data.Status = false;
+                    Friends.Items.Add(data);
+                }
+            }
         }
 
         private void textBoxMessage_PressEnter(object sender, KeyEventArgs e)
@@ -136,27 +190,14 @@ namespace Client
 
         private void listViewFriendList_Loaded(object sender, RoutedEventArgs e)
         {
-            GridViewColumn column = new GridViewColumn();
-            Dictionary<string, int> list = ClientInformation.CommunicationService.GetFriendList();
-            
-           
-            foreach (KeyValuePair<string, int> item in list)
+            foreach(FriendData item in listViewFriendList.Items)
             {
-                if(item.Value == 1)
-                    listViewFriendList.Items.Add(new FriendData
-                    {
-                        Username = item.Key,
-                        Status = new BitmapImage(new Uri(@"/Images/online_status.jpg", UriKind.Relative)),
-                        Image = ClientInformation.ToImage(ClientInformation.CommunicationService.GetAvatarImage(item.Key))
-                    });
-                else
-                    listViewFriendList.Items.Add(new FriendData
-                    {
-                        Username = item.Key,
-                        Status = new BitmapImage(new Uri(@"/Images/offline_circle.jpg", UriKind.Relative)),
-                        Image = ClientInformation.ToImage(ClientInformation.CommunicationService.GetAvatarImage(item.Key))
-                    });
-            }
+                if(!item.Status)
+                {
+                    ListViewItem row = listViewFriendList.ItemContainerGenerator.ContainerFromItem(item) as ListViewItem;
+                    row.Opacity = 0.3;
+                }
+            }          
         }
 
         private void MouseLeftButtonDown_avatarImage(object sender, MouseButtonEventArgs e)
@@ -164,5 +205,13 @@ namespace Client
             ChangeInformationWindow window = new ChangeInformationWindow();
             window.ShowDialog();
         }
+
+        private void buttonCall_click(object sender,RoutedEventArgs e)
+        {
+            Button b = sender as Button;
+            FriendData data = b.CommandParameter as FriendData;
+            textBoxConversation.Text += data.Username;            
+        }
+
     }
 }
