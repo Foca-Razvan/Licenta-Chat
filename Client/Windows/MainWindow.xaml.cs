@@ -20,6 +20,7 @@ using RDPCOMAPILib;
 using Client.Data;
 using Client.Windows;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace Client
 {
@@ -36,11 +37,10 @@ namespace Client
         public MainWindow()
         {
             InitializeComponent();
-            textBoxConversation.IsReadOnly = true;
+            //textBoxConversation.IsReadOnly = true;
 
             NetTcpBinding tcp = new NetTcpBinding(SecurityMode.None);
             tcp.MaxReceivedMessageSize = 20000000;
-
             CommunicationServiceCallback callback = new CommunicationServiceCallback(this);  
             DuplexChannelFactory<ICommunication> channelServerService = new DuplexChannelFactory<ICommunication>(callback,tcp,
                 new EndpointAddress("net.tcp://" + ClientInformation.IPAdressServer + ":4444/CommunicationService"));
@@ -49,7 +49,6 @@ namespace Client
 
             NetTcpBinding tcp1 = new NetTcpBinding(SecurityMode.None);
             tcp1.MaxReceivedMessageSize = 20000000;
-
             ClientInformation.scrrenShareCallback = new ScreenShareCallback();
             DuplexChannelFactory<IScreenShare> channelScreenShare = new DuplexChannelFactory<IScreenShare>(ClientInformation.scrrenShareCallback,tcp1,
                 new EndpointAddress("net.tcp://" + ClientInformation.IPAdressServer + ":4444/ScreenShareService"));
@@ -57,49 +56,23 @@ namespace Client
             ClientInformation.ScreenShareService.Subscribe(ClientInformation.Username);
 
             Title = ClientInformation.Username;
-            laber_username.Content = ClientInformation.Username;
-
-            byte[] image = ClientInformation.CommunicationService.GetAvatarImage(ClientInformation.Username);
-            if (image == null)
-                avatar_image.Source = new BitmapImage(new Uri(@"/Images/default_avatar.png", UriKind.Relative));
-            else
-                avatar_image.Source = ClientInformation.ToImage(image);
+            laber_username.Content = ClientInformation.Username;            
             ResizeMode = ResizeMode.CanMinimize;
 
             ClientInformation.CommunicationService.GetNotifications();
             ClientInformation.CommunicationService.GetInformation(ClientInformation.Username);
+
             listViewFriendListLoad();
+            AvatarImageLoad(ClientInformation.CommunicationService.GetAvatarImage(ClientInformation.Username));
         }
 
         private void listViewFriendListLoad()
         {
             Dictionary<string, int> list = ClientInformation.CommunicationService.GetFriendList();
-
-            /*foreach (KeyValuePair<string, int> item in list)
-            {
-                FriendData data = new FriendData();
-                data.Username = item.Key;
-                data.AvatarImage = ClientInformation.ToImage(ClientInformation.CommunicationService.GetAvatarImage(item.Key));
-
-                if (item.Value == 1)
-                {
-                    data.StatusImage = new BitmapImage(new Uri(@"/Images/online_status.jpg", UriKind.Relative));
-                    data.Status = true;
-                    listViewFriendList.Items.Add(data);
-                    
-                }
-                else
-                {
-                    data.StatusImage = new BitmapImage(new Uri(@"/Images/offline_circle.jpg", UriKind.Relative));
-                    data.Status = false;
-                    listViewFriendList.Items.Add(data);
-                }
-
-            }*/
-
             Friends = new FriendDataView();
 
             listViewFriendList.DataContext = Friends.Items;
+            listViewFriendList.ItemsSource = Friends.Items;
             foreach (KeyValuePair<string, int> item in list)
             {
                 FriendData data = new FriendData();
@@ -119,9 +92,21 @@ namespace Client
                     Friends.Items.Add(data);
                 }
             }
+
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listViewFriendList.ItemsSource);
+            view.SortDescriptions.Add(new SortDescription("Status", ListSortDirection.Descending));
+            view.SortDescriptions.Add(new SortDescription("Username", ListSortDirection.Ascending));
         }
 
-        private void textBoxMessage_PressEnter(object sender, KeyEventArgs e)
+        public void AvatarImageLoad(byte[] image)
+        {
+            if (image == null)
+                avatar_image.Source = new BitmapImage(new Uri(@"/Images/default_avatar.png", UriKind.Relative));
+            else
+                avatar_image.Source = ClientInformation.ToImage(image);
+        }
+
+        /*private void textBoxMessage_PressEnter(object sender, KeyEventArgs e)
         {
             if(e.Key == Key.Enter)
             {
@@ -129,9 +114,9 @@ namespace Client
                 ClientInformation.CommunicationService.SendMessage(textBoxMessage.Text,ConversationPartner);
                 textBoxMessage.Clear();
             }
-        }
+        }*/
 
-        private void ClosingEvent(object sender, System.ComponentModel.CancelEventArgs e)
+        private void ClosingEvent(object sender, CancelEventArgs e)
         {
             ClientInformation.CommunicationService.Logout();
         }
@@ -195,7 +180,7 @@ namespace Client
                 if(!item.Status)
                 {
                     ListViewItem row = listViewFriendList.ItemContainerGenerator.ContainerFromItem(item) as ListViewItem;
-                    row.Opacity = 0.3;
+                    row.Opacity = 0.5;
                 }
             }          
         }
@@ -210,8 +195,17 @@ namespace Client
         {
             Button b = sender as Button;
             FriendData data = b.CommandParameter as FriendData;
-            textBoxConversation.Text += data.Username;            
+            //textBoxConversation.Text += data.Username;            
         }
 
+        private void buttonConversation_click(object sender ,RoutedEventArgs e)
+        {
+
+        }
+
+        private void buttonShareScreen_click(object sender , RoutedEventArgs e)
+        {
+
+        }
     }
 }

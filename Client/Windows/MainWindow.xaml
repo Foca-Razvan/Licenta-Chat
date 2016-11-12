@@ -5,23 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
-        Title="MainWindow" Height="439.221" Width="470.621" Closing="ClosingEvent">
+        Title="MainWindow" Height="503.102" Width="289.044" Closing="ClosingEvent">
 
     <Window.Resources>
         <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="Visibility" Value="Collapsed" />
         </Style>
     </Window.Resources>
-    <Grid Margin="0,0,2,-2">
+    <Grid Margin="0,0,2,-1" Background="WhiteSmoke">
         <Grid.RowDefinitions>
             <RowDefinition Height="307*"/>
             <RowDefinition Height="25*"/>
             <RowDefinition Height="88*"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="textBoxMessage" HorizontalAlignment="Left" Height="23" Margin="239,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="219" KeyDown="textBoxMessage_PressEnter" Grid.Row="2"/>
-        <TextBox x:Name="textBoxConversation" HorizontalAlignment="Left" Height="271" Margin="239,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="219" Grid.RowSpan="3"/>
-        <DockPanel Margin="0,0,0,273">
-            <Menu DockPanel.Dock="Top" Height="25">
+        <DockPanel Margin="0,0,0,319">
+            <Menu DockPanel.Dock="Top" Height="26" Background="WhiteSmoke">
                 <MenuItem Header="Application">
                     <MenuItem Header="Logout" Click="MenuItemApplicationLogoutEvent"/>
                     <MenuItem Header="Close" Click="MenuItemApplicationCloseClickEvent"/>
@@ -32,17 +30,34 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <Image x:Name="avatar_image" HorizontalAlignment="Left" Height="54" Margin="10,32,0,0" VerticalAlignment="Top" Width="54" RenderTransformOrigin="0.281,0.56" MouseLeftButtonDown="MouseLeftButtonDown_avatarImage"/>
-        <Label x:Name="laber_username" Content="" HorizontalAlignment="Left" Margin="69,33,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.089,0.311" Width="165"/>
-        <Button x:Name="buttonAdd" Content="Add" HorizontalAlignment="Left" Margin="69,70,0,0" VerticalAlignment="Top" Width="75" Click="buttonAdd_Click"/>
-        <ListView x:Name="listViewFriendList" ItemsSource ="{Binding}" HorizontalAlignment="Left" Height="307" Margin="0,101,0,0" VerticalAlignment="Top" Width="234" Grid.RowSpan="3" Loaded="listViewFriendList_Loaded" FontSize="18">
+        <Image x:Name="avatar_image" HorizontalAlignment="Left" Height="40" Margin="10,32,0,0" VerticalAlignment="Top" Width="40" RenderTransformOrigin="0.281,0.56" MouseLeftButtonDown="MouseLeftButtonDown_avatarImage" 
+               Stretch="Fill" RenderOptions.BitmapScalingMode="Fant">
+        </Image>
+        <Label x:Name="laber_username" Content="" HorizontalAlignment="Left" Margin="55,33,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.089,0.311" Width="90" FontSize="14" 
+               FontWeight="Bold"/>
+        <Button x:Name="buttonAdd" HorizontalAlignment="Left" Margin="243,49,0,0" VerticalAlignment="Top" Width="26" Click="buttonAdd_Click" Height="27" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" >
+            <StackPanel>
+                <Image Source ="/Images/add-user.png" Stretch="Fill"/>
+            </StackPanel>
+        </Button>
+        <ListView x:Name="listViewFriendList" ItemsSource ="{Binding}" HorizontalAlignment="Left" Height="396" Margin="0,81,0,0" 
+                  VerticalAlignment="Top" Width="279" Grid.RowSpan="3" Loaded="listViewFriendList_Loaded" FontSize="18" Background="White">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="true" >
+                            <Setter Property="Background" Value="White" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.View>
-                <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}" >
+                <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}"  >
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Image Width="24" Height="24" Source="{Binding AvatarImage}" />
+                                    <Image Width="24" Height="24" Source="{Binding AvatarImage}" Stretch="Fill" />
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -51,16 +66,42 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Image Width="12" Height="12" Source="{Binding StatusImage}"/>
+                                    <Image Width="12" Height="12" Source="{Binding StatusImage}" Stretch="Fill"/>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="Username" DisplayMemberBinding="{Binding Username}"/>
+                    <GridViewColumn Width="50">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Click="buttonConversation_click" CommandParameter="{Binding}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="30" Height="30">
+                                    <StackPanel>
+                                        <Image Source ="/Images/conversation.png" Stretch="Fill" />
+                                    </StackPanel>
+                                </Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Call" Click="buttonCall_click" CommandParameter="{Binding}"/>
+                                <Button Click="buttonCall_click" CommandParameter="{Binding}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="26" Height="26">
+                                    <StackPanel>
+                                        <Image Source ="/Images/call.png" Stretch="Fill" />
+                                    </StackPanel>
+                                </Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Click="buttonShareScreen_click" CommandParameter="{Binding}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="26" Height="26">
+                                    <StackPanel>
+                                        <Image Source ="/Images/share-screen.png" Stretch="Fill" />
+                                    </StackPanel>
+                                </Button>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

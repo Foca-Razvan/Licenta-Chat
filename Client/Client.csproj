@@ -203,7 +203,28 @@
     <Resource Include="Images\offline_circle.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\away_status.jpg" />
+    <Resource Include="Images\add-user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\add-friend.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\add_friend_image.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\addFriend.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\friend_gray.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\conversation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\call.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\share-screen.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -14,6 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Media;
 using System.Windows.Media;
 using System.Threading;
+using System.Windows.Data;
+using System.ComponentModel;
 
 namespace Client
 {
@@ -30,7 +32,7 @@ namespace Client
 
         public void Send(string meessage, string to)
         {
-            MainWindow.textBoxConversation.Text += to + ": " + meessage + "\n";
+           // MainWindow.textBoxConversation.Text += to + ": " + meessage + "\n";
         }
 
         public void SendNotification(string username,byte[] image)
@@ -45,7 +47,7 @@ namespace Client
                     item.StatusImage = new BitmapImage(new Uri(@"/Images/online_status.jpg", UriKind.Relative));
                     break;
                 }
-            }           
+            }
         }
 
         public void UpdateListOfContacts(string username)
@@ -58,10 +60,10 @@ namespace Client
                 {                    
                     item.StatusImage = new BitmapImage(new Uri(@"/Images/offline_circle.jpg", UriKind.Relative));
                     row = MainWindow.listViewFriendList.ItemContainerGenerator.ContainerFromItem(item) as ListViewItem;
-                    row.Opacity = 0.3;
+                    row.Opacity = 0.4;
                     break;
                 }
-            } 
+            }
         }
 
         public void SendAudioNotification(string caller)
