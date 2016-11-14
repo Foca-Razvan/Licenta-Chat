@@ -37,7 +37,6 @@ namespace Client
         public MainWindow()
         {
             InitializeComponent();
-            //textBoxConversation.IsReadOnly = true;
 
             NetTcpBinding tcp = new NetTcpBinding(SecurityMode.None);
             tcp.MaxReceivedMessageSize = 20000000;
@@ -101,9 +100,15 @@ namespace Client
         public void AvatarImageLoad(byte[] image)
         {
             if (image == null)
-                avatar_image.Source = new BitmapImage(new Uri(@"/Images/default_avatar.png", UriKind.Relative));
+                avatar_image.Fill = new ImageBrush(new BitmapImage(new Uri(@"/Images/default_avatar.png", UriKind.Relative)));
             else
-                avatar_image.Source = ClientInformation.ToImage(image);
+                avatar_image.Fill = new ImageBrush(ClientInformation.ToImage(image));
+        }
+
+        public BitmapImage GetImageFromFriendList(string username)
+        {
+            FriendData data = Friends.Items.ToList().Find(x => x.Username == username);
+            return data.AvatarImage;
         }
 
         /*private void textBoxMessage_PressEnter(object sender, KeyEventArgs e)
@@ -136,29 +141,6 @@ namespace Client
         {
             if(ClientInformation.CommunicationService.Logout())
                 Close();
-        }
-
-        private void MenuItemConversationCallMouseClickEvent(object sender, RoutedEventArgs e)
-        {
-            if (ConversationPartner != null)
-            {
-                CallingWindow callingWindow = new CallingWindow(ConversationPartner);
-                ClientInformation.CallingWindows.Add(ConversationPartner, callingWindow);
-                callingWindow.Show();
-            }         
-        }
-
-        private void MenuItemConversationShareScreenMouseClickEvent(object sender ,RoutedEventArgs e)
-        {
-            if(ConversationPartner != null)
-            {
-                rdpSession = new RDPSession();
-                rdpSession.OnAttendeeConnected += Incoming;
-                rdpSession.Open();
-
-                IRDPSRAPIInvitation Invitation = rdpSession.Invitations.CreateInvitation("Trial", "MyGroup", "", 10);
-                ClientInformation.ScreenShareService.InitShareScreen(ClientInformation.Username, ConversationPartner,Invitation.ConnectionString);           
-            }
         }
 
         private void Incoming(object partner)
@@ -195,17 +177,35 @@ namespace Client
         {
             Button b = sender as Button;
             FriendData data = b.CommandParameter as FriendData;
-            //textBoxConversation.Text += data.Username;            
+
+            if(data.Status)
+            {
+                CallingWindow callingWindow = new CallingWindow(data.Username,data.AvatarImage);
+                ClientInformation.CallingWindows.Add(data.Username, callingWindow);
+                callingWindow.Show();
+            }
         }
 
         private void buttonConversation_click(object sender ,RoutedEventArgs e)
         {
-
+            Button b = sender as Button;
+            FriendData data = b.CommandParameter as FriendData;
         }
 
         private void buttonShareScreen_click(object sender , RoutedEventArgs e)
         {
+            Button b = sender as Button;
+            FriendData data = b.CommandParameter as FriendData;
 
+            if(data.Status)
+            {
+                rdpSession = new RDPSession();
+                rdpSession.OnAttendeeConnected += Incoming;
+                rdpSession.Open();
+
+                IRDPSRAPIInvitation Invitation = rdpSession.Invitations.CreateInvitation("Trial", "MyGroup", "", 10);
+                ClientInformation.ScreenShareService.InitShareScreen(ClientInformation.Username, data.Username, Invitation.ConnectionString);
+            }
         }
     }
 }

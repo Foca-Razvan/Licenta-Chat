@@ -51,6 +51,9 @@ namespace Client
             audioService = channelAudioService.CreateChannel();
 
             buttonClose.Visibility = Visibility.Hidden;
+
+            ImageBrush brush = new ImageBrush(ClientInformation.MainWindow.GetImageFromFriendList(sender));
+            avatarImage.Fill = brush;
         }
 
         private void buttonAccept_Click(object sender, RoutedEventArgs e)

@@ -45,6 +45,7 @@ namespace Client
                     row = MainWindow.listViewFriendList.ItemContainerGenerator.ContainerFromItem(item) as ListViewItem;
                     row.Opacity = 1;
                     item.StatusImage = new BitmapImage(new Uri(@"/Images/online_status.jpg", UriKind.Relative));
+                    item.Status = true;
                     break;
                 }
             }
@@ -59,6 +60,7 @@ namespace Client
                 if (item.Username == username)
                 {                    
                     item.StatusImage = new BitmapImage(new Uri(@"/Images/offline_circle.jpg", UriKind.Relative));
+                    item.Status = false;
                     row = MainWindow.listViewFriendList.ItemContainerGenerator.ContainerFromItem(item) as ListViewItem;
                     row.Opacity = 0.4;
                     break;

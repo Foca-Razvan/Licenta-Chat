@@ -45,8 +45,7 @@ namespace Client
 
         public void ChannelDeclined(string receiver)
         {
-            ClientInformation.CallingWindows[receiver].DeclinedCall();
-           
+            ClientInformation.CallingWindows[receiver].DeclinedCall();       
         }
 
         public void StopCall(string receiver)

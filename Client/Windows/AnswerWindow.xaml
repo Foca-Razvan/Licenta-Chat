@@ -5,12 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
-        Title="AnswerWindow" Height="161.096" Width="407.671" Closing="AnswerWindow_ClosingEvent">
+        Title="AnswerWindow" Height="112.547" Width="308.807" Closing="AnswerWindow_ClosingEvent">
     <Grid>
-        <Button x:Name="buttonAccept" Content="Accept" HorizontalAlignment="Left" Margin="42,90,0,0" VerticalAlignment="Top" Width="75" Click="buttonAccept_Click"/>
-        <Button x:Name="buttonCancel" Content="Decline" HorizontalAlignment="Left" Margin="294,90,0,0" VerticalAlignment="Top" Width="75" Click="buttonCancel_Click"/>
-        <Button x:Name="buttonClose" Content="Close" HorizontalAlignment="Left" Margin="171,90,0,0" VerticalAlignment="Top" Width="75" Click="buttonClose_Click"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="42,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="63" Width="327"/>
-
+        <Button x:Name="buttonAccept"  HorizontalAlignment="Left" Margin="108,38,0,0" VerticalAlignment="Top" Width="45" Click="buttonAccept_Click" Height="28">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Ellipse Stroke="Green" StrokeThickness="1">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="/Images/accept_call.png"></ImageBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button x:Name="buttonCancel" HorizontalAlignment="Left" Margin="179,38,0,0" VerticalAlignment="Top" Width="45" Click="buttonCancel_Click" Height="28">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Ellipse Stroke="Black" StrokeThickness="1">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="/Images/decline_call.png"></ImageBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button x:Name="buttonClose" HorizontalAlignment="Left" Margin="243,38,0,0" VerticalAlignment="Top" Width="45" Click="buttonClose_Click" Height="28">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Ellipse Stroke="Black" StrokeThickness="1">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="/Images/decline_call.png"></ImageBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="96,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18" Width="192"/>
+        <Ellipse x:Name="avatarImage" Margin="10,10,215,17"/>
     </Grid>
 </Window>

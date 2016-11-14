@@ -35,7 +35,7 @@ namespace Client
             InitializeComponent();
         }
 
-        public CallingWindow(string conversationPartner)
+        public CallingWindow(string conversationPartner,BitmapImage image)
         {
             InitializeComponent();
             ConversationPartner = conversationPartner;
@@ -47,10 +47,8 @@ namespace Client
 
             audioService = channelAudioService.CreateChannel();
             audioService.Subscribe(ClientInformation.Username);
-            textBlockInfo.TextAlignment = TextAlignment.Center;
-
-            
-
+       
+            avatarImage.Fill = new ImageBrush(image);
             Init();
         }
 
@@ -61,7 +59,7 @@ namespace Client
             wi.DataAvailable += new EventHandler<WaveInEventArgs>(wi_DataAvailableCallback);
             audioCallback.Wi = wi;
 
-            textBlockInfo.Text = "Calling " + ConversationPartner;
+            textBlockInfo.Text = "Calling " + ConversationPartner + "...";
 
             audioService.InitCommunication(ClientInformation.Username, ConversationPartner);
         }

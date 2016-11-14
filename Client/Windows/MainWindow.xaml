@@ -24,21 +24,27 @@
                     <MenuItem Header="Logout" Click="MenuItemApplicationLogoutEvent"/>
                     <MenuItem Header="Close" Click="MenuItemApplicationCloseClickEvent"/>
                 </MenuItem>
-                <MenuItem Header="Conversation">
-                    <MenuItem Header="Call" Click="MenuItemConversationCallMouseClickEvent"/>
-                    <MenuItem Header="ShareScreen" Click="MenuItemConversationShareScreenMouseClickEvent"/>
-                </MenuItem>
             </Menu>
         </DockPanel>
-        <Image x:Name="avatar_image" HorizontalAlignment="Left" Height="40" Margin="10,32,0,0" VerticalAlignment="Top" Width="40" RenderTransformOrigin="0.281,0.56" MouseLeftButtonDown="MouseLeftButtonDown_avatarImage" 
-               Stretch="Fill" RenderOptions.BitmapScalingMode="Fant">
-        </Image>
+        <Ellipse x:Name="avatar_image" Margin="10,32,224,275" MouseLeftButtonDown="MouseLeftButtonDown_avatarImage" Stretch="Fill" RenderOptions.BitmapScalingMode="Fant"/>
         <Label x:Name="laber_username" Content="" HorizontalAlignment="Left" Margin="55,33,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.089,0.311" Width="90" FontSize="14" 
                FontWeight="Bold"/>
         <Button x:Name="buttonAdd" HorizontalAlignment="Left" Margin="243,49,0,0" VerticalAlignment="Top" Width="26" Click="buttonAdd_Click" Height="27" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" >
             <StackPanel>
                 <Image Source ="/Images/add-user.png" Stretch="Fill"/>
             </StackPanel>
+            <!--<Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Ellipse Stroke="WhiteSmoke" StrokeThickness="1" Stretch="Fill">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="/Images/add-user.png"></ImageBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>-->
         </Button>
         <ListView x:Name="listViewFriendList" ItemsSource ="{Binding}" HorizontalAlignment="Left" Height="396" Margin="0,81,0,0" 
                   VerticalAlignment="Top" Width="279" Grid.RowSpan="3" Loaded="listViewFriendList_Loaded" FontSize="18" Background="White">
@@ -56,9 +62,11 @@
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Width="24" Height="24" Source="{Binding AvatarImage}" Stretch="Fill" />
-                                </StackPanel>
+                                <Ellipse Width="30" Height="30" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="{Binding AvatarImage}"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -108,5 +116,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        
     </Grid>
 </Window>

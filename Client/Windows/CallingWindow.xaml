@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
-        Title="CallingWindow" Height="133.973" Width="327.333" Closing="CallingWindow_ClosingEvent">
-    <Grid RenderTransformOrigin="0.389,0.485">
+        Title="CallingWindow" Height="122.973" Width="327.333" Closing="CallingWindow_ClosingEvent">
+    <Grid RenderTransformOrigin="0.389,0.485" Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="buttonCancel" Content="Cancel" HorizontalAlignment="Left" Margin="119,56,0,0" VerticalAlignment="Top" Width="75" Click="buttonCancel_Click" Grid.ColumnSpan="2"/>
-        <TextBlock x:Name="textBlockInfo" HorizontalAlignment="Left" Margin="47,16,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="197"/>
+        <Button x:Name="buttonCancel" Content="Cancel" HorizontalAlignment="Left" Margin="134,54,0,0" VerticalAlignment="Top" Width="76" Click="buttonCancel_Click" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="textBlockInfo" HorizontalAlignment="Left" Margin="91,17,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="218" TextAlignment="Center" Height="32"/>
+        <Ellipse x:Name="avatarImage" Margin="10,10,80,17"/>
 
     </Grid>
 </Window>
