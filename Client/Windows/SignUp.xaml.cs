@@ -47,23 +47,30 @@ namespace Client
                 textBlockError.Text = "The password is too short";
                 return;
             }
-
-            int answer = connectionService.SignUp(textBoxUsername.Text, passwordBoxFirst.Password, textBoxEmail.Text);
-            switch (answer)
+            try
             {
-                case 0:
-                    Close();
-                    break;
-                case 1 :
-                    textBlockError.Text = "The username already exists.";
-                    break;
-                case 2:
-                    textBlockError.Text = "The email is already used by another user.";
-                    break;
-                case 3:
-                    textBlockError.Text = "An error was occured when tried to setup your account.Please try again";
-                    break;
+                int answer = connectionService.SignUp(textBoxUsername.Text, passwordBoxFirst.Password, textBoxEmail.Text);
+                switch (answer)
+                {
+                    case 0:
+                        Close();
+                        break;
+                    case 1:
+                        textBlockError.Text = "The username already exists.";
+                        break;
+                    case 2:
+                        textBlockError.Text = "The email is already used by another user.";
+                        break;
+                    case 3:
+                        textBlockError.Text = "An error was occured when tried to setup your account.Please try again";
+                        break;
+                }
             }
+            catch
+            {
+                textBlockError.Text = "Couldn't connect to the server";
+            }
+            
            
         }
 

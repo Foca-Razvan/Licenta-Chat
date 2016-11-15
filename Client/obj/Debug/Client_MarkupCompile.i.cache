@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\App.xaml
-81543120788
+9-1785452682
 
-24-1192532014
+25-453111554
 21-144112544
-Windows\AddFriendWindow.xaml;Windows\AnswerWindow.xaml;Windows\CallingWindow.xaml;Windows\ChangeInformationWindow.xaml;Windows\FriendNotificationWindow.xaml;Windows\Login.xaml;Windows\MainWindow.xaml;Windows\SignUp.xaml;
+Windows\AddFriendWindow.xaml;Windows\AnswerWindow.xaml;Windows\CallingWindow.xaml;Windows\ChangeInformationWindow.xaml;Windows\ConversationWindow.xaml;Windows\FriendNotificationWindow.xaml;Windows\Login.xaml;Windows\MainWindow.xaml;Windows\SignUp.xaml;
 
-False
+True
 

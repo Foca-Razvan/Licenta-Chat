@@ -111,16 +111,6 @@ namespace Client
             return data.AvatarImage;
         }
 
-        /*private void textBoxMessage_PressEnter(object sender, KeyEventArgs e)
-        {
-            if(e.Key == Key.Enter)
-            {
-                textBoxConversation.Text += Title + ": " + textBoxMessage.Text + "\n";
-                ClientInformation.CommunicationService.SendMessage(textBoxMessage.Text,ConversationPartner);
-                textBoxMessage.Clear();
-            }
-        }*/
-
         private void ClosingEvent(object sender, CancelEventArgs e)
         {
             ClientInformation.CommunicationService.Logout();
@@ -190,6 +180,22 @@ namespace Client
         {
             Button b = sender as Button;
             FriendData data = b.CommandParameter as FriendData;
+            bool find = false;
+
+            foreach (KeyValuePair<string,ConversationWindow> item in ClientInformation.ConversationsWindows)
+            {
+                if (item.Key == data.Username)
+                    find = true;
+            }
+            if(!find)
+            {
+                ConversationWindow window = new ConversationWindow(data.Username);
+                ClientInformation.ConversationsWindows.Add(data.Username, window);
+                window.Show();
+            }
+            
+
+            
         }
 
         private void buttonShareScreen_click(object sender , RoutedEventArgs e)

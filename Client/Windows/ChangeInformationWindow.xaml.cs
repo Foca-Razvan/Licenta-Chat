@@ -38,29 +38,6 @@ namespace Client.Windows
             else
             {
                 image.Source = ClientInformation.ToImage(ClientInformation.Image);
-                /*Bitmap bitMap;
-                using (var ms = new MemoryStream(ClientInformation.Image))
-                {
-                    bitMap = new Bitmap(ms);
-                }
-
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    try
-                    {
-                        bitMap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                    }
-                    catch { }
-                    try
-                    
-                    ms.Position = 0;
-                    BitmapImage bitmapImage = new BitmapImage();
-                    bitmapImage.BeginInit();
-                    bitmapImage.StreamSource = ms;
-                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmapImage.EndInit();
-                    image.Source = bitmapImage;
-                }*/
             }
 
 

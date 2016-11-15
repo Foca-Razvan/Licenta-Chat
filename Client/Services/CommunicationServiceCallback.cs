@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Threading;
 using System.Windows.Data;
 using System.ComponentModel;
+using Client.Windows;
 
 namespace Client
 {
@@ -30,9 +31,22 @@ namespace Client
             MainWindow = mainWindow;
         }
 
-        public void Send(string meessage, string to)
-        {
-           // MainWindow.textBoxConversation.Text += to + ": " + meessage + "\n";
+        public void Send(string meessage, string from)
+        {        
+            KeyValuePair<string,ConversationWindow> item = ClientInformation.ConversationsWindows.ToList().Find(x => x.Key == from);
+            if(item.Value == null)
+            {
+                ConversationWindow window = new ConversationWindow(from);
+                ClientInformation.ConversationsWindows.Add(from,window);
+                window.Show();
+                window.textBoxConversation.Text += from + " " + DateTime.Now + ": " + meessage + "\n";
+            }
+            else
+            {
+                item.Value.textBoxConversation.Text += from + " " + DateTime.Now + ": " + meessage + "\n";
+            }
+
+            
         }
 
         public void SendNotification(string username,byte[] image)

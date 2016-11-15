@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Interfaces;
 using System.Windows.Media.Imaging;
+using Client.Windows;
 
 namespace Client
 {
     static class ClientInformation
     {
-        public static string IPAdressServer = "86.124.191.73";
+        public static string IPAdressServer = "79.112.21.143";
         public static string Username { get; set; }
         public static string Password { get; set; }
         public static string Email { get; set; }
@@ -20,6 +21,7 @@ namespace Client
         public static SignUp SignUpWindow { get; set; }
         public static Dictionary<string, CallingWindow> CallingWindows = new Dictionary<string, CallingWindow>();
         public static Dictionary<string, AnswerWindow> AnswerWindows = new Dictionary<string, AnswerWindow>();
+        public static Dictionary<string, ConversationWindow> ConversationsWindows = new Dictionary<string, ConversationWindow>();
 
         public static IConnection ConnectionService { get; set; }
         public static ICommunication CommunicationService { get; set; }
