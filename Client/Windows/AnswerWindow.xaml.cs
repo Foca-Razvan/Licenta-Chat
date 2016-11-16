@@ -47,11 +47,10 @@ namespace Client
             DuplexChannelFactory<IAudio> channelAudioService = new DuplexChannelFactory<IAudio>(audioCallback, new NetTcpBinding(SecurityMode.None),
                 new EndpointAddress("net.tcp://" + ClientInformation.IPAdressServer + ":4444/AudioService"));
 
-
             audioService = channelAudioService.CreateChannel();
+            audioService.Subscribe(ClientInformation.Username);
 
             buttonClose.Visibility = Visibility.Hidden;
-
             ImageBrush brush = new ImageBrush(ClientInformation.MainWindow.GetImageFromFriendList(sender));
             avatarImage.Fill = brush;
         }
@@ -61,8 +60,6 @@ namespace Client
             buttonAccept.Visibility = Visibility.Hidden;
             buttonCancel.Visibility = Visibility.Hidden;
             buttonClose.Visibility = Visibility.Visible;
-
-            audioService.Subscribe(ClientInformation.Username);
 
             WaveIn wi = new WaveIn();
             wi.WaveFormat = new WaveFormat(8000, 1);

@@ -26,8 +26,6 @@ namespace Client
     public partial class Login : Window
     {
         IConnection connectionService;
-        
-        BufferedWaveProvider bwp;
 
         public Login()
         {
@@ -53,7 +51,7 @@ namespace Client
             }
             catch
             {
-                textBlockError.Text = "Nu s-a putut conecta la server. Incercati din nou.";
+                textBlockError.Text = "Couldn't connect to the server";
                 return;
             }
 
@@ -68,7 +66,7 @@ namespace Client
             }
             else
             {
-                textBlockError.Text = "Username sau parola este gresita";
+                textBlockError.Text = "Wrong password or username";
             }
         }
 

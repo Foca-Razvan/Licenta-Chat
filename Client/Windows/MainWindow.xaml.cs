@@ -168,7 +168,7 @@ namespace Client
             Button b = sender as Button;
             FriendData data = b.CommandParameter as FriendData;
 
-            if(data.Status)
+            if (data.Status && !ClientInformation.AnswerWindows.ContainsKey(data.Username) && !ClientInformation.CallingWindows.ContainsKey(data.Username))
             {
                 CallingWindow callingWindow = new CallingWindow(data.Username,data.AvatarImage);
                 ClientInformation.CallingWindows.Add(data.Username, callingWindow);

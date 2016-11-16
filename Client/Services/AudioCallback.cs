@@ -40,26 +40,30 @@ namespace Client
 
         public void ChannelAccepted(string receiver)
         {
-            ClientInformation.CallingWindows[receiver].AcceptedCall();
+            if(ClientInformation.CallingWindows.ContainsKey(receiver))
+                ClientInformation.CallingWindows[receiver].AcceptedCall();
         }
 
         public void ChannelDeclined(string receiver)
         {
-            ClientInformation.CallingWindows[receiver].DeclinedCall();       
+            if(ClientInformation.CallingWindows.ContainsKey(receiver))
+                ClientInformation.CallingWindows[receiver].DeclinedCall();       
         }
 
         public void StopCall(string receiver)
         {
             if (ClientInformation.CallingWindows.ContainsKey(receiver))
-            {
+            {             
                 ClientInformation.CallingWindows[receiver].ClosedCall();
             }
             if (ClientInformation.AnswerWindows.ContainsKey(receiver))
             {
                 ClientInformation.AnswerWindows[receiver].ClosedCall();
             }
-            Wi.StopRecording();
-            wo.Stop();
+            if(Wi != null)
+                Wi.StopRecording();
+            if(wo != null)
+                wo.Stop();
         }
 
         // Not part of interface
@@ -71,17 +75,20 @@ namespace Client
 
         public void StopPlayingOutput()
         {
-            wo.Stop();
+            if(Wi != null)
+                wo.Stop();
         }
 
         public void StartRecording()
         {
-            Wi.StartRecording();
+            if(Wi != null)
+                Wi.StartRecording();
         }
 
         public void StopRecording()
         {
-            Wi.StopRecording();
+            if(Wi !=null)
+                Wi.StopRecording();
         }
     }
 }

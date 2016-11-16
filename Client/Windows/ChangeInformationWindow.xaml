@@ -6,16 +6,16 @@
         xmlns:local="clr-namespace:Client.Windows"
         mc:Ignorable="d"
         Title="ChangeInformationWindow" Height="351.989" Width="300">
-    <Grid Margin="0,0,0,-3">
+    <Grid Margin="0,0,0,-3" Background="WhiteSmoke">
         <TextBlock x:Name="textBlockInformation" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="27" Width="272"/>
         <TextBlock x:Name="textBlockPassword" HorizontalAlignment="Left" Margin="10,141,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Width="272"/>
         <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="10,162,0,0" VerticalAlignment="Top" Width="272" RenderTransformOrigin="0.754,4.158"/>
         <TextBlock x:Name="textBlockEmail" HorizontalAlignment="Left" Margin="10,187,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Email" Width="272"/>
         <TextBox x:Name="textBoxEmail" HorizontalAlignment="Left" Height="23" Margin="10,208,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
-        <Button x:Name="buttonAccept" Content="Save" HorizontalAlignment="Left" Margin="49,271,0,0" VerticalAlignment="Top" Width="75" Click="buttonAccept_Click"/>
-        <Button x:Name="buttonCancel" Content="Cancel" HorizontalAlignment="Left" Margin="180,271,0,0" VerticalAlignment="Top" Width="75" Click="buttonCancel_Click"/>
+        <Button x:Name="buttonAccept" Content="Save" HorizontalAlignment="Left" Margin="49,271,0,0" VerticalAlignment="Top" Width="75" Click="buttonAccept_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="1" BorderBrush="Black"/>
+        <Button x:Name="buttonCancel" Content="Cancel" HorizontalAlignment="Left" Margin="180,271,0,0" VerticalAlignment="Top" Width="75" Click="buttonCancel_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="1" BorderBrush="Black"/>
         <Image x:Name="image" HorizontalAlignment="Left" Height="75" Margin="10,42,0,0" VerticalAlignment="Top" Width="79" Stretch="Fill" RenderOptions.BitmapScalingMode="Fant"/>
-        <Button x:Name="buttonChange" Content="Change" HorizontalAlignment="Left" Margin="106,95,0,0" VerticalAlignment="Top" Width="75" Click="buttonChange_Click"/>
+        <Button x:Name="buttonChange" Content="Change" HorizontalAlignment="Left" Margin="106,95,0,0" VerticalAlignment="Top" Width="75" Click="buttonChange_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="1" BorderBrush="Black"/>
 
     </Grid>
 </Window>

@@ -33,18 +33,6 @@
             <StackPanel>
                 <Image Source ="/Images/add-user.png" Stretch="Fill"/>
             </StackPanel>
-            <!--<Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Grid>
-                        <Ellipse Stroke="WhiteSmoke" StrokeThickness="1" Stretch="Fill">
-                            <Ellipse.Fill>
-                                <ImageBrush ImageSource="/Images/add-user.png"></ImageBrush>
-                            </Ellipse.Fill>
-                        </Ellipse>
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Grid>
-                </ControlTemplate>
-            </Button.Template>-->
         </Button>
         <ListView x:Name="listViewFriendList" ItemsSource ="{Binding}" HorizontalAlignment="Left" Height="396" Margin="0,81,0,0" 
                   VerticalAlignment="Top" Width="279" Grid.RowSpan="3" Loaded="listViewFriendList_Loaded" FontSize="18" Background="White">

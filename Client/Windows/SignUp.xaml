@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="SignUp" Height="367.397" Width="307.397">
     <Grid Margin="0,0,2,0">
-        <Button x:Name="buttonOk" Content="Ok" HorizontalAlignment="Left" Margin="172,246,0,0" VerticalAlignment="Top" Width="75" Click="buttonOk_Click"/>
+        <Button x:Name="buttonOk" Content="Ok" HorizontalAlignment="Left" Margin="172,246,0,0" VerticalAlignment="Top" Width="75" Click="buttonOk_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="1" BorderBrush="Black"/>
         <TextBox x:Name="textBoxUsername" HorizontalAlignment="Left" Height="23" Margin="10,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272" RenderTransformOrigin="0.004,-0.76"/>
         <TextBlock x:Name="textBlockUsername" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top" Width="272" Height="23"/>
         <TextBlock x:Name="textBlockPassword" HorizontalAlignment="Left" Margin="10,66,0,0" TextWrapping="Wrap" Text="Password (min 5 characters)" VerticalAlignment="Top" Width="272" Height="23"/>
@@ -17,7 +17,7 @@
         <TextBlock x:Name="textBlockEmail" HorizontalAlignment="Left" Margin="10,178,0,0" TextWrapping="Wrap" Text="Email" VerticalAlignment="Top" RenderTransformOrigin="0.586,-0.421" Width="272" Height="23"/>
         <TextBox x:Name="textBoxEmail" HorizontalAlignment="Left" Height="23" Margin="10,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
         <TextBlock x:Name="textBlockError" HorizontalAlignment="Left" Margin="10,286,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="41" Width="272"/>
-        <Button x:Name="buttonBack" Content="Back" HorizontalAlignment="Left" Margin="38,246,0,0" VerticalAlignment="Top" Width="75" Click="buttonBack_Click"/>
+        <Button x:Name="buttonBack" Content="Back" HorizontalAlignment="Left" Margin="38,246,0,0" VerticalAlignment="Top" Width="75" Click="buttonBack_Click"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="1" BorderBrush="Black" Background="White"/>
 
     </Grid>
 </Window>

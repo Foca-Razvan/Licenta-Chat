@@ -13,12 +13,12 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="button" Content="Login" Margin="54,176,148,72" Width="90" Click="button_Click" Height="22"/>
+        <Button x:Name="button" Content="Login" Margin="54,176,148,72" Width="90" Click="button_Click" Height="22" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="1" BorderBrush="Black"/>
         <Label x:Name="label" Content="Username" HorizontalAlignment="Left" Margin="54,49,0,0" VerticalAlignment="Top" Width="203"/>
         <TextBox x:Name="textBoxUsername" HorizontalAlignment="Left" Margin="54,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="203"/>
         <Label x:Name="label1" Content="Password" Margin="54,103,0,0" Width="203" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="54,129,0,0" VerticalAlignment="Top" Width="203" Height="23"/>
-        <Button x:Name="buttonSignUp" Content="Sign Up" Margin="167,176,35,72" Width="90" Click="buttonSignUp_Click" Height="22"/>
+        <Button x:Name="buttonSignUp" Content="Sign Up" Margin="167,176,35,72" Width="90" Click="buttonSignUp_Click" Height="22" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="1" BorderBrush="Black" />
         <TextBlock x:Name="textBlockError" HorizontalAlignment="Left" Margin="54,203,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="203" Height="57"/>
 
     </Grid>

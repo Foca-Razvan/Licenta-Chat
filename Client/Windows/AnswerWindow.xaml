@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
-        Title="AnswerWindow" Height="112.547" Width="308.807" Closing="AnswerWindow_ClosingEvent">
-    <Grid>
-        <Button x:Name="buttonAccept"  HorizontalAlignment="Left" Margin="108,38,0,0" VerticalAlignment="Top" Width="45" Click="buttonAccept_Click" Height="28">
+        Title="AnswerWindow" Height="124.547" Width="308.807" Closing="AnswerWindow_ClosingEvent">
+    <Grid Background="WhiteSmoke">
+        <Button x:Name="buttonAccept"  HorizontalAlignment="Left" Margin="108,38,0,0" VerticalAlignment="Top" Width="47" Click="buttonAccept_Click" Height="40">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Grid>
@@ -21,7 +21,7 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button x:Name="buttonCancel" HorizontalAlignment="Left" Margin="179,38,0,0" VerticalAlignment="Top" Width="45" Click="buttonCancel_Click" Height="28">
+        <Button x:Name="buttonCancel" HorizontalAlignment="Left" Margin="179,38,0,0" VerticalAlignment="Top" Width="49" Click="buttonCancel_Click" Height="40">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Grid>
@@ -35,7 +35,7 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button x:Name="buttonClose" HorizontalAlignment="Left" Margin="243,38,0,0" VerticalAlignment="Top" Width="45" Click="buttonClose_Click" Height="28">
+        <Button x:Name="buttonClose" HorizontalAlignment="Left" Margin="243,38,0,0" VerticalAlignment="Top" Width="48" Click="buttonClose_Click" Height="40">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Grid>
