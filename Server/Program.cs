@@ -55,9 +55,11 @@ namespace Server
         {
             using (DataBaseContainer context = new DataBaseContainer())
             {
-                foreach(User user in context.Users)
+                foreach(Request user in context.Requests)
                 {
-                    user.Status = 0;
+                    Console.WriteLine(user.FromUsername + " to " + user.User.Username);
+                    if (user.User.Username == "Andrei")
+                        context.Requests.Remove(user);
                 }
                 context.SaveChanges();
             }

@@ -58,11 +58,11 @@ namespace Client
             laber_username.Content = ClientInformation.Username;            
             ResizeMode = ResizeMode.CanMinimize;
 
-            ClientInformation.CommunicationService.GetNotifications();
-            ClientInformation.CommunicationService.GetInformation(ClientInformation.Username);
-
+            ClientInformation.CommunicationService.GetNotifications();          
             listViewFriendListLoad();
             AvatarImageLoad(ClientInformation.CommunicationService.GetAvatarImage(ClientInformation.Username));
+
+            ClientInformation.CommunicationService.GetInformation(ClientInformation.Username);
         }
 
         private void listViewFriendListLoad()
@@ -157,6 +157,18 @@ namespace Client
             }          
         }
 
+        public void listViewFriendListRefreshOpacity()
+        {
+            foreach (FriendData item in listViewFriendList.Items)
+            {
+                if (!item.Status)
+                {
+                    ListViewItem row = listViewFriendList.ItemContainerGenerator.ContainerFromItem(item) as ListViewItem;
+                    row.Opacity = 0.5;
+                }
+            }
+        }
+
         private void MouseLeftButtonDown_avatarImage(object sender, MouseButtonEventArgs e)
         {     
             ChangeInformationWindow window = new ChangeInformationWindow();
@@ -192,10 +204,7 @@ namespace Client
                 ConversationWindow window = new ConversationWindow(data.Username);
                 ClientInformation.ConversationsWindows.Add(data.Username, window);
                 window.Show();
-            }
-            
-
-            
+            }               
         }
 
         private void buttonShareScreen_click(object sender , RoutedEventArgs e)
@@ -212,6 +221,19 @@ namespace Client
                 IRDPSRAPIInvitation Invitation = rdpSession.Invitations.CreateInvitation("Trial", "MyGroup", "", 10);
                 ClientInformation.ScreenShareService.InitShareScreen(ClientInformation.Username, data.Username, Invitation.ConnectionString);
             }
+        }
+
+        private void OnMouseRightButtonDown_Handler(object sender ,RoutedEventArgs e)
+        {
+           
+        }
+
+        private void RemoveFriend(object sender, RoutedEventArgs e)
+        {
+            MenuItem source = sender as MenuItem;
+            FriendData data = source.CommandParameter as FriendData;
+
+            ClientInformation.CommunicationService.RemoveFriend(ClientInformation.Username,data.Username);
         }
     }
 }

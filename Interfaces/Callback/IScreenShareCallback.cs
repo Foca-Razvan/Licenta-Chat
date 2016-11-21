@@ -12,7 +12,7 @@ namespace Interfaces
         [OperationContract(IsOneWay = true)]
         void ShareScrennNotification(string from,string connectionString);
         [OperationContract(IsOneWay = true)]
-        void SendFriendNotification(string username);
+        void SendFriendNotification(string username,byte[] image);
         [OperationContract(IsOneWay = true)]
         void SendProfileInformation(string password, string email, byte[] image);
     }

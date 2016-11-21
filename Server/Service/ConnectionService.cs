@@ -12,6 +12,12 @@ namespace Server
     public class ConnectionService : IConnection
     {
 
+        /// <summary>
+        /// Login
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public bool Login(string username, string password)
         {
             if (Subscriber.subscribers.Exists(x => x.Username == username))
@@ -37,7 +43,13 @@ namespace Server
             }
             return false;        
         }
-
+        /// <summary>
+        /// Creates an account.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public int SignUp(string username, string password , string email)
         {
             using (DataBaseContainer context = new DataBaseContainer())

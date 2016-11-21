@@ -5,12 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client.Windows"
         mc:Ignorable="d"
-        Title="FriendNotificationWindow" Height="190.685" Width="516.986">
-    <Grid Background="WhiteSmoke">
-        <TextBlock x:Name="textBlockInformation" HorizontalAlignment="Left" Margin="82,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="68" Width="346"/>
-        <Button x:Name="buttonAcceot" Content="Accept" HorizontalAlignment="Left" Margin="82,114,0,0" VerticalAlignment="Top" Width="75" Click="buttonAcceot_Click"
+        Title="FriendNotificationWindow" Height="148.685" Width="516.986">
+    <Grid Background="White">
+        <Ellipse x:Name="avatarImage" Margin="10,10,387,10"></Ellipse>
+        <TextBlock x:Name="textBlockInformation" HorizontalAlignment="Left" Margin="152,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="29" Width="347"/>
+        <Button x:Name="buttonAcceot" Content="Accept" HorizontalAlignment="Left" Margin="152,79,0,0" VerticalAlignment="Top" Width="75" Click="buttonAcceot_Click"
                 Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="1" BorderBrush="Black"  Background="White"/>
-        <Button x:Name="buttonDecline" Content="Decline" HorizontalAlignment="Left" Margin="353,114,0,0" VerticalAlignment="Top" Width="75" Click="buttonDecline_Click"
+        <Button x:Name="buttonDecline" Content="Decline" HorizontalAlignment="Left" Margin="354,79,0,0" VerticalAlignment="Top" Width="75" Click="buttonDecline_Click"
                 Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="1" BorderBrush="Black" Background="White"/>
     </Grid>
 </Window>

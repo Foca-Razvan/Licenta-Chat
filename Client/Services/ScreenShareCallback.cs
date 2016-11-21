@@ -16,9 +16,9 @@ namespace Client
             screenShareForm.Show();
         }
 
-        public void SendFriendNotification(string username)
+        public void SendFriendNotification(string username,byte[] image)
         {
-            FriendNotificationWindow window = new FriendNotificationWindow(username);
+            FriendNotificationWindow window = new FriendNotificationWindow(username ,image);
             window.Show();
         }
 

@@ -10,7 +10,11 @@ namespace Server
 {
     public class ScreenShareService : IScreenShare
     {
-
+        /// <summary>
+        /// Subscribes the screen share callback.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public bool Subscribe(string username)
         {
             IScreenShareCallback callback = OperationContext.Current.GetCallbackChannel<IScreenShareCallback>();
@@ -24,6 +28,13 @@ namespace Server
             return false;
         }
 
+
+        /// <summary>
+        /// Initialiaze a share screen with the partner.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="partner"></param>
+        /// <param name="connectionString"></param>
         public void InitShareScreen(string client , string partner,string connectionString)
         {
             UserInformation user = Subscriber.getUser(partner);

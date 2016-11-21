@@ -36,8 +36,15 @@
         </Button>
         <ListView x:Name="listViewFriendList" ItemsSource ="{Binding}" HorizontalAlignment="Left" Height="396" Margin="0,81,0,0" 
                   VerticalAlignment="Top" Width="279" Grid.RowSpan="3" Loaded="listViewFriendList_Loaded" FontSize="18" Background="White">
+            <ListView.Resources>
+                <ContextMenu x:Key="ContextMenuFriendList">
+                    <MenuItem Header="Remove" CommandParameter="{Binding}" Click="RemoveFriend" />
+                </ContextMenu>
+            </ListView.Resources>
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
+                    <EventSetter Event="MouseRightButtonDown"  Handler="OnMouseRightButtonDown_Handler"/>
+                    <Setter Property="ContextMenu" Value="{StaticResource ContextMenuFriendList}"/>
                     <Style.Triggers>
                         <Trigger Property="IsSelected" Value="true" >
                             <Setter Property="Background" Value="White" />
@@ -46,7 +53,7 @@
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.View>
-                <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}"  >
+                <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>

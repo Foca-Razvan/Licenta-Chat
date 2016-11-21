@@ -36,5 +36,7 @@ namespace Interfaces
         void UpdateProfile(string username,string email, string password, byte[] image);
         [OperationContract]
         byte[] GetAvatarImage(string username);
+        [OperationContract(IsOneWay = true)]
+        void RemoveFriend(string sender, string receiver);
     }
 }

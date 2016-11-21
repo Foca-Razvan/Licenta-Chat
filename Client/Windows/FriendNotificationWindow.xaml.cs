@@ -21,13 +21,14 @@ namespace Client.Windows
     {
         private string Sender;
 
-        public FriendNotificationWindow(string sender)
+        public FriendNotificationWindow(string sender,byte[] image)
         {
             InitializeComponent();
             Sender = sender;
             textBlockInformation.Text = Sender + " wants to add you to his friend list.";
             textBlockInformation.TextAlignment = TextAlignment.Center;
             ResizeMode = ResizeMode.CanMinimize;
+            avatarImage.Fill = new ImageBrush(ClientInformation.ToImage(image));
 
         }
 

@@ -10,6 +10,9 @@ using DataBase;
 
 namespace Server
 {
+    /// <summary>
+    /// Subscribes the client to the server so that the server can acces the callback.
+    /// </summary>
     public class CommunicationService : ICommunication
     {
         public bool Subscribe(string username)
@@ -25,7 +28,10 @@ namespace Server
                 return false;
             }          
         }
-
+        /// <summary>
+        /// Removes the user from the active users in the server and updates the friend list with users who are friends with him.
+        /// </summary>
+        /// <returns></returns>
         public bool Logout()
         {
             try
@@ -54,7 +60,11 @@ namespace Server
                 return false;
             }
         }
-
+        /// <summary>
+        /// text message 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="to"></param>
         public void SendMessage(string message,string to)
         {
             IClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<IClientCallback>();
@@ -65,6 +75,10 @@ namespace Server
                     user.CommunicationCallback.Send(message, information.Username);
         }
 
+        /// <summary>
+        /// Returns a dictionary with the name as key and 1 or 0 as status. 1 = online 0 = offline
+        /// </summary>
+        /// <returns></returns>
         public Dictionary<string,int> GetFriendList()
         {
             Dictionary<string, int> contacts = new Dictionary<string, int>();
@@ -80,6 +94,10 @@ namespace Server
             return contacts;
         }
 
+        /// <summary>
+        /// Creates a friend request.
+        /// </summary>
+        /// <param name="username">The username of the friend</param>
         public void AddFriend(string username)
         {
             IClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<IClientCallback>();
@@ -97,10 +115,20 @@ namespace Server
                 user.Requests.Add(request);
 
                 context.SaveChanges();
+
+                UserInformation _user = Subscriber.subscribers.Find(x => x.Username == user.Username);
+                if (_user != null)
+                    _user.ScreenShareCallback.SendFriendNotification(sender.Username, sender.UserAvatar.Image);
             }
 
-        }
 
+
+        }
+        /// <summary>
+        /// Checks if the user exists.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public bool CheckUserExistance(string username)
         {
             using (DataBaseContainer context = new DataBaseContainer())
@@ -111,6 +139,13 @@ namespace Server
             }
         }
 
+
+        /// <summary>
+        /// Check if the two user are friends.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="friend"></param>
+        /// <returns></returns>
         public bool IsFriendWith(string sender , string friend)
         {
             using (DataBaseContainer context = new DataBaseContainer())
@@ -123,7 +158,10 @@ namespace Server
                 return exist;
             }
         }
-
+        /// <summary>
+        /// Accepts friend request and updates the friend list.
+        /// </summary>
+        /// <param name="username"></param>
         public void AcceptFriendRequest(string username)
         {
             using (DataBaseContainer context = new DataBaseContainer())
@@ -142,9 +180,30 @@ namespace Server
 
                 context.Requests.Remove(request);
                 context.SaveChanges();
-            }
-        }
 
+
+                UserInformation _sender = Subscriber.subscribers.Find(x => x.Username == sender.Username);
+                UserInformation _receiver = Subscriber.subscribers.Find(x => x.Username == receiver.Username);
+
+                bool statusSender=false,statusReceiver=false;
+                if (receiver.Status == 1)
+                    statusReceiver = true;
+                if (sender.Status == 1)
+                    statusSender = true;
+
+                if (_sender != null)
+                    _sender.CommunicationCallback.AddFriendInFriendList(receiver.Username, receiver.UserAvatar.Image, statusReceiver);
+                if (_receiver != null)
+                    _receiver.CommunicationCallback.AddFriendInFriendList(sender.Username, sender.UserAvatar.Image, statusSender);
+
+            }
+
+            
+        }
+        /// <summary>
+        /// Decline friend request.
+        /// </summary>
+        /// <param name="username"></param>
         public void DeclineFriendRequest(string username)
         {
             using (DataBaseContainer context = new DataBaseContainer())
@@ -154,7 +213,9 @@ namespace Server
                 context.SaveChanges();
             }
         }
-
+        /// <summary>
+        /// Gets friend notification from the server.
+        /// </summary>
         public void GetNotifications()
         {
             IClientCallback callback = OperationContext.Current.GetCallbackChannel<IClientCallback>();
@@ -163,10 +224,18 @@ namespace Server
             {
                 foreach (Request request in context.Requests)
                     if (request.User.Username == user.Username)
-                        user.ScreenShareCallback.SendFriendNotification(request.FromUsername);
+                    {
+                        User friend = context.Users.ToList().Find(x => x.Username == request.FromUsername);
+                        user.ScreenShareCallback.SendFriendNotification(request.FromUsername, friend.UserAvatar.Image);                   
+                    }
             }
         }
 
+
+        /// <summary>
+        /// Returns profile information.
+        /// </summary>
+        /// <param name="username"></param>
         public void GetInformation(string username)
         {
             IClientCallback callback = OperationContext.Current.GetCallbackChannel<IClientCallback>();
@@ -183,7 +252,13 @@ namespace Server
             }
         }
 
-
+        /// <summary>
+        /// Updates the profile information in the data base.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <param name="image"></param>
         public void UpdateProfile(string username,string email,string password,byte[] image)
         {
             using (DataBaseContainer context = new DataBaseContainer())
@@ -197,7 +272,11 @@ namespace Server
                 context.SaveChanges();
             }
         }
-
+        /// <summary>
+        /// Returs an array of bytes[] of the image of the "username".
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public byte[] GetAvatarImage(string username)
         {
             byte[] image;
@@ -211,6 +290,38 @@ namespace Server
                 }
                 return null;
             }
+        }
+        /// <summary>
+        /// Removes the connection between the two user of frienship and updates the friend list of the both users.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="receiver"></param>
+        public void RemoveFriend(string sender, string receiver)
+        {
+            using (DataBaseContainer context = new DataBaseContainer())
+            {
+                User Sender = context.Users.ToList().Find(x => x.Username == sender);
+                User Receiver = context.Users.ToList().Find(x => x.Username == receiver);
+
+                History history = context.Histories.ToList().Find(x => x.User == Sender && x.User1 == Receiver || x.User == Receiver && x.User1 == Sender);
+
+                Sender.Histories.Remove(history);
+                Sender.Histories1.Remove(history);
+                Receiver.Histories.Remove(history);
+                Receiver.Histories1.Remove(history);
+
+                context.Histories.Remove(history);
+                context.SaveChanges();
+            }
+
+            UserInformation _Sender = Subscriber.getUser(sender);
+            UserInformation _Receiver = Subscriber.getUser(receiver);
+
+            if(_Sender != null)
+                _Sender.CommunicationCallback.FriendRemoved(receiver);
+            if(_Receiver != null)
+                _Receiver.CommunicationCallback.FriendRemoved(sender);
+
         }
     }
 }

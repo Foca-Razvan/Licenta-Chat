@@ -213,18 +213,6 @@
     <Resource Include="Images\add-user.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\add-friend.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\add_friend_image.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\addFriend.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\friend_gray.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\conversation.png" />
   </ItemGroup>
   <ItemGroup>

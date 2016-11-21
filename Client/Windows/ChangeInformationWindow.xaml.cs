@@ -75,6 +75,7 @@ namespace Client.Windows
                 Data = ms.ToArray();
             }
             ClientInformation.CommunicationService.UpdateProfile(ClientInformation.Username, textBoxEmail.Text, passwordBox.Password, Data);
+            ClientInformation.MainWindow.AvatarImageLoad(Data);
             Close();
 
         }
