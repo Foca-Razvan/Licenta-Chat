@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
-namespace Client.Data
+namespace Client
 {
     public class FriendData : INotifyPropertyChanged
     {

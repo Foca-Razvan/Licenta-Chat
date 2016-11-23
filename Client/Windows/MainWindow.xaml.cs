@@ -29,7 +29,7 @@ namespace Client
     /// </summary>
     public partial class MainWindow : Window
     {
-        RDPSession rdpSession;
+        public RDPSession RdpSession { get; set; }
         string ConversationPartner { get; set; }
         public FriendDataView Friends { get; set; }
 
@@ -192,14 +192,8 @@ namespace Client
         {
             Button b = sender as Button;
             FriendData data = b.CommandParameter as FriendData;
-            bool find = false;
 
-            foreach (KeyValuePair<string,ConversationWindow> item in ClientInformation.ConversationsWindows)
-            {
-                if (item.Key == data.Username)
-                    find = true;
-            }
-            if(!find)
+            if(!ClientInformation.ConversationsWindows.ContainsKey(data.Username))
             {
                 ConversationWindow window = new ConversationWindow(data.Username);
                 ClientInformation.ConversationsWindows.Add(data.Username, window);
@@ -212,14 +206,18 @@ namespace Client
             Button b = sender as Button;
             FriendData data = b.CommandParameter as FriendData;
 
-            if(data.Status)
+            if(data.Status && !ClientInformation.ShareScreenWindows.ContainsKey(data.Username))
             {
+                
                 rdpSession = new RDPSession();
                 rdpSession.OnAttendeeConnected += Incoming;
                 rdpSession.Open();
 
                 IRDPSRAPIInvitation Invitation = rdpSession.Invitations.CreateInvitation("Trial", "MyGroup", "", 10);
                 ClientInformation.ScreenShareService.InitShareScreen(ClientInformation.Username, data.Username, Invitation.ConnectionString);
+
+                ShareScreenEnding window = new ShareScreenEnding(data.Username);
+                window.Show();
             }
         }
 

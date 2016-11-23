@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using RDPCOMAPILib;
 
 namespace Client.Windows
 {
@@ -45,6 +46,37 @@ namespace Client.Windows
         private void windowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             ClientInformation.ConversationsWindows.Remove(ConversationPartner);
+        }
+
+        private void Incoming(object partner)
+        {
+            IRDPSRAPIAttendee myGuest = (IRDPSRAPIAttendee)partner;
+            myGuest.ControlLevel = CTRL_LEVEL.CTRL_LEVEL_INTERACTIVE;
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            FriendData friend = ClientInformation.GetFriend(ConversationPartner);
+            if (friend.Status && !ClientInformation.AnswerWindows.ContainsKey(friend.Username) && !ClientInformation.CallingWindows.ContainsKey(data.Username))
+            {
+                RDPSession rdpSession = new RDPSession();
+                rdpSession.OnAttendeeConnected += Incoming;
+                rdpSession.Open();
+
+                IRDPSRAPIInvitation Invitation = rdpSession.Invitations.CreateInvitation("Trial", "MyGroup", "", 10);
+                ClientInformation.ScreenShareService.InitShareScreen(ClientInformation.Username, ConversationPartner, Invitation.ConnectionString);
+            }
+        }
+
+        private void buttonCall_Click(object sender, RoutedEventArgs e)
+        {
+            FriendData friend = ClientInformation.GetFriend(ConversationPartner);
+            if(friend.Status)
+            {
+                CallingWindow callingWindow = new CallingWindow(friend.Username,friend.AvatarImage);
+                ClientInformation.CallingWindows.Add(friend.Username, callingWindow);
+                callingWindow.Show();
+            }
         }
     }
 }

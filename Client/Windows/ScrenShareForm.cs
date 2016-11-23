@@ -40,7 +40,9 @@ namespace Client
             axRDPViewer1.Visible = true;
 
             axRDPViewer1.Connect(ConnectionString, Partner, "");
-            
+
+            ClientInformation.ShareScreenWindows.Add(Partner, this);
+
         }
 
         private void buttonDecline_Click(object sender, EventArgs e)
@@ -50,6 +52,7 @@ namespace Client
 
         private void OnWindowClose(object sender, AxRDPCOMAPILib._IRDPSessionEvents_OnWindowCloseEvent e)
         {
+            ClientInformation.ShareScreenWindows.Remove(Partner);
             axRDPViewer1.Disconnect();
         }
     }

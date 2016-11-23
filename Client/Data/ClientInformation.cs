@@ -22,6 +22,7 @@ namespace Client
         public static Dictionary<string, CallingWindow> CallingWindows = new Dictionary<string, CallingWindow>();
         public static Dictionary<string, AnswerWindow> AnswerWindows = new Dictionary<string, AnswerWindow>();
         public static Dictionary<string, ConversationWindow> ConversationsWindows = new Dictionary<string, ConversationWindow>();
+        public static Dictionary<string, ScrenShareForm> ShareScreenWindows = new Dictionary<string, ScrenShareForm>();
 
         public static IConnection ConnectionService { get; set; }
         public static ICommunication CommunicationService { get; set; }
@@ -47,6 +48,19 @@ namespace Client
                 }
             }
             return null;
+        }
+
+        public static bool GetStatusFromFriendList(string username)
+        {
+            FriendData data = MainWindow.Friends.Items.ToList().Find(x => x.Username == username);
+            if (data != null)
+                return data.Status;            
+            return false;
+        }
+        
+        public static FriendData GetFriend(string username)
+        {
+            return MainWindow.Friends.Items.ToList().Find(x => x.Username == username);
         }
     }
 }

@@ -12,7 +12,9 @@ namespace Client
     {
         public void ShareScrennNotification(string from,string connectionString)
         {
+            
             ScrenShareForm screenShareForm = new ScrenShareForm(from,connectionString);
+            ClientInformation.ShareScreenWindows.Add(from,screenShareForm);
             screenShareForm.Show();
         }
 
