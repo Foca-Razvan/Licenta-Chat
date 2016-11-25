@@ -11,8 +11,7 @@ namespace Client
     public class ScreenShareCallback : IScreenShareCallback
     {
         public void ShareScrennNotification(string from,string connectionString)
-        {
-            
+        {         
             ScrenShareForm screenShareForm = new ScrenShareForm(from,connectionString);
             ClientInformation.ShareScreenWindows.Add(from,screenShareForm);
             screenShareForm.Show();
@@ -29,6 +28,13 @@ namespace Client
             ClientInformation.Password = password;
             ClientInformation.Email = email;
             ClientInformation.Image = image;
+        }
+
+        public void SendRefuseNotification(string sender)
+        {
+            ShareScreenEnding window;
+            ClientInformation.ShareScreenEndingWindows.TryGetValue(sender,out window);
+            window.DeclineRequest();
         }
     }
 }

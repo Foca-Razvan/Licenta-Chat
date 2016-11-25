@@ -14,5 +14,7 @@ namespace Interfaces
         bool Subscribe(string username);
         [OperationContract(IsOneWay = true)]
         void InitShareScreen(string client, string partner,string connectionString);
+        [OperationContract(IsOneWay = true)]
+        void RefuseShareScreen(string sender,string partner);
     }
 }

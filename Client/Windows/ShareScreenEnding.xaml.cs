@@ -31,9 +31,28 @@ namespace Client.Windows
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            ClientInformation.ShareScreenWindows.Remove(Partner);
-            ClientInformation.MainWindow.RdpSession.Close();
+            ClientInformation.ShareScreenEndingWindows.Remove(Partner);
+            if (ClientInformation.MainWindow.myGuest != null)
+            {
+                ClientInformation.MainWindow.myGuest.TerminateConnection();
+                ClientInformation.MainWindow.myGuest = null;
+            }
             Close();
+        }
+
+        private void Closing_Window(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            ClientInformation.ShareScreenEndingWindows.Remove(Partner);
+            if (ClientInformation.MainWindow.myGuest != null)
+            {
+                ClientInformation.MainWindow.myGuest.TerminateConnection();
+                ClientInformation.MainWindow.myGuest = null;
+            }
+        }
+
+        public void DeclineRequest()
+        {
+            textBlock.Text = Partner + " has declined your request.";
         }
     }
 }

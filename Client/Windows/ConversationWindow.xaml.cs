@@ -20,13 +20,13 @@ namespace Client.Windows
     /// </summary>
     public partial class ConversationWindow : Window
     {
-        public string ConversationPartner { get; set; }
+        public string Partner { get; set;}
 
         public ConversationWindow(string username)
         {
             InitializeComponent();
 
-            ConversationPartner = username;
+            Partner = username;
             avatarImage.Fill = new ImageBrush(ClientInformation.MainWindow.GetImageFromFriendList(username));
             textBlockUsername.Text = username;
             textBoxConversation.IsReadOnly = true;
@@ -38,14 +38,14 @@ namespace Client.Windows
             if (e.Key == Key.Enter)
             {
                 textBoxConversation.Text += ClientInformation.Username + " " + DateTime.Now + ":" + textBoxMessage.Text + "\n";
-                ClientInformation.CommunicationService.SendMessage(textBoxMessage.Text, ConversationPartner);
+                ClientInformation.CommunicationService.SendMessage(textBoxMessage.Text, Partner);
                 textBoxMessage.Clear();
             }
         }
 
         private void windowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            ClientInformation.ConversationsWindows.Remove(ConversationPartner);
+            ClientInformation.ConversationsWindows.Remove(Partner);
         }
 
         private void Incoming(object partner)
@@ -56,21 +56,21 @@ namespace Client.Windows
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            FriendData friend = ClientInformation.GetFriend(ConversationPartner);
-            if (friend.Status && !ClientInformation.AnswerWindows.ContainsKey(friend.Username) && !ClientInformation.CallingWindows.ContainsKey(data.Username))
+            FriendData friend = ClientInformation.GetFriend(Partner);
+            if (friend.Status && !ClientInformation.AnswerWindows.ContainsKey(friend.Username) && !ClientInformation.CallingWindows.ContainsKey(friend.Username))
             {
                 RDPSession rdpSession = new RDPSession();
                 rdpSession.OnAttendeeConnected += Incoming;
                 rdpSession.Open();
 
-                IRDPSRAPIInvitation Invitation = rdpSession.Invitations.CreateInvitation("Trial", "MyGroup", "", 10);
-                ClientInformation.ScreenShareService.InitShareScreen(ClientInformation.Username, ConversationPartner, Invitation.ConnectionString);
+                IRDPSRAPIInvitation Invitation = rdpSession.Invitations.CreateInvitation(ClientInformation.Username, Partner, "", 1);
+                ClientInformation.ScreenShareService.InitShareScreen(ClientInformation.Username, Partner, Invitation.ConnectionString);
             }
         }
 
         private void buttonCall_Click(object sender, RoutedEventArgs e)
         {
-            FriendData friend = ClientInformation.GetFriend(ConversationPartner);
+            FriendData friend = ClientInformation.GetFriend(Partner);
             if(friend.Status)
             {
                 CallingWindow callingWindow = new CallingWindow(friend.Username,friend.AvatarImage);

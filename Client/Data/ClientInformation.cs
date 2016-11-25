@@ -23,6 +23,7 @@ namespace Client
         public static Dictionary<string, AnswerWindow> AnswerWindows = new Dictionary<string, AnswerWindow>();
         public static Dictionary<string, ConversationWindow> ConversationsWindows = new Dictionary<string, ConversationWindow>();
         public static Dictionary<string, ScrenShareForm> ShareScreenWindows = new Dictionary<string, ScrenShareForm>();
+        public static Dictionary<string, ShareScreenEnding> ShareScreenEndingWindows = new Dictionary<string, ShareScreenEnding>();
 
         public static IConnection ConnectionService { get; set; }
         public static ICommunication CommunicationService { get; set; }

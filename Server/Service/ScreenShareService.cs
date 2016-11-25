@@ -18,7 +18,6 @@ namespace Server
         public bool Subscribe(string username)
         {
             IScreenShareCallback callback = OperationContext.Current.GetCallbackChannel<IScreenShareCallback>();
-            Console.WriteLine(username + "!");
             foreach (var client in Subscriber.subscribers)
                 if (client.Username == username)
                 {
@@ -40,6 +39,16 @@ namespace Server
             UserInformation user = Subscriber.getUser(partner);
             if (user != null && user.ScreenShareCallback != null)
                 user.ScreenShareCallback.ShareScrennNotification(client,connectionString);
+        }
+
+        public void RefuseShareScreen(string sender ,string partner)
+        {
+            IScreenShareCallback callback = OperationContext.Current.GetCallbackChannel<IScreenShareCallback>();
+            UserInformation Partner = Subscriber.getUser(partner);
+            if (Partner.ScreenShareCallback != null)
+                Partner.ScreenShareCallback.SendRefuseNotification(sender);
+
+
         }
     }
 }

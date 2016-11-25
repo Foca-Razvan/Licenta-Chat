@@ -30,9 +30,9 @@ namespace Client
     public partial class MainWindow : Window
     {
         public RDPSession RdpSession { get; set; }
-        string ConversationPartner { get; set; }
         public FriendDataView Friends { get; set; }
-
+        public IRDPSRAPIAttendee myGuest;
+        public IRDPSRAPIInvitation Invitation;
 
         public MainWindow()
         {
@@ -113,18 +113,26 @@ namespace Client
 
         private void ClosingEvent(object sender, CancelEventArgs e)
         {
-            ClientInformation.CommunicationService.Logout();
+            try
+            {
+                ClientInformation.CommunicationService.Logout();
+            }
+            catch { Close(); }
         }
 
 
         private void MenuItemApplicationLogoutEvent(object sender, RoutedEventArgs e)
         {
-            if (ClientInformation.CommunicationService.Logout())
+            try
             {
-                Login login = new Login();
-                login.Show();
-                Close();
+                if (ClientInformation.CommunicationService.Logout())
+                {
+                    Login login = new Login();
+                    login.Show();
+                    Close();
+                }
             }
+            catch { Close(); }
         }
 
         private void MenuItemApplicationCloseClickEvent(object sender, RoutedEventArgs e)
@@ -135,8 +143,14 @@ namespace Client
 
         private void Incoming(object partner)
         {
-            IRDPSRAPIAttendee myGuest = (IRDPSRAPIAttendee)partner;
+            myGuest = (IRDPSRAPIAttendee)partner;
             myGuest.ControlLevel = CTRL_LEVEL.CTRL_LEVEL_INTERACTIVE;
+        }
+
+        private void Disconnected(object partner)
+        {
+            //IRDPSRAPIAttendee myGuest = (IRDPSRAPIAttendee)partner;
+            myGuest.TerminateConnection();
         }
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
@@ -208,15 +222,20 @@ namespace Client
 
             if(data.Status && !ClientInformation.ShareScreenWindows.ContainsKey(data.Username))
             {
+                if (RdpSession == null)
+                {
+                    RdpSession = new RDPSession();
+                    RdpSession.OnAttendeeConnected += Incoming;
+                    RdpSession.Open();
+                }
                 
-                rdpSession = new RDPSession();
-                rdpSession.OnAttendeeConnected += Incoming;
-                rdpSession.Open();
 
-                IRDPSRAPIInvitation Invitation = rdpSession.Invitations.CreateInvitation("Trial", "MyGroup", "", 10);
+                if(Invitation == null)
+                    Invitation = RdpSession.Invitations.CreateInvitation(ClientInformation.Username, data.Username, "", 1);
                 ClientInformation.ScreenShareService.InitShareScreen(ClientInformation.Username, data.Username, Invitation.ConnectionString);
 
                 ShareScreenEnding window = new ShareScreenEnding(data.Username);
+                ClientInformation.ShareScreenEndingWindows.Add(data.Username, window);
                 window.Show();
             }
         }
@@ -232,6 +251,12 @@ namespace Client
             FriendData data = source.CommandParameter as FriendData;
 
             ClientInformation.CommunicationService.RemoveFriend(ClientInformation.Username,data.Username);
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            GroupConversationWindow window = new GroupConversationWindow();
+            window.Show();
         }
     }
 }

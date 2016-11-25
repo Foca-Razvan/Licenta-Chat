@@ -39,3 +39,9 @@ D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\Windows\Change
 D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\Windows\ChangeInformationWindow.baml
 D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\Windows\ConversationWindow.g.cs
 D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\Windows\ConversationWindow.baml
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\Windows\ShareScreenEnding.g.cs
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\Windows\ShareScreenEnding.baml
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\Windows\AddFriendConversationWindow.g.cs
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\Windows\AddFriendConversationWindow.baml
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\Windows\GroupConversationWindow.g.cs
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\Client\obj\Debug\Windows\GroupConversationWindow.baml

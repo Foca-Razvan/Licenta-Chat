@@ -70,7 +70,7 @@
             this.axRDPViewer1.Location = new System.Drawing.Point(0, 0);
             this.axRDPViewer1.Name = "axRDPViewer1";
             this.axRDPViewer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axRDPViewer1.OcxState")));
-            this.axRDPViewer1.Size = new System.Drawing.Size(10, 10);
+            this.axRDPViewer1.Size = new System.Drawing.Size(192, 192);
             this.axRDPViewer1.TabIndex = 3;
             this.axRDPViewer1.OnWindowClose += new AxRDPCOMAPILib._IRDPSessionEvents_OnWindowCloseEventHandler(this.OnWindowClose);
             // 
@@ -85,6 +85,7 @@
             this.Controls.Add(this.buttonAccept);
             this.Name = "ScrenShareForm";
             this.Text = "ScrenShareForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormClosingEvent);
             ((System.ComponentModel.ISupportInitialize)(this.axRDPViewer1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

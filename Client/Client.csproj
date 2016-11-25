@@ -66,6 +66,9 @@
     </ApplicationDefinition>
     <Compile Include="Data\FriendData.cs" />
     <Compile Include="Data\FriendDataView.cs" />
+    <Compile Include="Windows\AddFriendConversationWindow.xaml.cs">
+      <DependentUpon>AddFriendConversationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\AddFriendWindow.xaml.cs">
       <DependentUpon>AddFriendWindow.xaml</DependentUpon>
     </Compile>
@@ -88,15 +91,25 @@
     <Compile Include="Windows\FriendNotificationWindow.xaml.cs">
       <DependentUpon>FriendNotificationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\GroupConversationWindow.xaml.cs">
+      <DependentUpon>GroupConversationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ScrenShareForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\ScrenShareForm.Designer.cs">
       <DependentUpon>ScrenShareForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Windows\ShareScreenEnding.xaml.cs">
+      <DependentUpon>ShareScreenEnding.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\SignUp.xaml.cs">
       <DependentUpon>SignUp.xaml</DependentUpon>
     </Compile>
+    <Page Include="Windows\AddFriendConversationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\AddFriendWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -121,6 +134,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\GroupConversationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -140,6 +157,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Windows\ShareScreenEnding.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\SignUp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

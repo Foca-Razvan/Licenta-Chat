@@ -111,6 +111,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        
+        <Button x:Name="button" Content="Create" HorizontalAlignment="Left" Margin="176,49,0,0" VerticalAlignment="Top" Width="52" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderBrush="Black" Click="button_Click"/>
+
     </Grid>
 </Window>

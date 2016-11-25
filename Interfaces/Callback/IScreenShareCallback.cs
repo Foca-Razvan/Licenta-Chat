@@ -15,5 +15,7 @@ namespace Interfaces
         void SendFriendNotification(string username,byte[] image);
         [OperationContract(IsOneWay = true)]
         void SendProfileInformation(string password, string email, byte[] image);
+        [OperationContract(IsOneWay = true)]
+        void SendRefuseNotification(string sender);
     }
 }

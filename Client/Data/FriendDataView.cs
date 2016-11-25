@@ -50,5 +50,16 @@ namespace Client.Data
             if (item != null)
                 ModifiedItems.Add(item);
         }
+
+        public List<FriendData> GetOnlineFriends()
+        {
+            List<FriendData> list = new List<FriendData>();
+
+            foreach (FriendData data in Items)
+                if (data.Status)
+                    list.Add(data);
+
+            return list;
+        }
     }
 }

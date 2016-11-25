@@ -21,7 +21,7 @@ namespace Client
             InitializeComponent();
 
             axRDPViewer1.Visible = false;
-            label1.Text = from + " has offered to share screen. Do you accept ?";
+            label1.Text = from + " has offered to share his screen. Do you accept ?";
 
             ConnectionString = connectionString;
             Partner = from;
@@ -40,18 +40,25 @@ namespace Client
             axRDPViewer1.Visible = true;
 
             axRDPViewer1.Connect(ConnectionString, Partner, "");
-
-            ClientInformation.ShareScreenWindows.Add(Partner, this);
-
         }
 
         private void buttonDecline_Click(object sender, EventArgs e)
         {
+            ClientInformation.ShareScreenWindows.Remove(Partner);
+            ClientInformation.ScreenShareService.RefuseShareScreen(ClientInformation.Username, Partner);
             Close();
         }
 
         private void OnWindowClose(object sender, AxRDPCOMAPILib._IRDPSessionEvents_OnWindowCloseEvent e)
         {
+            ClientInformation.ScreenShareService.RefuseShareScreen(ClientInformation.Username, Partner);
+            ClientInformation.ShareScreenWindows.Remove(Partner);
+            axRDPViewer1.Disconnect();
+        }
+
+        private void FormClosingEvent(object sender, FormClosingEventArgs e)
+        {
+            ClientInformation.ScreenShareService.RefuseShareScreen(ClientInformation.Username, Partner);
             ClientInformation.ShareScreenWindows.Remove(Partner);
             axRDPViewer1.Disconnect();
         }
