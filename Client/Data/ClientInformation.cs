@@ -11,7 +11,7 @@ namespace Client
 {
     static class ClientInformation
     {
-        public static string IPAdressServer = "86.124.186.149";
+        public static string IPAdressServer = "79.118.91.233";
         public static string Username { get; set; }
         public static string Password { get; set; }
         public static string Email { get; set; }
@@ -24,6 +24,7 @@ namespace Client
         public static Dictionary<string, ConversationWindow> ConversationsWindows = new Dictionary<string, ConversationWindow>();
         public static Dictionary<string, ScrenShareForm> ShareScreenWindows = new Dictionary<string, ScrenShareForm>();
         public static Dictionary<string, ShareScreenEnding> ShareScreenEndingWindows = new Dictionary<string, ShareScreenEnding>();
+        public static Dictionary<string, GroupConversationWindow> GroupConversationWindows = new Dictionary<string, GroupConversationWindow>();
 
         public static IConnection ConnectionService { get; set; }
         public static ICommunication CommunicationService { get; set; }

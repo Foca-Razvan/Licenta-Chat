@@ -1,0 +1,15 @@
+﻿<Window x:Class="Client.Windows.GroupConversationNotificationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client.Windows"
+        mc:Ignorable="d"
+        Title="GroupConversationNotificationWindow" Height="149.181" Width="394.262" Closing="ClosingEvent">
+    <Grid>
+        <Button x:Name="buttonAccept" Content="Aceept" HorizontalAlignment="Left" Margin="60,73,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderBrush="Black" Click="buttonAccept_Click"/>
+        <Button x:Name="buttonDecline" Content="Decline" HorizontalAlignment="Left" Margin="241,73,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderBrush="Black" Click="buttonDecline_Click"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" RenderTransformOrigin="-1.514,0.235" Width="366" Height="41" TextAlignment="Center"/>
+
+    </Grid>
+</Window>

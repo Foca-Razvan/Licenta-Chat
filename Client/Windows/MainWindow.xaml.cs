@@ -255,6 +255,7 @@ namespace Client
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
+            // TO DO
             GroupConversationWindow window = new GroupConversationWindow();
             window.Show();
         }

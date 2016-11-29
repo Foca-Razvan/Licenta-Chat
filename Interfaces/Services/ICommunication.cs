@@ -38,5 +38,19 @@ namespace Interfaces
         byte[] GetAvatarImage(string username);
         [OperationContract(IsOneWay = true)]
         void RemoveFriend(string sender, string receiver);
+        [OperationContract(IsOneWay = true)]
+        void InviteToGroupConversation(string sender, string receiver,string groupName);
+        [OperationContract]
+        bool AcceptGroupRequest(string sender,string groupName);
+        [OperationContract(IsOneWay = true)]
+        void DeclineGroupRequest(string sender, string groupName);
+        [OperationContract]
+        bool CreateGroupConversation(string creator, string groupName);
+        [OperationContract(IsOneWay = true)]
+        void LeaveGroup(string user, string groupName);
+        [OperationContract]
+        List<string> GetGroupMembers(string groupName);
+        [OperationContract(IsOneWay = true)]
+        void SendGroupMessage(string from, string groupName, string message);
     }
 }

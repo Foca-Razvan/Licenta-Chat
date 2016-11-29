@@ -26,7 +26,7 @@ namespace Server
             catch
             {
                 return false;
-            }          
+            }
         }
         /// <summary>
         /// Removes the user from the active users in the server and updates the friend list with users who are friends with him.
@@ -41,7 +41,7 @@ namespace Server
 
                 Subscriber.Unsubscribe(callback);
 
-                foreach(UserInformation client in Subscriber.subscribers)
+                foreach (UserInformation client in Subscriber.subscribers)
                 {
                     if (client.IsFriendWith(user.Username) && user.CommunicationCallback != client.CommunicationCallback)
                         client.CommunicationCallback.UpdateListOfContacts(user.Username);
@@ -65,7 +65,7 @@ namespace Server
         /// </summary>
         /// <param name="message"></param>
         /// <param name="to"></param>
-        public void SendMessage(string message,string to)
+        public void SendMessage(string message, string to)
         {
             IClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<IClientCallback>();
             UserInformation information = Subscriber.subscribers.Find(x => x.CommunicationCallback == clientCallback);
@@ -79,7 +79,7 @@ namespace Server
         /// Returns a dictionary with the name as key and 1 or 0 as status. 1 = online 0 = offline
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string,int> GetFriendList()
+        public Dictionary<string, int> GetFriendList()
         {
             Dictionary<string, int> contacts = new Dictionary<string, int>();
             IClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<IClientCallback>();
@@ -146,7 +146,7 @@ namespace Server
         /// <param name="sender"></param>
         /// <param name="friend"></param>
         /// <returns></returns>
-        public bool IsFriendWith(string sender , string friend)
+        public bool IsFriendWith(string sender, string friend)
         {
             using (DataBaseContainer context = new DataBaseContainer())
             {
@@ -185,7 +185,7 @@ namespace Server
                 UserInformation _sender = Subscriber.subscribers.Find(x => x.Username == sender.Username);
                 UserInformation _receiver = Subscriber.subscribers.Find(x => x.Username == receiver.Username);
 
-                bool statusSender=false,statusReceiver=false;
+                bool statusSender = false, statusReceiver = false;
                 if (receiver.Status == 1)
                     statusReceiver = true;
                 if (sender.Status == 1)
@@ -198,7 +198,7 @@ namespace Server
 
             }
 
-            
+
         }
         /// <summary>
         /// Decline friend request.
@@ -226,7 +226,7 @@ namespace Server
                     if (request.User.Username == user.Username)
                     {
                         User friend = context.Users.ToList().Find(x => x.Username == request.FromUsername);
-                        user.ScreenShareCallback.SendFriendNotification(request.FromUsername, friend.UserAvatar.Image);                   
+                        user.ScreenShareCallback.SendFriendNotification(request.FromUsername, friend.UserAvatar.Image);
                     }
             }
         }
@@ -248,7 +248,7 @@ namespace Server
                         client.ScreenShareCallback.SendProfileInformation(user.Password, user.Email, user.UserAvatar.Image);
                     else
                         client.ScreenShareCallback.SendProfileInformation(user.Password, user.Email, null);
-                
+
             }
         }
 
@@ -259,7 +259,7 @@ namespace Server
         /// <param name="email"></param>
         /// <param name="password"></param>
         /// <param name="image"></param>
-        public void UpdateProfile(string username,string email,string password,byte[] image)
+        public void UpdateProfile(string username, string email, string password, byte[] image)
         {
             using (DataBaseContainer context = new DataBaseContainer())
             {
@@ -317,11 +317,76 @@ namespace Server
             UserInformation _Sender = Subscriber.getUser(sender);
             UserInformation _Receiver = Subscriber.getUser(receiver);
 
-            if(_Sender != null)
+            if (_Sender != null)
                 _Sender.CommunicationCallback.FriendRemoved(receiver);
-            if(_Receiver != null)
+            if (_Receiver != null)
                 _Receiver.CommunicationCallback.FriendRemoved(sender);
 
+        }
+
+        public void InviteToGroupConversation(string sender, string receiver, string groupName)
+        {
+            UserInformation user = Subscriber.getUser(receiver);
+            if (user != null)
+                user.CommunicationCallback.SendGroupConversationNotification(sender, groupName);
+        }
+
+        public bool AcceptGroupRequest(string sender, string groupName)
+        {
+            UserInformation user = Subscriber.getUser(sender);
+            GroupConversation group = Subscriber.GetGroup(groupName);
+            if (group != null)
+            {
+                group.UserJoined(sender);
+                return true;
+            }
+            return false;
+        }
+
+        public void DeclineGroupRequest(string sender, string groupName)
+        {
+            UserInformation user = Subscriber.getUser(sender);
+            GroupConversation group = Subscriber.GetGroup(groupName);
+            if (group != null)
+                group.UserDeclined(sender);
+        }
+
+        public void LeaveGroup(string sender , string groupName)
+        {
+            UserInformation user = Subscriber.getUser(sender);
+            GroupConversation group = Subscriber.GetGroup(groupName);
+            if (group != null)
+            {
+                group.UserLeft(sender);
+                if (group.Members.Count == 0)
+                    Subscriber.GroupConversations.Remove(group);
+            }
+
+        }
+        public bool CreateGroupConversation(string creator,string groupName)
+        {
+            if(Subscriber.GroupConversations.Exists( x => x.Creator == creator && x.GroupName == groupName))
+                return false;
+
+            GroupConversation group = new GroupConversation(creator,groupName);
+            Subscriber.GroupConversations.Add(group);
+            return true;
+        }
+
+        public List<string> GetGroupMembers(string groupName)
+        {
+            List<string> list = new List<string>();
+            GroupConversation group = Subscriber.GetGroup(groupName);
+            foreach (UserInformation user in group.Members)
+                list.Add(user.Username);
+            return list;
+        }
+
+        public void SendGroupMessage(string sender,string groupName,string message)
+        {
+            GroupConversation group = Subscriber.GetGroup(groupName);
+            if (group != null)
+                group.SendMessage(sender, message);
         }
     }
 }

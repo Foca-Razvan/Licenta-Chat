@@ -32,7 +32,7 @@
             </ListView.View>
         </ListView>
         <Button x:Name="buttonAdd" Content="Add" HorizontalAlignment="Left" Margin="40,232,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="1" BorderBrush="Black" Click="buttonAdd_Click"/>
-        <Button x:Name="buttonCancel" Content="Cancel" HorizontalAlignment="Left" Margin="176,232,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="1" BorderBrush="Black"/>
+        <Button x:Name="buttonCancel" Content="Cancel" HorizontalAlignment="Left" Margin="176,232,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="1" BorderBrush="Black" Click="buttonCancel_Click"/>
 
     </Grid>
 </Window>

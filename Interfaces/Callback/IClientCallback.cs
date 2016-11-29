@@ -24,5 +24,15 @@ namespace Interfaces
         void AddFriendInFriendList(string username, byte[] image,bool status);
         [OperationContract(IsOneWay = true)]
         void FriendRemoved(string username);
+        [OperationContract(IsOneWay = true)]
+        void SendGroupConversationNotification(string sender, string groupName);
+        [OperationContract(IsOneWay = true)]
+        void UserJoinedGroup(string sender,string groupName);
+        [OperationContract(IsOneWay = true)]
+        void UserRefusedGroup(string sender, string groupName);
+        [OperationContract(IsOneWay = true)]
+        void UserLeft(string sender, string groupName);
+        [OperationContract(IsOneWay = true)]
+        void SendGroup(string sender, string groupName, string message);
     }
 }

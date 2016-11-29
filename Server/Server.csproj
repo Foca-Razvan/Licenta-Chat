@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\GroupConversation.cs" />
     <Compile Include="Service\AudioService.cs" />
     <Compile Include="Service\CommunicationService.cs" />
     <Compile Include="Service\ConnectionService.cs" />

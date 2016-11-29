@@ -104,14 +104,46 @@ namespace Client
             else
                 item.StatusImage = new BitmapImage(new Uri(@"/Images/offline_circle.jpg", UriKind.Relative));
             ClientInformation.MainWindow.Friends.Items.Add(item);
-
-            //ClientInformation.MainWindow.listViewFriendListRefreshOpacity();
         }
 
         public void FriendRemoved(string username)
         {
             FriendData item = ClientInformation.MainWindow.Friends.Items.ToList().Find(x => x.Username == username);
             ClientInformation.MainWindow.Friends.Items.Remove(item);
+        }
+
+        public void SendGroupConversationNotification(string sender,string groupName)
+        {
+            GroupConversationNotificationWindow window = new GroupConversationNotificationWindow(sender, groupName);
+            window.Show();
+        }
+
+        public void UserJoinedGroup(string sender,string groupName)
+        {
+            GroupConversationWindow window;
+            ClientInformation.GroupConversationWindows.TryGetValue(groupName, out window);
+            window.UserJoined(sender);
+        }
+
+        public void UserRefusedGroup(string sender,string groupName)
+        {
+            GroupConversationWindow window;
+            ClientInformation.GroupConversationWindows.TryGetValue(groupName, out window);
+            window.UserRefused(sender);
+        }
+
+        public void UserLeft(string sender,string groupName)
+        {
+            GroupConversationWindow window;
+            ClientInformation.GroupConversationWindows.TryGetValue(groupName, out window);
+            window.UserLeft(sender);
+        }
+
+        public void SendGroup(string sender,string groupName,string message)
+        {
+            GroupConversationWindow group;
+            ClientInformation.GroupConversationWindows.TryGetValue(groupName, out group);
+            group.ReceiveMessage(sender, message);
         }
     }
 

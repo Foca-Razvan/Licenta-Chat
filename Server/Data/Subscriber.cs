@@ -10,6 +10,7 @@ namespace Server
     public static class Subscriber
     {
         public static List<UserInformation> subscribers = new List<UserInformation>();
+        public static List<GroupConversation> GroupConversations = new List<GroupConversation>();
 
         public static void Subscribe(IClientCallback client,string username)
         {
@@ -27,6 +28,11 @@ namespace Server
         {
             UserInformation user = subscribers.Find(x => x.Username == username);
             return user;
+        }
+
+        public static GroupConversation GetGroup(string groupName)
+        {
+            return GroupConversations.Find(x => x.GroupName == groupName);
         }
     }
 }

@@ -91,6 +91,9 @@
     <Compile Include="Windows\FriendNotificationWindow.xaml.cs">
       <DependentUpon>FriendNotificationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\GroupConversationNotificationWindow.xaml.cs">
+      <DependentUpon>GroupConversationNotificationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\GroupConversationWindow.xaml.cs">
       <DependentUpon>GroupConversationWindow.xaml</DependentUpon>
     </Compile>
@@ -131,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\FriendNotificationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\GroupConversationNotificationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

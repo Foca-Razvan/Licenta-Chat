@@ -20,10 +20,13 @@ namespace Client.Windows
     public partial class AddFriendConversationWindow : Window
     {
         public List<string> Partners { get; set;}
-        public AddFriendConversationWindow(List<string> partners)
+        public string GroupName { get; set; }
+
+        public AddFriendConversationWindow(List<string> partners,string groupName)
         {
             InitializeComponent();
             Partners = partners;
+            GroupName = groupName;
             FriendListLoad();
         }
 
@@ -37,8 +40,18 @@ namespace Client.Windows
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
-            List<FriendData> Friends = listViewFriendList.SelectedItems as List<FriendData>;
-            MessageBox.Show("yaya");
+            try
+            {
+                FriendData friend = (FriendData)listViewFriendList.SelectedItem;
+                ClientInformation.CommunicationService.InviteToGroupConversation(ClientInformation.Username, friend.Username, GroupName);
+                Close();
+            }
+            catch { }
+        }
+
+        private void buttonCancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

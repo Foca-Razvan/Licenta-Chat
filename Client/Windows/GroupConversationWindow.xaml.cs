@@ -20,15 +20,33 @@ namespace Client.Windows
     public partial class GroupConversationWindow : Window
     {
         public List<string> Partners = new List<string>();
+        public string GroupName { get; set;}
 
         public GroupConversationWindow()
         {
             InitializeComponent();
+            ResizeMode = ResizeMode.CanMinimize;
+            Height = 110;
+            Width = 270;
+            textBoxConversation.IsReadOnly = true;
+        }
+
+        public GroupConversationWindow(string groupName)
+        {
+            InitializeComponent();
+            ResizeMode = ResizeMode.CanMinimize;
+            Partners = ClientInformation.CommunicationService.GetGroupMembers(groupName);
+            Partners.Remove(ClientInformation.Username);
+
+            textBoxName.Visibility = Visibility.Hidden;
+            buttonCreate.Visibility = Visibility.Hidden;
+            textBoxConversation.IsReadOnly = true;
+            GroupName = groupName;
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            AddFriendConversationWindow window = new AddFriendConversationWindow(Partners);
+            AddFriendConversationWindow window = new AddFriendConversationWindow(Partners, GroupName);
             window.ShowDialog();
         }
 
@@ -37,7 +55,7 @@ namespace Client.Windows
             if (e.Key == Key.Enter)
             {
                 textBoxConversation.Text += ClientInformation.Username + " " + DateTime.Now + ":" + textBoxMessage.Text + "\n";
-                //ClientInformation.CommunicationService.SendMessage(textBoxMessage.Text, Partner);
+                ClientInformation.CommunicationService.SendGroupMessage(ClientInformation.Username, GroupName, textBoxMessage.Text);
                 textBoxMessage.Clear();
             }
         }
@@ -50,6 +68,49 @@ namespace Client.Windows
         private void button_Click(object sender,RoutedEventArgs e)
         {
 
+        }
+
+        public void UserJoined(string user)
+        {
+            textBoxConversation.Text += user + " has joined.\n";
+            Partners.Add(user);
+        }
+
+        public void UserLeft(string user)
+        {
+            textBoxConversation.Text += user + " left.\n";
+            Partners.Remove(user);
+        }
+
+        public void UserRefused(string user)
+        {
+            textBoxConversation.Text += user + " refused to join.\n";
+        }
+
+        private void buttonCreate_Click(object sender, RoutedEventArgs e)
+        {
+            GroupName = textBoxName.Text;
+
+            if (ClientInformation.CommunicationService.CreateGroupConversation(ClientInformation.Username, GroupName))
+            {
+                Height = 374;
+                Width = 562.67;                
+                textBoxName.Visibility = Visibility.Hidden;
+                buttonCreate.Visibility = Visibility.Hidden;
+
+                ClientInformation.GroupConversationWindows.Add(GroupName, this);
+            }        
+        }
+
+        public void ReceiveMessage(string sender,string message)
+        {
+            textBoxConversation.Text += sender + " " + DateTime.Now + ": " + message + "\n";
+        }
+
+        private void OnClosingEvent(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            ClientInformation.CommunicationService.LeaveGroup(ClientInformation.Username, GroupName);
+            ClientInformation.GroupConversationWindows.Remove(GroupName);
         }
     }
 }
