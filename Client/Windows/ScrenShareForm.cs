@@ -66,6 +66,7 @@ namespace Client
             if (ok)
             {
                 ClientInformation.ShareScreenWindows.Remove(Partner);
+                ClientInformation.ScreenShareService.RefuseShareScreen(ClientInformation.Username, Partner);
                 axRDPViewer1.Disconnect();
             }
 

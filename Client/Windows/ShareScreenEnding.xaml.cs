@@ -52,5 +52,15 @@ namespace Client.Windows
             textBlock.Text = Partner + " has declined your request.";
             button.Visibility = Visibility.Hidden;
         }
+
+        private void buttonPause_Click(object sender, RoutedEventArgs e)
+        {
+            ClientInformation.MainWindow.RdpSession.Pause();
+        }
+
+        private void buttonResume_Click(object sender, RoutedEventArgs e)
+        {
+            ClientInformation.MainWindow.RdpSession.Resume();
+        }
     }
 }
