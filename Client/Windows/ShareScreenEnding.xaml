@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client.Windows"
         mc:Ignorable="d"
-        Title="ShareScreenEnding" Height="101.639" Width="353.279" Closing="Closing_Window">
+        Title="ShareScreenEnding" Height="151.639" Width="437.279" Closing="Closing_Window">
     <Grid>
-        <Button x:Name="button" Content="Close" HorizontalAlignment="Left" Margin="137,40,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderBrush="Black" BorderThickness="1" Click="button_Click"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="325" Height="25"/>
-        <Button x:Name="buttonPause" Content="Pause" HorizontalAlignment="Left" Margin="35,40,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderBrush="Black" BorderThickness="1" Click="buttonPause_Click"/>
-        <Button x:Name="buttonResume" Content="Resume" HorizontalAlignment="Left" Margin="240,40,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderBrush="Black" BorderThickness="1" Click="buttonResume_Click"/>
+        <Ellipse x:Name="AvatarImage" Stretch="Fill" Margin="10,27,326,20"></Ellipse>
+        <Button x:Name="button" Content="Close" HorizontalAlignment="Left" Margin="254,80,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderBrush="Black" BorderThickness="1" Click="button_Click"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="128,27,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="275" Height="25"/>
+        <Button x:Name="buttonPause" Content="Pause" HorizontalAlignment="Left" Margin="128,80,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderBrush="Black" BorderThickness="1" Click="buttonPause_Click"/>
 
     </Grid>
 </Window>

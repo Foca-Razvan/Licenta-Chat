@@ -21,6 +21,7 @@ namespace Client.Windows
     {
         private string Partner;
         private bool ok = false;
+        private bool status = true;
 
         public ShareScreenEnding(string partner)
         {
@@ -28,7 +29,10 @@ namespace Client.Windows
             textBlock.TextAlignment = TextAlignment.Center;
             textBlock.Text = "Share screen with " + partner + ".";
             Partner = partner;
+            ClientInformation.MainWindow.RdpSession.Resume();
+            AvatarImage.Fill = new ImageBrush(ClientInformation.MainWindow.GetImageFromFriendList(Partner));
         }
+
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
@@ -51,16 +55,23 @@ namespace Client.Windows
         {
             textBlock.Text = Partner + " has declined your request.";
             button.Visibility = Visibility.Hidden;
+            buttonPause.Visibility = Visibility.Hidden;
         }
 
         private void buttonPause_Click(object sender, RoutedEventArgs e)
         {
-            ClientInformation.MainWindow.RdpSession.Pause();
-        }
-
-        private void buttonResume_Click(object sender, RoutedEventArgs e)
-        {
-            ClientInformation.MainWindow.RdpSession.Resume();
+            if (status)
+            {
+                ClientInformation.MainWindow.RdpSession.Pause();
+                buttonPause.Content = "Resume";
+                status = false;
+            }
+            else
+            {
+                ClientInformation.MainWindow.RdpSession.Resume();
+                buttonPause.Content = "Pause";
+                status = true;
+            }
         }
     }
 }
