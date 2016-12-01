@@ -20,6 +20,7 @@ namespace Client.Windows
     public partial class ShareScreenEnding : Window
     {
         private string Partner;
+        private bool ok = false;
 
         public ShareScreenEnding(string partner)
         {
@@ -32,28 +33,24 @@ namespace Client.Windows
         private void button_Click(object sender, RoutedEventArgs e)
         {
             ClientInformation.ShareScreenEndingWindows.Remove(Partner);
-            ClientInformation.MainWindow.RdpSession.Close();
-            /*if (ClientInformation.MainWindow.myGuest != null)
-            {
-                ClientInformation.MainWindow.myGuest.TerminateConnection();
-                ClientInformation.MainWindow.myGuest = null;
-            }*/
+            ClientInformation.ScreenShareService.EndShareScreen(ClientInformation.Username,Partner);
+            ok = true;
             Close();
         }
 
         private void Closing_Window(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            /*ClientInformation.ShareScreenEndingWindows.Remove(Partner);
-            if (ClientInformation.MainWindow.myGuest != null)
+            if(!ok)
             {
-                ClientInformation.MainWindow.myGuest.TerminateConnection();
-                ClientInformation.MainWindow.myGuest = null;
-            }*/
+                ClientInformation.ShareScreenEndingWindows.Remove(Partner);
+                ClientInformation.ScreenShareService.EndShareScreen(ClientInformation.Username, Partner);
+            }
         }
 
         public void DeclineRequest()
         {
             textBlock.Text = Partner + " has declined your request.";
+            button.Visibility = Visibility.Hidden;
         }
     }
 }

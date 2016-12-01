@@ -58,8 +58,13 @@ namespace Client
 
         private void FormClosingEvent(object sender, FormClosingEventArgs e)
         {
-            ClientInformation.ScreenShareService.RefuseShareScreen(ClientInformation.Username, Partner);
+            //ClientInformation.ScreenShareService.RefuseShareScreen(ClientInformation.Username, Partner);
             ClientInformation.ShareScreenWindows.Remove(Partner);
+            axRDPViewer1.Disconnect();
+        }
+
+        public void Disconnect()
+        {
             axRDPViewer1.Disconnect();
         }
     }

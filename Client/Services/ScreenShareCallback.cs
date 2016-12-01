@@ -34,7 +34,16 @@ namespace Client
         {
             ShareScreenEnding window;
             ClientInformation.ShareScreenEndingWindows.TryGetValue(sender,out window);
-            window.DeclineRequest();
+            if(window != null)
+                window.DeclineRequest();
+        }
+
+        public void EndShareScreen(string sender)
+        {
+            ScrenShareForm form;
+            ClientInformation.ShareScreenWindows.TryGetValue(sender,out form);
+            if (form != null)
+                form.Disconnect();
         }
     }
 }

@@ -43,12 +43,16 @@ namespace Server
 
         public void RefuseShareScreen(string sender ,string partner)
         {
-            IScreenShareCallback callback = OperationContext.Current.GetCallbackChannel<IScreenShareCallback>();
             UserInformation Partner = Subscriber.getUser(partner);
             if (Partner.ScreenShareCallback != null)
                 Partner.ScreenShareCallback.SendRefuseNotification(sender);
+        }
 
-
+        public void EndShareScreen(string sender,string receiver)
+        {
+            UserInformation user = Subscriber.getUser(receiver);
+            if(user != null && user.ScreenShareCallback != null)
+                user.ScreenShareCallback.EndShareScreen(sender);
         }
     }
 }

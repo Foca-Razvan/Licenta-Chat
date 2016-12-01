@@ -31,8 +31,8 @@ namespace Client
     {
         public RDPSession RdpSession { get; set; }
         public FriendDataView Friends { get; set; }
-        public IRDPSRAPIAttendee myGuest;
-        public IRDPSRAPIInvitation Invitation;
+        private int groupNr = 1;
+        private int authNr = 1;
 
         public MainWindow()
         {
@@ -143,14 +143,14 @@ namespace Client
 
         private void Incoming(object partner)
         {
-            myGuest = (IRDPSRAPIAttendee)partner;
+            IRDPSRAPIAttendee myGuest = (IRDPSRAPIAttendee)partner;
             myGuest.ControlLevel = CTRL_LEVEL.CTRL_LEVEL_INTERACTIVE;
         }
 
         private void Disconnected(object partner)
         {
             //IRDPSRAPIAttendee myGuest = (IRDPSRAPIAttendee)partner;
-            myGuest.TerminateConnection();
+            //myGuest.TerminateConnection();
         }
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
@@ -222,16 +222,18 @@ namespace Client
 
             if(data.Status && !ClientInformation.ShareScreenWindows.ContainsKey(data.Username))
             {
+
                 if (RdpSession == null)
                 {
                     RdpSession = new RDPSession();
                     RdpSession.OnAttendeeConnected += Incoming;
                     RdpSession.Open();
-                }
-                
 
-                if(Invitation == null)
-                    Invitation = RdpSession.Invitations.CreateInvitation(ClientInformation.Username, data.Username, "", 1);
+                }
+                IRDPSRAPIInvitation Invitation = RdpSession.Invitations.CreateInvitation("auth" + authNr,"group"+groupNr, "", 2);
+                authNr++;
+                groupNr++;
+
                 ClientInformation.ScreenShareService.InitShareScreen(ClientInformation.Username, data.Username, Invitation.ConnectionString);
 
                 ShareScreenEnding window = new ShareScreenEnding(data.Username);
@@ -255,7 +257,6 @@ namespace Client
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            // TO DO
             GroupConversationWindow window = new GroupConversationWindow();
             window.Show();
         }

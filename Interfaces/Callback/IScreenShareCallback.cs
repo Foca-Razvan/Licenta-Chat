@@ -17,5 +17,7 @@ namespace Interfaces
         void SendProfileInformation(string password, string email, byte[] image);
         [OperationContract(IsOneWay = true)]
         void SendRefuseNotification(string sender);
+        [OperationContract(IsOneWay = true)]
+        void EndShareScreen(string sender);
     }
 }
