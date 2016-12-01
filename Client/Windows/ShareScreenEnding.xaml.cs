@@ -32,22 +32,23 @@ namespace Client.Windows
         private void button_Click(object sender, RoutedEventArgs e)
         {
             ClientInformation.ShareScreenEndingWindows.Remove(Partner);
-            if (ClientInformation.MainWindow.myGuest != null)
+            ClientInformation.MainWindow.RdpSession.Close();
+            /*if (ClientInformation.MainWindow.myGuest != null)
             {
                 ClientInformation.MainWindow.myGuest.TerminateConnection();
                 ClientInformation.MainWindow.myGuest = null;
-            }
+            }*/
             Close();
         }
 
         private void Closing_Window(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            ClientInformation.ShareScreenEndingWindows.Remove(Partner);
+            /*ClientInformation.ShareScreenEndingWindows.Remove(Partner);
             if (ClientInformation.MainWindow.myGuest != null)
             {
                 ClientInformation.MainWindow.myGuest.TerminateConnection();
                 ClientInformation.MainWindow.myGuest = null;
-            }
+            }*/
         }
 
         public void DeclineRequest()

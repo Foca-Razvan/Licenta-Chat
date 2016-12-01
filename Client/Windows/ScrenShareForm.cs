@@ -51,7 +51,7 @@ namespace Client
 
         private void OnWindowClose(object sender, AxRDPCOMAPILib._IRDPSessionEvents_OnWindowCloseEvent e)
         {
-            ClientInformation.ScreenShareService.RefuseShareScreen(ClientInformation.Username, Partner);
+            //ClientInformation.ScreenShareService.RefuseShareScreen(ClientInformation.Username, Partner);
             ClientInformation.ShareScreenWindows.Remove(Partner);
             axRDPViewer1.Disconnect();
         }
