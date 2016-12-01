@@ -9,8 +9,8 @@
     <Grid>
         <Button x:Name="button" Content="Close" HorizontalAlignment="Left" Margin="137,40,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderBrush="Black" BorderThickness="1" Click="button_Click"/>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="325" Height="25"/>
-        <Button x:Name="buttonPause" Content="Pause" HorizontalAlignment="Left" Margin="35,40,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderBrush="Black" BorderThickness="1"/>
-        <Button x:Name="buttonResume" Content="Resume" HorizontalAlignment="Left" Margin="240,40,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderBrush="Black" BorderThickness="1"/>
+        <Button x:Name="buttonPause" Content="Pause" HorizontalAlignment="Left" Margin="35,40,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderBrush="Black" BorderThickness="1" Click="buttonPause_Click"/>
+        <Button x:Name="buttonResume" Content="Resume" HorizontalAlignment="Left" Margin="240,40,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderBrush="Black" BorderThickness="1" Click="buttonResume_Click"/>
 
     </Grid>
 </Window>
