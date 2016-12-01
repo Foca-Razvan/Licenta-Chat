@@ -15,6 +15,7 @@ namespace Client
 
         private string ConnectionString { get; set; }
         private string Partner { get; set; }
+        private bool ok = true;
 
         public ScrenShareForm(string from , string connectionString)
         {
@@ -46,21 +47,28 @@ namespace Client
         {
             ClientInformation.ShareScreenWindows.Remove(Partner);
             ClientInformation.ScreenShareService.RefuseShareScreen(ClientInformation.Username, Partner);
+            ok = false;
             Close();
         }
 
         private void OnWindowClose(object sender, AxRDPCOMAPILib._IRDPSessionEvents_OnWindowCloseEvent e)
         {
-            //ClientInformation.ScreenShareService.RefuseShareScreen(ClientInformation.Username, Partner);
-            ClientInformation.ShareScreenWindows.Remove(Partner);
-            axRDPViewer1.Disconnect();
+            if(ok)
+            {
+                ClientInformation.ShareScreenWindows.Remove(Partner);
+                axRDPViewer1.Disconnect();
+            }
+
         }
 
         private void FormClosingEvent(object sender, FormClosingEventArgs e)
         {
-            //ClientInformation.ScreenShareService.RefuseShareScreen(ClientInformation.Username, Partner);
-            ClientInformation.ShareScreenWindows.Remove(Partner);
-            axRDPViewer1.Disconnect();
+            if (ok)
+            {
+                ClientInformation.ShareScreenWindows.Remove(Partner);
+                axRDPViewer1.Disconnect();
+            }
+
         }
 
         public void Disconnect()
