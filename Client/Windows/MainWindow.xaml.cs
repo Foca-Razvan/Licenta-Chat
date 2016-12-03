@@ -108,7 +108,10 @@ namespace Client
         public BitmapImage GetImageFromFriendList(string username)
         {
             FriendData data = Friends.Items.ToList().Find(x => x.Username == username);
-            return data.AvatarImage;
+            if (data != null)
+                return data.AvatarImage;
+            else
+                return null;
         }
 
         private void ClosingEvent(object sender, CancelEventArgs e)
