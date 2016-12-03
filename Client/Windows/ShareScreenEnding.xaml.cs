@@ -22,8 +22,9 @@ namespace Client.Windows
         private string Partner;
         private bool ok = false;
         private bool status = true;
+        private bool group = false;
 
-        public ShareScreenEnding(string partner)
+        public ShareScreenEnding(string partner,bool groupStatus)
         {
             InitializeComponent();
             textBlock.TextAlignment = TextAlignment.Center;
@@ -31,13 +32,17 @@ namespace Client.Windows
             Partner = partner;
             ClientInformation.MainWindow.RdpSession.Resume();
             AvatarImage.Fill = new ImageBrush(ClientInformation.MainWindow.GetImageFromFriendList(Partner));
+            group = groupStatus;
         }
 
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
             ClientInformation.ShareScreenEndingWindows.Remove(Partner);
-            ClientInformation.ScreenShareService.EndShareScreen(ClientInformation.Username,Partner);
+            if (group)
+                ClientInformation.ScreenShareService.GroupEndShareScreen(ClientInformation.Username, Partner);
+            else
+                ClientInformation.ScreenShareService.EndShareScreen(ClientInformation.Username, Partner);
             ok = true;
             Close();
         }
