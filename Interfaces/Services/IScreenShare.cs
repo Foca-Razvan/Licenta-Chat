@@ -18,5 +18,7 @@ namespace Interfaces
         void RefuseShareScreen(string sender,string partner);
         [OperationContract(IsOneWay = true)]
         void EndShareScreen(string sender, string receiver);
+        [OperationContract(IsOneWay = true)]
+        void InitShareScreenGroup(string client, string Group, string connectionString);
     }
 }

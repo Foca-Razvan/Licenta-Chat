@@ -54,5 +54,12 @@ namespace Server
             if(user != null && user.ScreenShareCallback != null)
                 user.ScreenShareCallback.EndShareScreen(sender);
         }
+
+        public void InitShareScreenGroup(string sender,string groupName,string connectionString)
+        {
+            GroupConversation group = Subscriber.GetGroup(groupName);
+            foreach(UserInformation user in group.Members)
+                user.ScreenShareCallback.GroupShareScreenNotification(sender,group.GroupName, connectionString);
+        }
     }
 }

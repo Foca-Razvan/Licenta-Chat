@@ -45,5 +45,13 @@ namespace Client
             if (form != null)
                 form.Disconnect();
         }
+
+        public void GroupShareScreenNotification(string sender,string groupName,string connectionString)
+        {
+            ScrenShareForm screenShareForm = new ScrenShareForm(groupName, connectionString);
+            ClientInformation.ShareScreenWindows.Add(sender, screenShareForm);
+            ClientInformation.ShareScreenWindows.Add(groupName, screenShareForm);
+            screenShareForm.Show();
+        }
     }
 }

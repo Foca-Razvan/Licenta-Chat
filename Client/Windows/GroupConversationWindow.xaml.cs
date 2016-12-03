@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using RDPCOMAPILib;
 
 namespace Client.Windows
 {
@@ -21,6 +22,9 @@ namespace Client.Windows
     {
         public List<string> Partners = new List<string>();
         public string GroupName { get; set;}
+
+        private int auth = 0;
+        private int group = 0;
 
         public GroupConversationWindow()
         {
@@ -62,12 +66,35 @@ namespace Client.Windows
 
         private void buttonCall_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void button_Click(object sender,RoutedEventArgs e)
         {
+            if (!ClientInformation.ShareScreenWindows.ContainsKey(GroupName))
+            {
+                if (ClientInformation.MainWindow.RdpSession == null)
+                {
+                    ClientInformation.MainWindow.RdpSession = new RDPSession();
+                    ClientInformation.MainWindow.RdpSession.OnAttendeeConnected += Incoming;
+                    ClientInformation.MainWindow.RdpSession.Open();
+                }
 
+                IRDPSRAPIInvitation Invitation = ClientInformation.MainWindow.RdpSession.Invitations.CreateInvitation("auth" + auth, "group" + group, "", 100);
+                auth++;
+                group++;
+                ClientInformation.ScreenShareService.InitShareScreenGroup(ClientInformation.Username, GroupName, Invitation.ConnectionString);
+                ShareScreenEnding window = new ShareScreenEnding(GroupName);
+                foreach (string partner in Partners)
+                    ClientInformation.ShareScreenEndingWindows.Add(partner, window);
+                ClientInformation.ShareScreenEndingWindows.Add(GroupName, window);
+                window.Show();
+            }
+        }
+
+        private void Incoming(object partner)
+        {
+            IRDPSRAPIAttendee myGuest = (IRDPSRAPIAttendee)partner;
+            myGuest.ControlLevel = CTRL_LEVEL.CTRL_LEVEL_INTERACTIVE;
         }
 
         public void UserJoined(string user)

@@ -19,5 +19,7 @@ namespace Interfaces
         void SendRefuseNotification(string sender);
         [OperationContract(IsOneWay = true)]
         void EndShareScreen(string sender);
+        [OperationContract(IsOneWay = true)]
+        void GroupShareScreenNotification(string sender, string groupName, string connectionString);
     }
 }
