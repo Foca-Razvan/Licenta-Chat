@@ -59,7 +59,8 @@ namespace Server
         {
             GroupConversation group = Subscriber.GetGroup(groupName);
             foreach(UserInformation user in group.Members)
-                user.ScreenShareCallback.GroupShareScreenNotification(sender,group.GroupName, connectionString);
+                if(user.Username != sender)
+                    user.ScreenShareCallback.GroupShareScreenNotification(sender,group.GroupName, connectionString);
         }
     }
 }
