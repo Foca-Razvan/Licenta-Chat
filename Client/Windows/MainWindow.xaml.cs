@@ -239,7 +239,7 @@ namespace Client
 
                 ClientInformation.ScreenShareService.InitShareScreen(ClientInformation.Username, data.Username, Invitation.ConnectionString);
 
-                ShareScreenEnding window = new ShareScreenEnding(data.Username);
+                ShareScreenEnding window = new ShareScreenEnding(data.Username,false);
                 ClientInformation.ShareScreenEndingWindows.Add(data.Username, window);
                 window.Show();
             }
