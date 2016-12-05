@@ -16,8 +16,9 @@ namespace Client
         private string ConnectionString { get; set; }
         private string Partner { get; set; }
         private bool ok = true;
+        public bool IsGroup { get; set; }
 
-        public ScrenShareForm(string from , string connectionString)
+        public ScrenShareForm(string from , string connectionString,bool isGroup)
         {
             InitializeComponent();
 
@@ -26,6 +27,7 @@ namespace Client
 
             ConnectionString = connectionString;
             Partner = from;
+            IsGroup = isGroup;
         }
 
         private void buttonAccept_Click(object sender, EventArgs e)
@@ -46,7 +48,10 @@ namespace Client
         private void buttonDecline_Click(object sender, EventArgs e)
         {
             ClientInformation.ShareScreenWindows.Remove(Partner);
-            ClientInformation.ScreenShareService.RefuseShareScreen(ClientInformation.Username, Partner);
+            if (IsGroup)
+                ClientInformation.ScreenShareService.RefuseShareScreen(ClientInformation.Username, Partner);
+            else
+                ClientInformation.ScreenShareService.RefuseGroupShareScreen(ClientInformation.Username, Partner);
             ok = false;
             Close();
         }

@@ -51,11 +51,15 @@ namespace Client
 
         public void UserRefusedShareScreenGroup(string sender, string groupName)
         {
-            GroupConversationWindow group;
-            ClientInformation.GroupConversationWindows.TryGetValue(groupName, out group);
+         
+            if(ClientInformation.ShareScreenEndingWindows.ToList().Exists(x=> x.Key == sender))
+            {
+                GroupConversationWindow group;
+                ClientInformation.GroupConversationWindows.TryGetValue(groupName, out group);
 
-            if (group != null)
-                group.UserRefusedSharreScreenGroup(sender);
+                if (group != null)
+                    group.UserRefusedSharreScreenGroup(sender);
+            }
 
             ClientInformation.ShareScreenEndingWindows.Remove(sender);
         }

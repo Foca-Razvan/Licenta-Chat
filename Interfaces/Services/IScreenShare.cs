@@ -23,6 +23,6 @@ namespace Interfaces
         [OperationContract(IsOneWay = true)]
         void GroupEndShareScreen(string sender, string groupName);
         [OperationContract(IsOneWay = true)]
-        void RefuseGroupShareScreen(string sender, string groupName, string receiver);
+        void RefuseGroupShareScreen(string sender, string groupName);
     }
 }

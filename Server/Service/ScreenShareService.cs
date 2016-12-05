@@ -34,36 +34,37 @@ namespace Server
         /// <param name="client"></param>
         /// <param name="partner"></param>
         /// <param name="connectionString"></param>
-        public void InitShareScreen(string client , string partner,string connectionString)
+        public void InitShareScreen(string client, string partner, string connectionString)
         {
             UserInformation user = Subscriber.getUser(partner);
             if (user != null && user.ScreenShareCallback != null)
-                user.ScreenShareCallback.ShareScrennNotification(client,connectionString);
+                user.ScreenShareCallback.ShareScrennNotification(client, connectionString);
         }
 
-        public void RefuseShareScreen(string sender ,string partner)
+        public void RefuseShareScreen(string sender, string partner)
         {
             UserInformation Partner = Subscriber.getUser(partner);
             if (Partner != null && Partner.ScreenShareCallback != null)
                 Partner.ScreenShareCallback.SendRefuseNotification(sender);
-            
+
         }
 
-        public void ReguseShareScreenGrouop(string sender ,string receiver ,string groupName)
+        public void RefuseGroupShareScreen(string sender, string groupName)
         {
-        GroupConversation group = Subscriber.GetGroup(groupName);
-        if (group != null)
-            group.UserRefusedShareSCreen(sender,receiver);
-    }
 
-        public void RefuseGroupShareScreen(string sender,string groupName,string receiver)
+            GroupConversation group = Subscriber.GetGroup(groupName);
+            if (group != null)
+                group.UserRefusedShareSCreen(sender);
+        }
+
+        /*public void RefuseGroupShareScreen(string sender,string groupName,string receiver)
         {
             GroupConversation group = Subscriber.GetGroup(groupName);
             if (group != null)
                 foreach (UserInformation user in group.Members)
                     if (user.Username == receiver)
                         user.ScreenShareCallback.UserLeftShareScreenGroup(sender,groupName);
-        }
+        }*/
 
         public void EndShareScreen(string sender,string receiver)
         {

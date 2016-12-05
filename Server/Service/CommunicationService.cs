@@ -337,7 +337,7 @@ namespace Server
             GroupConversation group = Subscriber.GetGroup(groupName);
             if (group != null)
             {
-                if!(group.UserExits(sender))
+                if(!group.UserExits(sender))
                     group.UserJoined(sender);
                 return true;
             }
