@@ -40,7 +40,12 @@ namespace Client.Windows
         {
             ClientInformation.ShareScreenEndingWindows.Remove(Partner);
             if (group)
+            {
                 ClientInformation.ScreenShareService.GroupEndShareScreen(ClientInformation.Username, Partner);
+                GroupConversationWindow group;
+                ClientInformation.GroupConversationWindows.TryGetValue(Partner, out group);
+                group.CloseShareScreen();
+            }
             else
                 ClientInformation.ScreenShareService.EndShareScreen(ClientInformation.Username, Partner);
             ok = true;

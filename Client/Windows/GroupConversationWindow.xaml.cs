@@ -132,6 +132,13 @@ namespace Client.Windows
             textBoxConversation.Text += user + " refused to join.\n";
         }
 
+        public void CloseShareScreen()
+        {
+            foreach (string member in Partners)
+                ClientInformation.ShareScreenEndingWindows.Remove(member);
+            ClientInformation.ShareScreenEndingWindows.Remove(GroupName);
+        }
+
         private void buttonCreate_Click(object sender, RoutedEventArgs e)
         {
             GroupName = textBoxName.Text;
