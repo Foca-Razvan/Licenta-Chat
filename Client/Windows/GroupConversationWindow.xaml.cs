@@ -122,9 +122,16 @@ namespace Client.Windows
         {
             textBoxConversation.Text += user + " left share screen group.\n";
             ClientInformation.ShareScreenEndingWindows.Remove(user);
+            ClientInformation.ShareScreenWindows.Remove(user);
             ShareScreenPartners.Remove(user);
-            if(ShareScreenPartners.Count == 0)
+            if (ShareScreenPartners.Count == 0)
+            {
+                ShareScreenEnding window;
+                ClientInformation.ShareScreenEndingWindows.TryGetValue(GroupName, out window);
+                if (window != null)
+                    window.AllUsersLeft();
                 ClientInformation.ShareScreenEndingWindows.Remove(GroupName);
+            }
         }
 
         public void UserRefused(string user)
@@ -135,7 +142,10 @@ namespace Client.Windows
         public void CloseShareScreen()
         {
             foreach (string member in Partners)
+            {
                 ClientInformation.ShareScreenEndingWindows.Remove(member);
+                ClientInformation.ShareScreenWindows.Remove(member);
+            }
             ClientInformation.ShareScreenEndingWindows.Remove(GroupName);
         }
 

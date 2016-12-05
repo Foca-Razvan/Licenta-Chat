@@ -83,5 +83,12 @@ namespace Client.Windows
                 status = true;
             }
         }
+
+        public void AllUsersLeft()
+        {
+            textBlock.Text = "All members left.";
+            button.Visibility = Visibility.Hidden;
+            buttonPause.Visibility = Visibility.Hidden;
+        }
     }
 }
