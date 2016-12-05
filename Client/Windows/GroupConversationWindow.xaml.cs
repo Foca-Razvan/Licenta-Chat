@@ -66,6 +66,7 @@ namespace Client.Windows
 
         private void buttonCall_Click(object sender, RoutedEventArgs e)
         {
+            // TO DO
         }
 
         private void button_Click(object sender,RoutedEventArgs e)
@@ -83,7 +84,7 @@ namespace Client.Windows
                 auth++;
                 group++;
                 ClientInformation.ScreenShareService.InitShareScreenGroup(ClientInformation.Username, GroupName, Invitation.ConnectionString);
-                ShareScreenEnding window = new ShareScreenEnding(GroupName);
+                ShareScreenEnding window = new ShareScreenEnding(GroupName,true);
                 foreach (string partner in Partners)
                     ClientInformation.ShareScreenEndingWindows.Add(partner, window);
                 ClientInformation.ShareScreenEndingWindows.Add(GroupName, window);
@@ -107,6 +108,9 @@ namespace Client.Windows
         {
             textBoxConversation.Text += user + " left.\n";
             Partners.Remove(user);
+            ClientInformation.ShareScreenEndingWindows.Remove(user);
+            ClientInformation.CallingWindows.Remove(user);
+            ClientInformation.AnswerWindows.Remove(user);
         }
 
         public void UserRefused(string user)
@@ -138,6 +142,7 @@ namespace Client.Windows
         {
             ClientInformation.CommunicationService.LeaveGroup(ClientInformation.Username, GroupName);
             ClientInformation.GroupConversationWindows.Remove(GroupName);
+            ClientInformation.ShareScreenEndingWindows.Remove(GroupName);
         }
     }
 }

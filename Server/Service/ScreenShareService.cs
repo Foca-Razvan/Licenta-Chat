@@ -44,7 +44,7 @@ namespace Server
         public void RefuseShareScreen(string sender ,string partner)
         {
             UserInformation Partner = Subscriber.getUser(partner);
-            if (Partner.ScreenShareCallback != null)
+            if (Partner != null && Partner.ScreenShareCallback != null)
                 Partner.ScreenShareCallback.SendRefuseNotification(sender);
         }
 
