@@ -23,6 +23,7 @@ namespace Client.Windows
         public List<string> Partners = new List<string>();
         public string GroupName { get; set;}
 
+        private List<string> ShareScreenPartners = new List<string>();
         private int auth = 0;
         private int group = 0;
 
@@ -86,7 +87,10 @@ namespace Client.Windows
                 ClientInformation.ScreenShareService.InitShareScreenGroup(ClientInformation.Username, GroupName, Invitation.ConnectionString);
                 ShareScreenEnding window = new ShareScreenEnding(GroupName,true);
                 foreach (string partner in Partners)
+                {
                     ClientInformation.ShareScreenEndingWindows.Add(partner, window);
+                    ShareScreenPartners.Add(partner);
+                }
                 ClientInformation.ShareScreenEndingWindows.Add(GroupName, window);
                 window.Show();
             }
@@ -111,6 +115,16 @@ namespace Client.Windows
             ClientInformation.ShareScreenEndingWindows.Remove(user);
             ClientInformation.CallingWindows.Remove(user);
             ClientInformation.AnswerWindows.Remove(user);
+            ShareScreenPartners.Remove(user);
+        }
+
+        public void UserLeftShareScreen(string user)
+        {
+            textBoxConversation.Text += user + " left share screen group.\n";
+            ClientInformation.ShareScreenEndingWindows.Remove(user);
+            ShareScreenPartners.Remove(user);
+            if(ShareScreenPartners.Count == 0)
+                ClientInformation.ShareScreenEndingWindows.Remove(GroupName);
         }
 
         public void UserRefused(string user)

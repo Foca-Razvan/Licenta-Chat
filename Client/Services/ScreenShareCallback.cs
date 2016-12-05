@@ -38,6 +38,20 @@ namespace Client
                 window.DeclineRequest();
         }
 
+        public void UserLeftShareScreenGroup(string sender,string groupName)
+        {
+            //ShareScreenEnding window;
+            //ClientInformation.ShareScreenEndingWindows.TryGetValue(sender, out window);
+            ClientInformation.ShareScreenEndingWindows.Remove(sender);
+
+            GroupConversationWindow group;
+            ClientInformation.GroupConversationWindows.TryGetValue(groupName, out group);
+            if (group != null)
+                group.UserLeftShareScreen(sender);
+
+
+        }
+
         public void EndShareScreen(string sender)
         {
             ScrenShareForm form;
