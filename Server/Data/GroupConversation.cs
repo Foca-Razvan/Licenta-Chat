@@ -61,6 +61,13 @@ namespace Server
                     user.CommunicationCallback.SendGroup(from, GroupName, message);
         }
 
-       
+        public bool UserExits(string username)
+        {
+            if (Members.Exists(x => x.Username == username))
+                return true;
+
+            return false;
+        }
+
     }
 }

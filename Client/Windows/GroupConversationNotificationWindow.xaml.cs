@@ -33,9 +33,13 @@ namespace Client.Windows
 
         private void buttonAccept_Click(object sender, RoutedEventArgs e)
         {
+
             if (ClientInformation.CommunicationService.AcceptGroupRequest(ClientInformation.Username, GroupName))
             {
                 ok = true;
+
+                if (ClientInformation.GroupConversationWindows.ToList().Exists(x => x.Key == GroupName))
+                    Close();
                 GroupConversationWindow window = new GroupConversationWindow(GroupName);
                 ClientInformation.GroupConversationWindows.Add(GroupName, window);
                 window.Show();
