@@ -51,7 +51,6 @@ namespace Server
 
         public void RefuseGroupShareScreen(string sender, string groupName)
         {
-
             GroupConversation group = Subscriber.GetGroup(groupName);
             if (group != null)
                 group.UserRefusedShareSCreen(sender);

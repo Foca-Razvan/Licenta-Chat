@@ -40,11 +40,10 @@ namespace Server
             Members.Remove(user);
         }
 
-        public void UserRefusedShareSCreen(string sender,string receiver)
+        public void UserRefusedShareSCreen(string sender)
         {
             foreach(UserInformation member in Members)
-                if (member.Username == receiver)
-                    member.ScreenShareCallback.UserRefusedShareScreenGroup(sender,GroupName);
+                member.ScreenShareCallback.UserRefusedShareScreenGroup(sender,GroupName);
         }
 
         public void UserDeclined(string username)

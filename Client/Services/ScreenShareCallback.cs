@@ -12,7 +12,7 @@ namespace Client
     {
         public void ShareScrennNotification(string from,string connectionString)
         {         
-            ScrenShareForm screenShareForm = new ScrenShareForm(from,connectionString);
+            ScrenShareForm screenShareForm = new ScrenShareForm(from,connectionString, false);
             ClientInformation.ShareScreenWindows.Add(from,screenShareForm);
             screenShareForm.Show();
         }
@@ -74,7 +74,7 @@ namespace Client
 
         public void GroupShareScreenNotification(string sender,string groupName,string connectionString)
         {
-            ScrenShareForm screenShareForm = new ScrenShareForm(groupName, connectionString);
+            ScrenShareForm screenShareForm = new ScrenShareForm(groupName, connectionString,true);
             ClientInformation.ShareScreenWindows.Add(sender, screenShareForm);
             ClientInformation.ShareScreenWindows.Add(groupName, screenShareForm);
             screenShareForm.Show();
