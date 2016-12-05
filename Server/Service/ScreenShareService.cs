@@ -46,7 +46,15 @@ namespace Server
             UserInformation Partner = Subscriber.getUser(partner);
             if (Partner != null && Partner.ScreenShareCallback != null)
                 Partner.ScreenShareCallback.SendRefuseNotification(sender);
+            
         }
+
+        public void ReguseShareScreenGrouop(string sender ,string receiver ,string groupName)
+        {
+        GroupConversation group = Subscriber.GetGroup(groupName);
+        if (group != null)
+            group.UserRefusedShareSCreen(sender,receiver);
+    }
 
         public void RefuseGroupShareScreen(string sender,string groupName,string receiver)
         {

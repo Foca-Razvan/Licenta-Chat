@@ -120,7 +120,7 @@ namespace Client
             {
                 ClientInformation.CommunicationService.Logout();
             }
-            catch { Close(); }
+            catch {  }
         }
 
 

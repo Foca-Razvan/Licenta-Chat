@@ -40,8 +40,6 @@ namespace Client
 
         public void UserLeftShareScreenGroup(string sender,string groupName)
         {
-            //ShareScreenEnding window;
-            //ClientInformation.ShareScreenEndingWindows.TryGetValue(sender, out window);
             ClientInformation.ShareScreenEndingWindows.Remove(sender);
 
             GroupConversationWindow group;
@@ -49,7 +47,17 @@ namespace Client
             if (group != null)
                 group.UserLeftShareScreen(sender);
 
+        }
 
+        public void UserRefusedShareScreenGroup(string sender, string groupName)
+        {
+            GroupConversationWindow group;
+            ClientInformation.GroupConversationWindows.TryGetValue(groupName, out group);
+
+            if (group != null)
+                group.UserRefusedSharreScreenGroup(sender);
+
+            ClientInformation.ShareScreenEndingWindows.Remove(sender);
         }
 
         public void EndShareScreen(string sender)
@@ -67,5 +75,7 @@ namespace Client
             ClientInformation.ShareScreenWindows.Add(groupName, screenShareForm);
             screenShareForm.Show();
         }
+
+
     }
 }

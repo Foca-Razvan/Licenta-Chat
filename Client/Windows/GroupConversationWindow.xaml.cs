@@ -134,6 +134,20 @@ namespace Client.Windows
             }
         }
 
+        public void UserRefusedSharreScreenGroup(string user)
+        {
+            ClientInformation.ShareScreenEndingWindows.Remove(user);
+            ClientInformation.ShareScreenWindows.Remove(user);
+            if (ShareScreenPartners.Count == 0)
+            {
+                ShareScreenEnding window;
+                ClientInformation.ShareScreenEndingWindows.TryGetValue(GroupName, out window);
+                if (window != null)
+                    window.AllUserRefused();
+                ClientInformation.ShareScreenEndingWindows.Remove(GroupName);
+            }
+        }
+
         public void UserRefused(string user)
         {
             textBoxConversation.Text += user + " refused to join.\n";

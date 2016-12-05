@@ -74,7 +74,8 @@ namespace Client
 
         public void Disconnect()
         {
-            axRDPViewer1.Disconnect();
+            try { axRDPViewer1.Disconnect(); } catch { };
+            
             buttonAccept.Visible = false;
             buttonDecline.Visible = false;
             label1.Text = Partner + " has ended the share screen.";

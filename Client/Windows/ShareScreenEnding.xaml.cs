@@ -90,5 +90,12 @@ namespace Client.Windows
             button.Visibility = Visibility.Hidden;
             buttonPause.Visibility = Visibility.Hidden;
         }
+
+        public void AllUserRefused()
+        {
+            textBlock.Text = "All members refused.";
+            button.Visibility = Visibility.Hidden;
+            buttonPause.Visibility = Visibility.Hidden;
+        }
     }
 }
