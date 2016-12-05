@@ -54,7 +54,7 @@ namespace Server
             if (group != null)
                 foreach (UserInformation user in group.Members)
                     if (user.Username == receiver)
-                        user.ScreenShareCallback.UserLeftShareScreenGroup(sender);
+                        user.ScreenShareCallback.UserLeftShareScreenGroup(sender,groupName);
         }
 
         public void EndShareScreen(string sender,string receiver)
