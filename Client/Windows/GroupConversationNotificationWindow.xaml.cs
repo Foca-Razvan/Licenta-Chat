@@ -28,7 +28,6 @@ namespace Client.Windows
             InitializeComponent();
             GroupName = groupName;
             textBlock.Text = sender + " has invited you to " + groupName + " group";
-            //Partners = partners;
         }
 
         private void buttonAccept_Click(object sender, RoutedEventArgs e)

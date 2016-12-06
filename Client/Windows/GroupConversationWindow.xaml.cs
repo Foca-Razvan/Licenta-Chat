@@ -88,7 +88,7 @@ namespace Client.Windows
                 ShareScreenEnding window = new ShareScreenEnding(GroupName, true);
                 foreach (string partner in Partners)
                 {
-                    //ClientInformation.ShareScreenEndingWindows.Add(partner, window);
+                    ClientInformation.ShareScreenEndingWindows.Add(partner, window);
                     ShareScreenPartners.Add(partner);
                 }
                 ClientInformation.ShareScreenEndingWindows.Add(GroupName, window);

@@ -67,7 +67,7 @@ namespace Server
         {
             GroupConversation group = Subscriber.GetGroup(groupName);
             foreach(UserInformation user in group.Members)
-                if(user.Username != sender)
+                if(user.Username != sender )
                     user.ScreenShareCallback.GroupShareScreenNotification(sender,group.GroupName, connectionString);
         }
 
