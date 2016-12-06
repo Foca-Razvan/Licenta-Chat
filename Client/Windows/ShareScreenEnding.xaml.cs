@@ -42,9 +42,10 @@ namespace Client.Windows
             if (group)
             {
                 ClientInformation.ScreenShareService.GroupEndShareScreen(ClientInformation.Username, Partner);
-                GroupConversationWindow group;
-                ClientInformation.GroupConversationWindows.TryGetValue(Partner, out group);
-                group.CloseShareScreen();
+                GroupConversationWindow _group;
+                ClientInformation.GroupConversationWindows.TryGetValue(Partner, out _group);
+                if(_group != null)
+                    _group.CloseShareScreen();
             }
             else
                 ClientInformation.ScreenShareService.EndShareScreen(ClientInformation.Username, Partner);
@@ -56,9 +57,10 @@ namespace Client.Windows
         {
             if(!ok)
             {
-                GroupConversationWindow group;
-                ClientInformation.GroupConversationWindows.TryGetValue(Partner, out group);
-                group.CloseShareScreen();
+                GroupConversationWindow _group;
+                ClientInformation.GroupConversationWindows.TryGetValue(Partner, out _group);
+                if(_group != null)
+                    _group.CloseShareScreen();
 
                 ClientInformation.ShareScreenEndingWindows.Remove(Partner);
                 ClientInformation.ScreenShareService.EndShareScreen(ClientInformation.Username, Partner);
