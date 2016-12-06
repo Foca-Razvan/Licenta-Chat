@@ -200,16 +200,21 @@ namespace Client.Windows
 
         private void OnClosingEvent(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            ShareScreenEnding screenShare;
-            ClientInformation.ShareScreenEndingWindows.TryGetValue(GroupName, out screenShare);
-            if(screenShare != null)
-                screenShare.Close();
+            if (GroupName != null)
+            {
+                ShareScreenEnding screenShare;
+                ClientInformation.ShareScreenEndingWindows.TryGetValue(GroupName, out screenShare);
+                if (screenShare != null)
+                    screenShare.Close();
 
-            CloseShareScreen();
+                CloseShareScreen();
 
-            ClientInformation.CommunicationService.LeaveGroup(ClientInformation.Username, GroupName);
-            ClientInformation.GroupConversationWindows.Remove(GroupName);
-            ClientInformation.ShareScreenEndingWindows.Remove(GroupName);
+                ClientInformation.CommunicationService.LeaveGroup(ClientInformation.Username, GroupName);
+                ClientInformation.GroupConversationWindows.Remove(GroupName);
+                ClientInformation.ShareScreenEndingWindows.Remove(GroupName);
+            }
+
+
         }
     }
 }
