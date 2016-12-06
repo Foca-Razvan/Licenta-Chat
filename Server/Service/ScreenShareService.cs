@@ -76,7 +76,7 @@ namespace Server
             GroupConversation group = Subscriber.GetGroup(groupName);
             foreach (UserInformation user in group.Members)
                 if (user.Username != sender)
-                    user.ScreenShareCallback.EndShareScreen(sender);
+                    user.ScreenShareCallback.EndShareScreen(groupName);
         }
     }
 }

@@ -33,6 +33,7 @@ namespace Client.Windows
             Height = 110;
             Width = 270;
             textBoxConversation.IsReadOnly = true;
+            Title = "";
         }
 
         public GroupConversationWindow(string groupName)
@@ -46,6 +47,7 @@ namespace Client.Windows
             buttonCreate.Visibility = Visibility.Hidden;
             textBoxConversation.IsReadOnly = true;
             GroupName = groupName;
+            Title = GroupName;
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -189,6 +191,7 @@ namespace Client.Windows
                 buttonCreate.Visibility = Visibility.Hidden;
 
                 ClientInformation.GroupConversationWindows.Add(GroupName, this);
+                Title = GroupName;
             }        
         }
 

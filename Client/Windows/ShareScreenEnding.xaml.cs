@@ -33,6 +33,7 @@ namespace Client.Windows
             ClientInformation.MainWindow.RdpSession.Resume();
             AvatarImage.Fill = new ImageBrush(ClientInformation.MainWindow.GetImageFromFriendList(Partner));
             group = groupStatus;
+            Title = "Screen Share";
         }
 
 
