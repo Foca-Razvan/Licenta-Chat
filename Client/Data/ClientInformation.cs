@@ -63,6 +63,7 @@ namespace Client
         public static FriendData GetFriend(string username)
         {
             return MainWindow.Friends.Items.ToList().Find(x => x.Username == username);
+
         }
     }
 }
