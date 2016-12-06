@@ -75,7 +75,7 @@ namespace Client
         public void GroupShareScreenNotification(string sender,string groupName,string connectionString)
         {
             ScrenShareForm screenShareForm = new ScrenShareForm(groupName, connectionString,true);
-            ClientInformation.ShareScreenWindows.Add(sender, screenShareForm);
+            //ClientInformation.ShareScreenWindows.Add(sender, screenShareForm);
             ClientInformation.ShareScreenWindows.Add(groupName, screenShareForm);
             screenShareForm.Show();
         }

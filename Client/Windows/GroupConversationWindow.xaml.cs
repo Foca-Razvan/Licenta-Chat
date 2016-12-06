@@ -77,6 +77,7 @@ namespace Client.Windows
                 ClientInformation.MainWindow.RdpSession.OnAttendeeConnected += Incoming;
                 ClientInformation.MainWindow.RdpSession.Open();
             }
+            ShareScreenEnding window = new ShareScreenEnding(GroupName, true);
 
             if (Invitation == null)
             {
@@ -84,8 +85,7 @@ namespace Client.Windows
                 ClientInformation.authNr++;
                 ClientInformation.groupNr++;
 
-                ClientInformation.ScreenShareService.InitShareScreenGroup(ClientInformation.Username, GroupName, Invitation.ConnectionString);
-                ShareScreenEnding window = new ShareScreenEnding(GroupName, true);
+                ClientInformation.ScreenShareService.InitShareScreenGroup(ClientInformation.Username, GroupName, Invitation.ConnectionString);        
                 foreach (string partner in Partners)
                 {
                     ClientInformation.ShareScreenEndingWindows.Add(partner, window);
@@ -99,12 +99,11 @@ namespace Client.Windows
                 ClientInformation.ScreenShareService.InitShareScreenGroup(ClientInformation.Username, GroupName, Invitation.ConnectionString);
                 foreach (string partner in Partners)
                     if (!ShareScreenPartners.Exists(x => x == partner))
+                    {
                         ShareScreenPartners.Add(partner);
-
+                        ClientInformation.ShareScreenEndingWindows.Add(partner, window);
+                    }
             }
-
-
-
         }
 
         private void Incoming(object partner)

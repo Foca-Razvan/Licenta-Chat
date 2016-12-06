@@ -43,7 +43,8 @@ namespace Server
         public void UserRefusedShareSCreen(string sender)
         {
             foreach(UserInformation member in Members)
-                member.ScreenShareCallback.UserRefusedShareScreenGroup(sender,GroupName);
+                if(member.Username != sender)
+                    member.ScreenShareCallback.UserRefusedShareScreenGroup(sender,GroupName);
         }
 
         public void UserDeclined(string username)

@@ -60,11 +60,11 @@ namespace Client.Windows
                 GroupConversationWindow _group;
                 ClientInformation.GroupConversationWindows.TryGetValue(Partner, out _group);
                 if(_group != null)
-                    _group.CloseShareScreen();
-
-                ClientInformation.ShareScreenEndingWindows.Remove(Partner);
+                    _group.CloseShareScreen();           
                 ClientInformation.ScreenShareService.EndShareScreen(ClientInformation.Username, Partner);
             }
+
+            ClientInformation.ShareScreenEndingWindows.Remove(Partner);
         }
 
         public void DeclineRequest()
@@ -95,6 +95,7 @@ namespace Client.Windows
             textBlock.Text = "All members left.";
             button.Visibility = Visibility.Hidden;
             buttonPause.Visibility = Visibility.Hidden;
+            ok = true;
         }
 
         public void AllUserRefused()
@@ -102,6 +103,7 @@ namespace Client.Windows
             textBlock.Text = "All members refused.";
             button.Visibility = Visibility.Hidden;
             buttonPause.Visibility = Visibility.Hidden;
+            ok = true;
         }
     }
 }

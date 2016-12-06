@@ -59,11 +59,11 @@ namespace Client
 
         private void OnWindowClose(object sender, AxRDPCOMAPILib._IRDPSessionEvents_OnWindowCloseEvent e)
         {
-            if(ok)
+            /*if(ok)
             {
                 ClientInformation.ShareScreenWindows.Remove(Partner);
                 axRDPViewer1.Disconnect();
-            }
+            }*/
 
         }
 
