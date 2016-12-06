@@ -23,6 +23,7 @@ namespace Client.Windows
         public List<string> Partners = new List<string>();
         public string GroupName { get; set;}
 
+        public IRDPSRAPIInvitation Invitation;
         private List<string> ShareScreenPartners = new List<string>();
         private int auth = 0;
         private int group = 0;
@@ -70,22 +71,23 @@ namespace Client.Windows
             // TO DO
         }
 
-        private void button_Click(object sender,RoutedEventArgs e)
+        private void button_Click(object sender, RoutedEventArgs e)
         {
-            if (!ClientInformation.ShareScreenWindows.ContainsKey(GroupName))
+            if (ClientInformation.MainWindow.RdpSession == null)
             {
-                if (ClientInformation.MainWindow.RdpSession == null)
-                {
-                    ClientInformation.MainWindow.RdpSession = new RDPSession();
-                    ClientInformation.MainWindow.RdpSession.OnAttendeeConnected += Incoming;
-                    ClientInformation.MainWindow.RdpSession.Open();
-                }
+                ClientInformation.MainWindow.RdpSession = new RDPSession();
+                ClientInformation.MainWindow.RdpSession.OnAttendeeConnected += Incoming;
+                ClientInformation.MainWindow.RdpSession.Open();
+            }
 
-                IRDPSRAPIInvitation Invitation = ClientInformation.MainWindow.RdpSession.Invitations.CreateInvitation("auth" + auth, "group" + group, "", 100);
+            if (Invitation == null)
+            {
+                Invitation = ClientInformation.MainWindow.RdpSession.Invitations.CreateInvitation("auth" + auth, "group" + group, "", 100);
                 auth++;
                 group++;
+
                 ClientInformation.ScreenShareService.InitShareScreenGroup(ClientInformation.Username, GroupName, Invitation.ConnectionString);
-                ShareScreenEnding window = new ShareScreenEnding(GroupName,true);
+                ShareScreenEnding window = new ShareScreenEnding(GroupName, true);
                 foreach (string partner in Partners)
                 {
                     ClientInformation.ShareScreenEndingWindows.Add(partner, window);
@@ -94,6 +96,16 @@ namespace Client.Windows
                 ClientInformation.ShareScreenEndingWindows.Add(GroupName, window);
                 window.Show();
             }
+            else
+            {
+                ClientInformation.ScreenShareService.InitShareScreenGroup(ClientInformation.Username, GroupName, Invitation.ConnectionString);
+                foreach (string partner in Partners)
+                    if (!ShareScreenPartners.Exists(x => x == partner))
+                        ShareScreenPartners.Add(partner);
+            }
+
+
+
         }
 
         private void Incoming(object partner)
@@ -131,6 +143,7 @@ namespace Client.Windows
                 if (window != null)
                     window.AllUsersLeft();
                 ClientInformation.ShareScreenEndingWindows.Remove(GroupName);
+                Invitation = null;
             }
         }
 
@@ -138,6 +151,7 @@ namespace Client.Windows
         {
             ClientInformation.ShareScreenEndingWindows.Remove(user);
             ClientInformation.ShareScreenWindows.Remove(user);
+            ShareScreenPartners.Remove(user);
             if (ShareScreenPartners.Count == 0)
             {
                 ShareScreenEnding window;
@@ -145,6 +159,7 @@ namespace Client.Windows
                 if (window != null)
                     window.AllUserRefused();
                 ClientInformation.ShareScreenEndingWindows.Remove(GroupName);
+                Invitation = null;
             }
         }
 
@@ -161,6 +176,7 @@ namespace Client.Windows
                 ClientInformation.ShareScreenWindows.Remove(member);
             }
             ClientInformation.ShareScreenEndingWindows.Remove(GroupName);
+            Invitation = null;
         }
 
         private void buttonCreate_Click(object sender, RoutedEventArgs e)
@@ -185,6 +201,13 @@ namespace Client.Windows
 
         private void OnClosingEvent(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            ShareScreenEnding screenShare;
+            ClientInformation.ShareScreenEndingWindows.TryGetValue(GroupName, out screenShare);
+            if(screenShare != null)
+                screenShare.Close();
+
+            CloseShareScreen();
+
             ClientInformation.CommunicationService.LeaveGroup(ClientInformation.Username, GroupName);
             ClientInformation.GroupConversationWindows.Remove(GroupName);
             ClientInformation.ShareScreenEndingWindows.Remove(GroupName);

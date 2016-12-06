@@ -49,9 +49,10 @@ namespace Client
         {
             ClientInformation.ShareScreenWindows.Remove(Partner);
             if (IsGroup)
-                ClientInformation.ScreenShareService.RefuseShareScreen(ClientInformation.Username, Partner);
-            else
                 ClientInformation.ScreenShareService.RefuseGroupShareScreen(ClientInformation.Username, Partner);
+            else
+                ClientInformation.ScreenShareService.RefuseShareScreen(ClientInformation.Username, Partner);
+
             ok = false;
             Close();
         }

@@ -56,15 +56,6 @@ namespace Server
                 group.UserRefusedShareSCreen(sender);
         }
 
-        /*public void RefuseGroupShareScreen(string sender,string groupName,string receiver)
-        {
-            GroupConversation group = Subscriber.GetGroup(groupName);
-            if (group != null)
-                foreach (UserInformation user in group.Members)
-                    if (user.Username == receiver)
-                        user.ScreenShareCallback.UserLeftShareScreenGroup(sender,groupName);
-        }*/
-
         public void EndShareScreen(string sender,string receiver)
         {
             UserInformation user = Subscriber.getUser(receiver);

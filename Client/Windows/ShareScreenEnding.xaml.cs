@@ -56,6 +56,10 @@ namespace Client.Windows
         {
             if(!ok)
             {
+                GroupConversationWindow group;
+                ClientInformation.GroupConversationWindows.TryGetValue(Partner, out group);
+                group.CloseShareScreen();
+
                 ClientInformation.ShareScreenEndingWindows.Remove(Partner);
                 ClientInformation.ScreenShareService.EndShareScreen(ClientInformation.Username, Partner);
             }
