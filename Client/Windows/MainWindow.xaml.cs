@@ -31,8 +31,6 @@ namespace Client
     {
         public RDPSession RdpSession { get; set; }
         public FriendDataView Friends { get; set; }
-        private int groupNr = 1;
-        private int authNr = 1;
 
         public MainWindow()
         {
@@ -233,9 +231,9 @@ namespace Client
                     RdpSession.Open();
 
                 }
-                IRDPSRAPIInvitation Invitation = RdpSession.Invitations.CreateInvitation("auth" + authNr,"group"+groupNr, "", 1);
-                authNr++;
-                groupNr++;
+                IRDPSRAPIInvitation Invitation = RdpSession.Invitations.CreateInvitation("auth" + ClientInformation.authNr++, "group"+ ClientInformation.groupNr++, "", 1);
+                ClientInformation.authNr++;
+                ClientInformation.groupNr++;
 
                 ClientInformation.ScreenShareService.InitShareScreen(ClientInformation.Username, data.Username, Invitation.ConnectionString);
 

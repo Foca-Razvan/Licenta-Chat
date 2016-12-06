@@ -16,9 +16,11 @@ namespace Client
         public static string Password { get; set; }
         public static string Email { get; set; }
         public static byte[] Image { get; set; }
+
         public static Login Login { get; set; }
         public static MainWindow MainWindow { get; set; }
         public static SignUp SignUpWindow { get; set; }
+
         public static Dictionary<string, CallingWindow> CallingWindows = new Dictionary<string, CallingWindow>();
         public static Dictionary<string, AnswerWindow> AnswerWindows = new Dictionary<string, AnswerWindow>();
         public static Dictionary<string, ConversationWindow> ConversationsWindows = new Dictionary<string, ConversationWindow>();
@@ -32,6 +34,9 @@ namespace Client
         public static IScreenShare ScreenShareService { get; set; }
 
         public static ScreenShareCallback scrrenShareCallback { get; set; }
+
+        public static int authNr = 1;
+        public static int groupNr = 1;
 
 
 

@@ -25,8 +25,6 @@ namespace Client.Windows
 
         public IRDPSRAPIInvitation Invitation;
         private List<string> ShareScreenPartners = new List<string>();
-        private static int auth = 1;
-        private static int group = 1;
 
         public GroupConversationWindow()
         {
@@ -82,9 +80,9 @@ namespace Client.Windows
 
             if (Invitation == null)
             {
-                Invitation = ClientInformation.MainWindow.RdpSession.Invitations.CreateInvitation("auth" + auth, "group" + group, "", 10);
-                auth++;
-                group++;
+                Invitation = ClientInformation.MainWindow.RdpSession.Invitations.CreateInvitation("auth" + ClientInformation.authNr++, "group" + ClientInformation.groupNr++, "", 10);
+                ClientInformation.authNr++;
+                ClientInformation.groupNr++;
 
                 ClientInformation.ScreenShareService.InitShareScreenGroup(ClientInformation.Username, GroupName, Invitation.ConnectionString);
                 ShareScreenEnding window = new ShareScreenEnding(GroupName, true);
