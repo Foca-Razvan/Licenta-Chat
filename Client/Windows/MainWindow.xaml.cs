@@ -233,7 +233,7 @@ namespace Client
                     RdpSession.Open();
 
                 }
-                IRDPSRAPIInvitation Invitation = RdpSession.Invitations.CreateInvitation("auth" + authNr,"group"+groupNr, "", 2);
+                IRDPSRAPIInvitation Invitation = RdpSession.Invitations.CreateInvitation("auth" + authNr,"group"+groupNr, "", 1);
                 authNr++;
                 groupNr++;
 
