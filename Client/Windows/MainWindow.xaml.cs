@@ -118,7 +118,11 @@ namespace Client
             {
                 ClientInformation.CommunicationService.Logout();
             }
-            catch {  }
+            catch {
+                this.Close();
+                if(ClientInformation.Login != null)
+                    ClientInformation.Login.Show();
+            }
         }
 
 
@@ -146,12 +150,6 @@ namespace Client
         {
             IRDPSRAPIAttendee myGuest = (IRDPSRAPIAttendee)partner;
             myGuest.ControlLevel = CTRL_LEVEL.CTRL_LEVEL_INTERACTIVE;
-        }
-
-        private void Disconnected(object partner)
-        {
-            //IRDPSRAPIAttendee myGuest = (IRDPSRAPIAttendee)partner;
-            //myGuest.TerminateConnection();
         }
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
