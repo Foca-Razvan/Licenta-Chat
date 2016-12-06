@@ -58,14 +58,9 @@ namespace Client
         }
 
         private void OnWindowClose(object sender, AxRDPCOMAPILib._IRDPSessionEvents_OnWindowCloseEvent e)
-        {
+        {           
+            
 
-            ClientInformation.ScreenShareService.UserLeftShareScreen(ClientInformation.Username, Partner);
-            /*if(ok)
-            {
-                ClientInformation.ShareScreenWindows.Remove(Partner);
-                axRDPViewer1.Disconnect();
-            }*/
 
         }
 
@@ -73,9 +68,18 @@ namespace Client
         {
             if (ok)
             {
-                ClientInformation.ShareScreenWindows.Remove(Partner);
-                ClientInformation.ScreenShareService.RefuseShareScreen(ClientInformation.Username, Partner);
-                axRDPViewer1.Disconnect();
+                if (IsGroup)
+                {
+                    ClientInformation.ShareScreenWindows.Remove(Partner);
+                    ClientInformation.ScreenShareService.UserLeftShareScreen(ClientInformation.Username, Partner);
+                    axRDPViewer1.Disconnect();
+                }
+                else
+                {
+                    ClientInformation.ShareScreenWindows.Remove(Partner);
+                    ClientInformation.ScreenShareService.RefuseShareScreen(ClientInformation.Username, Partner);
+                    axRDPViewer1.Disconnect();
+                }
             }
 
         }

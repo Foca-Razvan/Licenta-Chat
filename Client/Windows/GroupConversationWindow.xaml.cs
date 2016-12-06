@@ -174,8 +174,8 @@ namespace Client.Windows
             {
                 ClientInformation.ShareScreenEndingWindows.Remove(member);
                 ClientInformation.ShareScreenWindows.Remove(member);
-                ShareScreenPartners.Remove(member);
             }
+            ShareScreenPartners.Clear();
             ClientInformation.ShareScreenEndingWindows.Remove(GroupName);
             Invitation = null;
         }
