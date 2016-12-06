@@ -59,6 +59,8 @@ namespace Client
 
         private void OnWindowClose(object sender, AxRDPCOMAPILib._IRDPSessionEvents_OnWindowCloseEvent e)
         {
+
+            ClientInformation.ScreenShareService.UserLeftShareScreen(ClientInformation.Username, Partner);
             /*if(ok)
             {
                 ClientInformation.ShareScreenWindows.Remove(Partner);

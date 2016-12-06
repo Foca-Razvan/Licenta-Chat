@@ -78,5 +78,13 @@ namespace Server
                 if (user.Username != sender)
                     user.ScreenShareCallback.EndShareScreen(groupName);
         }
+
+        public void UserLeftShareScreen(string sender, string groupName)
+        {
+            GroupConversation group = Subscriber.GetGroup(groupName);
+            foreach (UserInformation user in group.Members)
+                if (user != null && user.Username != sender)
+                    user.ScreenShareCallback.UserLeftShareScreenGroup(sender, group.GroupName);
+        }
     }
 }

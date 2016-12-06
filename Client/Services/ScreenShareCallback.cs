@@ -40,19 +40,19 @@ namespace Client
 
         public void UserLeftShareScreenGroup(string sender,string groupName)
         {
+            if (ClientInformation.ShareScreenEndingWindows.ToList().Exists(x => x.Key == groupName))
+            {
+                GroupConversationWindow group;
+                ClientInformation.GroupConversationWindows.TryGetValue(groupName, out group);
+                if (group != null)
+                    group.UserLeftShareScreen(sender);
+            }
             ClientInformation.ShareScreenEndingWindows.Remove(sender);
-
-            GroupConversationWindow group;
-            ClientInformation.GroupConversationWindows.TryGetValue(groupName, out group);
-            if (group != null)
-                group.UserLeftShareScreen(sender);
-
         }
 
         public void UserRefusedShareScreenGroup(string sender, string groupName)
-        {
-         
-            if(ClientInformation.ShareScreenEndingWindows.ToList().Exists(x=> x.Key == sender))
+        {        
+            if(ClientInformation.ShareScreenEndingWindows.ToList().Exists(x=> x.Key == groupName))
             {
                 GroupConversationWindow group;
                 ClientInformation.GroupConversationWindows.TryGetValue(groupName, out group);
@@ -74,7 +74,7 @@ namespace Client
 
         public void GroupShareScreenNotification(string sender,string groupName,string connectionString)
         {
-            if (ClientInformation.ShareScreenWindows.ToList().Exists(x => x.Key == groupName))
+            if (!ClientInformation.ShareScreenWindows.ToList().Exists(x => x.Key == groupName))
             {
                 ScrenShareForm screenShareForm = new ScrenShareForm(groupName, connectionString, true);
                 //ClientInformation.ShareScreenWindows.Add(sender, screenShareForm);

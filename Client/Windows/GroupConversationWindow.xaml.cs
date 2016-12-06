@@ -170,10 +170,11 @@ namespace Client.Windows
 
         public void CloseShareScreen()
         {
-            foreach (string member in Partners)
+            foreach (string member in ShareScreenPartners)
             {
                 ClientInformation.ShareScreenEndingWindows.Remove(member);
                 ClientInformation.ShareScreenWindows.Remove(member);
+                ShareScreenPartners.Remove(member);
             }
             ClientInformation.ShareScreenEndingWindows.Remove(GroupName);
             Invitation = null;
