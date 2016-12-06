@@ -98,13 +98,15 @@ namespace Client.Windows
             }
             else
             {
-                ClientInformation.ScreenShareService.InitShareScreenGroup(ClientInformation.Username, GroupName, Invitation.ConnectionString);
+                
                 foreach (string partner in Partners)
                     if (!ShareScreenPartners.Exists(x => x == partner))
                     {
                         ShareScreenPartners.Add(partner);
                         ClientInformation.ShareScreenEndingWindows.Add(partner, window);
                     }
+
+                ClientInformation.ScreenShareService.InitShareScreenGroup(ClientInformation.Username, GroupName, Invitation.ConnectionString);
             }
         }
 
