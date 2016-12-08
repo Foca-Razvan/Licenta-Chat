@@ -19,8 +19,12 @@ namespace Interfaces
         [OperationContract(IsOneWay = true)]
         void InitCommunication(string username,string partner);
         [OperationContract(IsOneWay = true)]
-        void Confirmation(string sender,string receiver,bool ok);
+        void Confirmation(string sender,string receiver,bool ok,bool isGroup);
         [OperationContract(IsOneWay = true)]
         void StopCall(string sender,string receiver);
+        [OperationContract(IsOneWay = true)]
+        void InitCommunicationGroup(string sender, string groupName);
+        [OperationContract(IsOneWay = true)]
+        void SendVoiceGroup(byte[] audio, int byteRecorded, string groupName,string sender);
     }
 }

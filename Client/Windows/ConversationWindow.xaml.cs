@@ -73,7 +73,7 @@ namespace Client.Windows
             FriendData friend = ClientInformation.GetFriend(Partner);
             if(friend.Status)
             {
-                CallingWindow callingWindow = new CallingWindow(friend.Username,friend.AvatarImage);
+                CallingWindow callingWindow = new CallingWindow(friend.Username,friend.AvatarImage,false);
                 ClientInformation.CallingWindows.Add(friend.Username, callingWindow);
                 callingWindow.Show();
             }

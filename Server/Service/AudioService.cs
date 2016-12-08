@@ -39,7 +39,7 @@ namespace Server
         {
             UserInformation receiver = Subscriber.subscribers.Find(x => x.Username == conversationPartner);
             if(receiver != null && receiver.CommunicationCallback != null)
-                receiver.CommunicationCallback.SendAudioNotification(sender);
+                receiver.CommunicationCallback.SendAudioNotification(sender,false);
         }
 
         public void SendVoice(byte[] voice,int byteRecorded,string conversationPartner)
@@ -49,14 +49,27 @@ namespace Server
                 user.AudioCallback.SendVoiceCallback(voice,byteRecorded);
         }
 
-        public void Confirmation(string sender , string receiver, bool ok)
+        public void Confirmation(string sender , string receiver, bool ok,bool isGroup)
         {
-            UserInformation user = Subscriber.getUser(receiver);
-            if (user != null && user.AudioCallback != null)
-                if (ok)
-                    user.AudioCallback.ChannelAccepted(sender);
-                else
-                    user.AudioCallback.ChannelDeclined(sender);
+            if (isGroup)
+            {
+                GroupConversation group = Subscriber.GetGroup(receiver);
+                foreach (UserInformation user in group.Members)
+                    if (user.Username != sender)
+                        if (ok)
+                            user.AudioCallback.ChannelAccepted(sender);
+                        else
+                            user.AudioCallback.ChannelDeclined(sender);
+            }
+            else
+            {
+                UserInformation user = Subscriber.getUser(receiver);
+                if (user != null && user.AudioCallback != null)
+                    if (ok)
+                        user.AudioCallback.ChannelAccepted(sender);
+                    else
+                        user.AudioCallback.ChannelDeclined(sender);
+            }
         }
 
         public void StopCall(string sender,string receiver)
@@ -64,6 +77,22 @@ namespace Server
             UserInformation user = Subscriber.getUser(receiver);
             if(user != null && user.AudioCallback != null)
                 user.AudioCallback.StopCall(sender);
+        }
+
+        public void InitCommunicationGroup(string sender, string groupName)
+        {
+            GroupConversation group = Subscriber.GetGroup(groupName);
+            foreach (UserInformation user in group.Members)
+                if (user.Username != sender)
+                    user.CommunicationCallback.SendAudioNotification(sender,true);
+        }
+
+        public void SendVoiceGroup(byte[] voice, int byteRecorded, string groupName, string sender)
+        {
+            GroupConversation group = Subscriber.GetGroup(groupName);
+            foreach (UserInformation user in group.Members)
+                if (user.Username != sender)
+                    user.AudioCallback.SendVoiceCallback(voice, byteRecorded);
         }
     }
 }

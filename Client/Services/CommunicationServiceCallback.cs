@@ -79,9 +79,9 @@ namespace Client
             }
         }
 
-        public void SendAudioNotification(string caller)
+        public void SendAudioNotification(string caller,bool isGroup)
         {
-            AnswerWindow answerWindow = new AnswerWindow(caller);
+            AnswerWindow answerWindow = new AnswerWindow(caller, isGroup);
             ClientInformation.AnswerWindows.Add(caller, answerWindow);
             answerWindow.Show();
         }

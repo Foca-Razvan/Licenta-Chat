@@ -195,7 +195,7 @@ namespace Client
 
             if (data.Status && !ClientInformation.AnswerWindows.ContainsKey(data.Username) && !ClientInformation.CallingWindows.ContainsKey(data.Username))
             {
-                CallingWindow callingWindow = new CallingWindow(data.Username,data.AvatarImage);
+                CallingWindow callingWindow = new CallingWindow(data.Username,data.AvatarImage,false);
                 ClientInformation.CallingWindows.Add(data.Username, callingWindow);
                 callingWindow.Show();
             }

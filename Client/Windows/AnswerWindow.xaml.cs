@@ -26,6 +26,7 @@ namespace Client
     public partial class AnswerWindow : Window
     {
         string ConversationPartner { get; set; }
+        public bool IsGroup { get; set; }
         IAudio audioService;
         AudioCallback audioCallback;
 
@@ -34,9 +35,10 @@ namespace Client
             InitializeComponent();
         }
 
-        public AnswerWindow(string sender)
+        public AnswerWindow(string sender,bool isGroup)
         {
             InitializeComponent();
+            IsGroup = isGroup;
             ResizeMode = ResizeMode.CanMinimize;
             textBlock.TextAlignment = TextAlignment.Center;
 
@@ -66,7 +68,7 @@ namespace Client
             wi.DataAvailable += new EventHandler<WaveInEventArgs>(wi_DataAvailableCallback);
 
             audioCallback.Wi = wi;
-            audioService.Confirmation(ClientInformation.Username, ConversationPartner, true);
+            audioService.Confirmation(ClientInformation.Username, ConversationPartner, true, IsGroup);
             audioCallback.StartRecording();
 
             textBlock.Text = "Audio Call with " + ConversationPartner;
@@ -75,12 +77,15 @@ namespace Client
 
         private void wi_DataAvailableCallback(object sender, WaveInEventArgs e)
         {
-            audioService.SendVoice(e.Buffer, e.BytesRecorded, ConversationPartner);
+            if (IsGroup)
+                audioService.SendVoiceGroup(e.Buffer, e.BytesRecorded, ConversationPartner, ClientInformation.Username);
+            else
+                audioService.SendVoice(e.Buffer, e.BytesRecorded, ConversationPartner);
         }
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
-            audioService.Confirmation(ClientInformation.Username, ConversationPartner , false);
+            audioService.Confirmation(ClientInformation.Username, ConversationPartner, false, IsGroup);
             ClientInformation.AnswerWindows.Remove(ConversationPartner);
             Close();
         }

@@ -34,6 +34,7 @@ namespace Client.Windows
             Width = 270;
             textBoxConversation.IsReadOnly = true;
             Title = "";
+            textBlockMembers.Visibility = Visibility.Hidden;
         }
 
         public GroupConversationWindow(string groupName)
@@ -48,6 +49,7 @@ namespace Client.Windows
             textBoxConversation.IsReadOnly = true;
             GroupName = groupName;
             Title = GroupName;
+            textBlockMembers.Visibility = Visibility.Visible;
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -68,7 +70,13 @@ namespace Client.Windows
 
         private void buttonCall_Click(object sender, RoutedEventArgs e)
         {
-            // TO DO
+            if (Partners.Count != 0)
+            {
+
+                CallingWindow callingWindow = new CallingWindow(GroupName, null, true);
+                ClientInformation.CallingWindows.Add(GroupName, callingWindow);
+                callingWindow.Show();
+            }
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -120,6 +128,10 @@ namespace Client.Windows
         {
             textBoxConversation.Text += user + " has joined.\n";
             Partners.Add(user);
+            textBlockMembers.Text = "";
+            for (int i = 0; i < Partners.Count - 1; i++)
+                textBlockMembers.Text += Partners[i] + ",";
+            textBlockMembers.Text += Partners[Partners.Count - 1];
         }
 
         public void UserLeft(string user)
@@ -130,6 +142,10 @@ namespace Client.Windows
             ClientInformation.CallingWindows.Remove(user);
             ClientInformation.AnswerWindows.Remove(user);
             ShareScreenPartners.Remove(user);
+            textBlockMembers.Text = "";
+            for(int i=0; i<Partners.Count-1;i++)
+                textBlockMembers.Text += Partners[i] + ",";
+            textBlockMembers.Text += Partners[Partners.Count - 1];
         }
 
         public void UserLeftShareScreen(string user)
@@ -195,6 +211,7 @@ namespace Client.Windows
 
                 ClientInformation.GroupConversationWindows.Add(GroupName, this);
                 Title = GroupName;
+                textBlockMembers.Visibility = Visibility.Visible;
             }        
         }
 

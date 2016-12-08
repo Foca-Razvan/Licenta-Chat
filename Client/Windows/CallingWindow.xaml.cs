@@ -29,13 +29,14 @@ namespace Client
         string ConversationPartner { get; set; } 
         IAudio audioService;
         AudioCallback audioCallback;
+        public bool IsGroup { get; set; }
 
         public CallingWindow()
         {
             InitializeComponent();
         }
 
-        public CallingWindow(string conversationPartner,BitmapImage image)
+        public CallingWindow(string conversationPartner,BitmapImage image,bool isGroup)
         {
             InitializeComponent();
             ConversationPartner = conversationPartner;
@@ -49,6 +50,7 @@ namespace Client
             audioService.Subscribe(ClientInformation.Username);
        
             avatarImage.Fill = new ImageBrush(image);
+            IsGroup = isGroup;
             Init();
         }
 
@@ -61,12 +63,18 @@ namespace Client
 
             textBlockInfo.Text = "Calling " + ConversationPartner + "...";
 
-            audioService.InitCommunication(ClientInformation.Username, ConversationPartner);
+            if (IsGroup)
+                audioService.InitCommunicationGroup(ClientInformation.Username, ConversationPartner);
+            else
+                audioService.InitCommunication(ClientInformation.Username, ConversationPartner);
         }
 
         private void wi_DataAvailableCallback(object sender, WaveInEventArgs e)
         {
-            audioService.SendVoice(e.Buffer, e.BytesRecorded, ConversationPartner);
+            if (IsGroup)
+                audioService.SendVoiceGroup(e.Buffer, e.BytesRecorded, ConversationPartner,ClientInformation.Username);
+            else
+                audioService.SendVoice(e.Buffer, e.BytesRecorded, ConversationPartner);
         }
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
@@ -80,21 +88,31 @@ namespace Client
 
         public void DeclinedCall()
         {
-            textBlockInfo.Text = ConversationPartner + " has declined your call";
-            buttonCancel.Visibility = Visibility.Hidden;
+            if (!IsGroup)
+            {
+                textBlockInfo.Text = ConversationPartner + " has declined your call";
+                buttonCancel.Visibility = Visibility.Hidden;
+            }
         }
 
         public void AcceptedCall()
         {
-            textBlockInfo.Text = ConversationPartner + " has accepted your call.";
-            buttonCancel.Content = "Close";
-            audioCallback.StartRecording();
+            if (!IsGroup)
+            {
+                textBlockInfo.Text = ConversationPartner + " has accepted your call.";
+                buttonCancel.Content = "Close";
+                audioCallback.StartRecording();
+            }
         }
 
         public void ClosedCall()
         {
-            textBlockInfo.Text = ConversationPartner + " has stopped the conversation";
-            buttonCancel.Visibility = Visibility.Hidden;
+            if (!IsGroup)
+            {
+                textBlockInfo.Text = ConversationPartner + " has stopped the conversation";
+                buttonCancel.Visibility = Visibility.Hidden;
+            }
+
         }
 
         private void CallingWindow_ClosingEvent(object sender, System.ComponentModel.CancelEventArgs e)
