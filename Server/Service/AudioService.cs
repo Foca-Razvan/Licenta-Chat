@@ -54,12 +54,8 @@ namespace Server
             if (isGroup)
             {
                 GroupConversation group = Subscriber.GetGroup(receiver);
-                foreach (UserInformation user in group.Members)
-                    if (user.Username != sender)
-                        if (ok)
-                            user.AudioCallback.ChannelAccepted(sender);
-                        else
-                            user.AudioCallback.ChannelDeclined(sender);
+                if (ok)
+                    group.UserJoinAudio(sender);
             }
             else
             {
@@ -72,27 +68,31 @@ namespace Server
             }
         }
 
-        public void StopCall(string sender,string receiver)
+        public void StopCall(string sender,string receiver,bool isGroup)
         {
-            UserInformation user = Subscriber.getUser(receiver);
-            if(user != null && user.AudioCallback != null)
-                user.AudioCallback.StopCall(sender);
+            if (isGroup)
+            {
+                GroupConversation group = Subscriber.GetGroup(receiver);
+                group.UserLeftAudio(sender);
+            }
+            else
+            {
+                UserInformation user = Subscriber.getUser(receiver);
+                if (user != null && user.AudioCallback != null)
+                    user.AudioCallback.StopCall(sender);
+            }
         }
 
         public void InitCommunicationGroup(string sender, string groupName)
         {
             GroupConversation group = Subscriber.GetGroup(groupName);
-            foreach (UserInformation user in group.Members)
-                if (user.Username != sender)
-                    user.CommunicationCallback.SendAudioNotification(sender,true);
+            group.InviteMembersToAudioCall(sender);
         }
 
         public void SendVoiceGroup(byte[] voice, int byteRecorded, string groupName, string sender)
         {
             GroupConversation group = Subscriber.GetGroup(groupName);
-            foreach (UserInformation user in group.Members)
-                if (user.Username != sender)
-                    user.AudioCallback.SendVoiceCallback(voice, byteRecorded);
+            group.SendVoiceAudio(sender, voice, byteRecorded);
         }
     }
 }

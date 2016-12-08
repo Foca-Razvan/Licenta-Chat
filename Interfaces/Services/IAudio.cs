@@ -21,7 +21,7 @@ namespace Interfaces
         [OperationContract(IsOneWay = true)]
         void Confirmation(string sender,string receiver,bool ok,bool isGroup);
         [OperationContract(IsOneWay = true)]
-        void StopCall(string sender,string receiver);
+        void StopCall(string sender,string receiver,bool isGroup);
         [OperationContract(IsOneWay = true)]
         void InitCommunicationGroup(string sender, string groupName);
         [OperationContract(IsOneWay = true)]

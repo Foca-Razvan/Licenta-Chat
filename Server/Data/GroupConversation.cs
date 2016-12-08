@@ -11,6 +11,7 @@ namespace Server
         public string Creator { get; set;}
         public string GroupName { get; set;}
         public List<UserInformation> Members = new List<UserInformation>();
+        public List<UserInformation> AudioMembers = new List<UserInformation>();
 
         public GroupConversation(string creator,string groupName)
         {
@@ -67,6 +68,34 @@ namespace Server
                 return true;
 
             return false;
+        }
+
+        public void UserJoinAudio(string username)
+        {
+            UserInformation user = Subscriber.getUser(username);
+            if(!AudioMembers.Exists( x=> x.Username == user.Username))
+                AudioMembers.Add(user);
+        }
+
+        public void UserLeftAudio(string username)
+        {
+            UserInformation user = Subscriber.getUser(username);
+            AudioMembers.Remove(user);
+        }
+
+        public void SendVoiceAudio(string sender,byte[] audio,int bytesRecorded)
+        {
+            foreach (UserInformation user in AudioMembers)
+                if (user.Username != sender)
+                    user.AudioCallback.SendVoiceCallback(audio, bytesRecorded);
+        }
+
+        public void InviteMembersToAudioCall(string sender)
+        {
+            foreach (UserInformation member in Members)
+                if (member.Username != sender && !AudioMembers.Exists(x => x.Username == member.Username))
+                    member.CommunicationCallback.SendAudioNotification(sender, true);
+
         }
 
     }

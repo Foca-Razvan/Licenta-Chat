@@ -81,7 +81,7 @@ namespace Client
         {
             audioCallback.StopPlayingOutput();
             audioCallback.StopRecording();
-            audioService.StopCall(ClientInformation.Username, ConversationPartner);
+            audioService.StopCall(ClientInformation.Username, ConversationPartner,IsGroup);
             ClientInformation.CallingWindows.Remove(ConversationPartner);
             Close();
         }
@@ -103,6 +103,11 @@ namespace Client
                 buttonCancel.Content = "Close";
                 audioCallback.StartRecording();
             }
+            else
+            {
+                buttonCancel.Content = "Close";
+                audioCallback.StartRecording();
+            }
         }
 
         public void ClosedCall()
@@ -119,7 +124,7 @@ namespace Client
         {
             audioCallback.StopPlayingOutput();
             audioCallback.StopRecording();
-            audioService.StopCall(ClientInformation.Username, ConversationPartner);
+            audioService.StopCall(ClientInformation.Username, ConversationPartner,IsGroup);
             ClientInformation.CallingWindows.Remove(ConversationPartner);
         }
     }

@@ -94,7 +94,7 @@ namespace Client
         {
             audioCallback.StopPlayingOutput();
             audioCallback.StopRecording();
-            audioService.StopCall(ClientInformation.Username, ConversationPartner);
+            audioService.StopCall(ClientInformation.Username, ConversationPartner,IsGroup);
             ClientInformation.AnswerWindows.Remove(ConversationPartner);
             Close();          
         }
@@ -111,7 +111,7 @@ namespace Client
         {
             audioCallback.StopPlayingOutput();
             audioCallback.StopRecording();
-            audioService.StopCall(ClientInformation.Username, ConversationPartner);
+            audioService.StopCall(ClientInformation.Username, ConversationPartner,IsGroup);
             ClientInformation.AnswerWindows.Remove(ConversationPartner);
         }
     }
