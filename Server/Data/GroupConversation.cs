@@ -95,7 +95,7 @@ namespace Server
             UserJoinAudio(sender);           
             foreach (UserInformation member in Members)
                 if (member.Username != sender && !AudioMembers.Exists(x => x.Username == member.Username))
-                    member.CommunicationCallback.SendAudioNotification(sender, true);
+                    member.CommunicationCallback.SendAudioNotification(GroupName, true);
         }
     }
 }
