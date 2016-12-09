@@ -234,8 +234,6 @@ namespace Client.Windows
                 ClientInformation.GroupConversationWindows.Remove(GroupName);
                 ClientInformation.ShareScreenEndingWindows.Remove(GroupName);
             }
-
-
         }
     }
 }
