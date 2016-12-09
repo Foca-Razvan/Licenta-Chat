@@ -64,7 +64,10 @@ namespace Client
             textBlockInfo.Text = "Calling " + ConversationPartner + "...";
 
             if (IsGroup)
+            {
                 audioService.InitCommunicationGroup(ClientInformation.Username, ConversationPartner);
+                audioCallback.StartRecording();
+            }
             else
                 audioService.InitCommunication(ClientInformation.Username, ConversationPartner);
         }
@@ -72,7 +75,7 @@ namespace Client
         private void wi_DataAvailableCallback(object sender, WaveInEventArgs e)
         {
             if (IsGroup)
-                audioService.SendVoiceGroup(e.Buffer, e.BytesRecorded, ConversationPartner,ClientInformation.Username);
+                audioService.SendVoiceGroup(e.Buffer, e.BytesRecorded, ConversationPartner, ClientInformation.Username);
             else
                 audioService.SendVoice(e.Buffer, e.BytesRecorded, ConversationPartner);
         }

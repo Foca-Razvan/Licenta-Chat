@@ -92,7 +92,8 @@ namespace Server
         public void SendVoiceGroup(byte[] voice, int byteRecorded, string groupName, string sender)
         {
             GroupConversation group = Subscriber.GetGroup(groupName);
-            group.SendVoiceAudio(sender, voice, byteRecorded);
+            if(group != null)
+                group.SendVoiceAudio(sender, voice, byteRecorded);
         }
     }
 }

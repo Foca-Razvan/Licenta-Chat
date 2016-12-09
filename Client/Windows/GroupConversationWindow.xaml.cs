@@ -73,8 +73,16 @@ namespace Client.Windows
             if (Partners.Count != 0)
             {
                 CallingWindow callingWindow = new CallingWindow(GroupName, null, true);
-                ClientInformation.CallingWindows.Add(GroupName, callingWindow);
-                callingWindow.Show();
+                if (!ClientInformation.CallingWindows.ToList().Exists(x => x.Key == GroupName))
+                {
+                    ClientInformation.CallingWindows.Add(GroupName, callingWindow);
+                    callingWindow.Show();
+                }
+                else
+                {
+                    KeyValuePair<string,CallingWindow> pair = ClientInformation.CallingWindows.ToList().Find(x => x.Key == GroupName);
+                    pair.Value.Show();
+                }
             }
         }
 
