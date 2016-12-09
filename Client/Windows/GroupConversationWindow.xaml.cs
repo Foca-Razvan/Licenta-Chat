@@ -72,7 +72,6 @@ namespace Client.Windows
         {
             if (Partners.Count != 0)
             {
-
                 CallingWindow callingWindow = new CallingWindow(GroupName, null, true);
                 ClientInformation.CallingWindows.Add(GroupName, callingWindow);
                 callingWindow.Show();
