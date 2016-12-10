@@ -36,9 +36,7 @@ namespace Client.Windows
             if (ClientInformation.Image == null)
                 image.Source = new BitmapImage(new Uri(@"/Images/default_avatar.png", UriKind.Relative));
             else
-            {
                 image.Source = ClientInformation.ToImage(ClientInformation.Image);
-            }
 
 
         }
