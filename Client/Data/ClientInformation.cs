@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Interfaces;
 using System.Windows.Media.Imaging;
 using Client.Windows;
+using NAudio.Wave;
+using NAudio.CoreAudioApi;
 
 namespace Client
 {
@@ -37,6 +39,8 @@ namespace Client
 
         public static int authNr = 1;
         public static int groupNr = 1;
+
+        public static WaveFormat waveFormat = new WaveFormat(12000, 2);
 
 
 

@@ -88,10 +88,7 @@ namespace Server
 
             foreach (UserInformation user in AudioMembers)
                 if (user.Username != sender)
-                {
-                    Console.WriteLine(sender + " has sent " + bytesRecorded + " to " + user.Username);
                     user.AudioCallback.SendVoiceCallback(audio, bytesRecorded);
-                }
         }
 
         public void InviteMembersToAudioCall(string sender)

@@ -64,7 +64,7 @@ namespace Client
             buttonClose.Visibility = Visibility.Visible;
 
             WaveIn wi = new WaveIn();
-            wi.WaveFormat = new WaveFormat(8000, 1);
+            wi.WaveFormat = ClientInformation.waveFormat;
             wi.DataAvailable += new EventHandler<WaveInEventArgs>(wi_DataAvailableCallback);
 
             audioCallback.Wi = wi;

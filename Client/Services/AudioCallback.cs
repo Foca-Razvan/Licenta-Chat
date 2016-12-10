@@ -11,7 +11,7 @@ namespace Client
 {
     public class AudioCallback : IAudioCallback
     {
-        private BufferedWaveProvider bwp = new BufferedWaveProvider(new WaveFormat(8000, 1));
+        private BufferedWaveProvider bwp = new BufferedWaveProvider(ClientInformation.waveFormat);
         private WaveOut wo = new WaveOut();
         public WaveIn Wi { get; set; }
 
