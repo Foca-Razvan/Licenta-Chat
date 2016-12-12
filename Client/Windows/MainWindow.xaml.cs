@@ -38,6 +38,7 @@ namespace Client
 
             NetTcpBinding tcp = new NetTcpBinding(SecurityMode.None);
             tcp.MaxReceivedMessageSize = 20000000;
+            tcp.SendTimeout = new TimeSpan(10, 0, 0);
             CommunicationServiceCallback callback = new CommunicationServiceCallback(this);  
             DuplexChannelFactory<ICommunication> channelServerService = new DuplexChannelFactory<ICommunication>(callback,tcp,
                 new EndpointAddress("net.tcp://" + ClientInformation.IPAdressServer + ":4444/CommunicationService"));
@@ -46,6 +47,7 @@ namespace Client
 
             NetTcpBinding tcp1 = new NetTcpBinding(SecurityMode.None);
             tcp1.MaxReceivedMessageSize = 20000000;
+            tcp1.SendTimeout = new TimeSpan(10, 0, 0);
             ClientInformation.scrrenShareCallback = new ScreenShareCallback();
             DuplexChannelFactory<IScreenShare> channelScreenShare = new DuplexChannelFactory<IScreenShare>(ClientInformation.scrrenShareCallback,tcp1,
                 new EndpointAddress("net.tcp://" + ClientInformation.IPAdressServer + ":4444/ScreenShareService"));
@@ -119,9 +121,6 @@ namespace Client
                 ClientInformation.CommunicationService.Logout();
             }
             catch {
-                this.Close();
-                if(ClientInformation.Login != null)
-                    ClientInformation.Login.Show();
             }
         }
 

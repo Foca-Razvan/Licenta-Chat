@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Interfaces;
 using NAudio.Wave;
 using NAudio.CoreAudioApi;
+using System.ServiceModel;
+using System.Threading;
 
 namespace Client
 {
@@ -36,6 +38,7 @@ namespace Client
         {
             bwp.AddSamples(voice, 0, bytesRecorded);
             wo.Play();
+
         }
 
         public void ChannelAccepted(string receiver)

@@ -1,0 +1,10 @@
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\DataBase\bin\Release\DataBase.dll.config
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\DataBase\bin\Release\DataBase.dll
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\DataBase\bin\Release\DataBase.pdb
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\DataBase\bin\Release\EntityFramework.dll
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\DataBase\bin\Release\EntityFramework.SqlServer.dll
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\DataBase\bin\Release\EntityFramework.xml
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\DataBase\bin\Release\EntityFramework.SqlServer.xml
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\DataBase\obj\Release\DataBase.csprojResolveAssemblyReference.cache
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\DataBase\obj\Release\DataBase.dll
+D:\Facultate\Anul III Semestru II\.NET\Licenta 1\DataBase\obj\Release\DataBase.pdb

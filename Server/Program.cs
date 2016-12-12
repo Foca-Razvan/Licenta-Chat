@@ -15,22 +15,27 @@ namespace Server
         {
 
             ServiceHost serviceHost = new ServiceHost(typeof(ConnectionService), new Uri("net.tcp://192.168.0.100:4444/ConnectionService"));
-            serviceHost.AddServiceEndpoint(typeof(IConnection), new NetTcpBinding(SecurityMode.None), "");
-
-            NetTcpBinding tcp = new NetTcpBinding(SecurityMode.None);
-            tcp.MaxReceivedMessageSize = 20000000;
+            NetTcpBinding tcpConnection = new NetTcpBinding(SecurityMode.None);
+            tcpConnection.ReceiveTimeout = new TimeSpan(10, 0, 0);
+            serviceHost.AddServiceEndpoint(typeof(IConnection), tcpConnection, "");
 
             ServiceHost serviceCommunicationHost = new ServiceHost(typeof(CommunicationService), new Uri("net.tcp://192.168.0.100:4444/CommunicationService"));
-            serviceCommunicationHost.AddServiceEndpoint(typeof(ICommunication), tcp, "");
+            NetTcpBinding tcpCommunication = new NetTcpBinding(SecurityMode.None);
+            tcpCommunication.MaxReceivedMessageSize = 20000000;
+            tcpCommunication.ReceiveTimeout = new TimeSpan(10, 0, 0);
+            serviceCommunicationHost.AddServiceEndpoint(typeof(ICommunication), tcpCommunication, "");
 
             ServiceHost serviceAudioHost = new ServiceHost(typeof(AudioService), new Uri("net.tcp://192.168.0.100:4444/AudioService"));
-            serviceAudioHost.AddServiceEndpoint(typeof(IAudio), new NetTcpBinding(SecurityMode.None), "");
-
-            NetTcpBinding tcp1 = new NetTcpBinding(SecurityMode.None);
-            tcp1.MaxReceivedMessageSize = 20000000;
+            NetTcpBinding tcpAudio = new NetTcpBinding(SecurityMode.None);
+            tcpAudio.MaxReceivedMessageSize = 20000000;
+            tcpAudio.ReceiveTimeout = new TimeSpan(10, 0, 0);
+            serviceAudioHost.AddServiceEndpoint(typeof(IAudio), tcpAudio, "");
 
             ServiceHost serviceScreenShareHost = new ServiceHost(typeof(ScreenShareService), new Uri("net.tcp://192.168.0.100:4444/ScreenShareService"));
-            serviceScreenShareHost.AddServiceEndpoint(typeof(IScreenShare), tcp1, "");
+            NetTcpBinding tcpScreenShare = new NetTcpBinding(SecurityMode.None);
+            tcpScreenShare.MaxReceivedMessageSize = 20000000;
+            tcpScreenShare.ReceiveTimeout = new TimeSpan(10, 0, 0);
+            serviceScreenShareHost.AddServiceEndpoint(typeof(IScreenShare), tcpScreenShare, "");
 
             serviceCommunicationHost.Open();
             serviceHost.Open();

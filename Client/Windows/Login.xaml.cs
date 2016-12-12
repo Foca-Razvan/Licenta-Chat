@@ -36,7 +36,10 @@ namespace Client
 
         public void Init()
         {
-            ChannelFactory<IConnection> channelServerService = new ChannelFactory<IConnection>(new NetTcpBinding(SecurityMode.None),
+            NetTcpBinding tcp = new NetTcpBinding(SecurityMode.None);
+            tcp.SendTimeout = new TimeSpan(10, 0, 0);
+
+            ChannelFactory<IConnection> channelServerService = new ChannelFactory<IConnection>(tcp,
                 new EndpointAddress("net.tcp://"+ ClientInformation.IPAdressServer + ":4444/ConnectionService"));
             connectionService = channelServerService.CreateChannel();      
         }

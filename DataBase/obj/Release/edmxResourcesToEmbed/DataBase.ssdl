@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DataBase.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="DataBaseStoreContainer">
+    <EntitySet Name="Users" EntityType="DataBase.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Histories" EntityType="DataBase.Store.Histories" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Requests" EntityType="DataBase.Store.Requests" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserAvatars" EntityType="DataBase.Store.UserAvatars" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="UserHistory" Association="DataBase.Store.UserHistory">
+      <End Role="User" EntitySet="Users" />
+      <End Role="History" EntitySet="Histories" />
+    </AssociationSet>
+    <AssociationSet Name="UserHistory1" Association="DataBase.Store.UserHistory1">
+      <End Role="User" EntitySet="Users" />
+      <End Role="History" EntitySet="Histories" />
+    </AssociationSet>
+    <AssociationSet Name="UserRequest" Association="DataBase.Store.UserRequest">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Request" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="UserAvatarUser" Association="DataBase.Store.UserAvatarUser">
+      <End Role="UserAvatar" EntitySet="UserAvatars" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="IdUser" />
+    </Key>
+    <Property Name="IdUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Status" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Histories">
+    <Key>
+      <PropertyRef Name="IdHistory" />
+    </Key>
+    <Property Name="IdHistory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Conversation" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserIdUser" Type="int" Nullable="false" />
+    <Property Name="UserIdUser1" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Requests">
+    <Key>
+      <PropertyRef Name="IdRequest" />
+    </Key>
+    <Property Name="IdRequest" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FromUsername" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FromUserId" Type="int" Nullable="false" />
+    <Property Name="UserIdUser" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserAvatars">
+    <Key>
+      <PropertyRef Name="IdUserAvatar" />
+    </Key>
+    <Property Name="IdUserAvatar" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Image" Type="varbinary(max)" Nullable="true" />
+    <Property Name="User_IdUser" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="UserHistory">
+    <End Role="User" Type="DataBase.Store.Users" Multiplicity="1" />
+    <End Role="History" Type="DataBase.Store.Histories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="IdUser" />
+      </Principal>
+      <Dependent Role="History">
+        <PropertyRef Name="UserIdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserHistory1">
+    <End Role="User" Type="DataBase.Store.Users" Multiplicity="1" />
+    <End Role="History" Type="DataBase.Store.Histories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="IdUser" />
+      </Principal>
+      <Dependent Role="History">
+        <PropertyRef Name="UserIdUser1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserRequest">
+    <End Role="User" Type="DataBase.Store.Users" Multiplicity="1" />
+    <End Role="Request" Type="DataBase.Store.Requests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="IdUser" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="UserIdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserAvatarUser">
+    <End Role="UserAvatar" Type="DataBase.Store.UserAvatars" Multiplicity="*" />
+    <End Role="User" Type="DataBase.Store.Users" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="IdUser" />
+      </Principal>
+      <Dependent Role="UserAvatar">
+        <PropertyRef Name="User_IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

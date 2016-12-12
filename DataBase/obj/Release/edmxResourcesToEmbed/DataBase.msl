@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DataBaseStoreContainer" CdmEntityContainer="DataBaseContainer">
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(DataBase.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Histories">
+      <EntityTypeMapping TypeName="IsTypeOf(DataBase.History)">
+        <MappingFragment StoreEntitySet="Histories">
+          <ScalarProperty Name="IdHistory" ColumnName="IdHistory" />
+          <ScalarProperty Name="Conversation" ColumnName="Conversation" />
+          <ScalarProperty Name="UserIdUser" ColumnName="UserIdUser" />
+          <ScalarProperty Name="UserIdUser1" ColumnName="UserIdUser1" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Requests">
+      <EntityTypeMapping TypeName="IsTypeOf(DataBase.Request)">
+        <MappingFragment StoreEntitySet="Requests">
+          <ScalarProperty Name="IdRequest" ColumnName="IdRequest" />
+          <ScalarProperty Name="FromUsername" ColumnName="FromUsername" />
+          <ScalarProperty Name="FromUserId" ColumnName="FromUserId" />
+          <ScalarProperty Name="UserIdUser" ColumnName="UserIdUser" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserAvatars">
+      <EntityTypeMapping TypeName="IsTypeOf(DataBase.UserAvatar)">
+        <MappingFragment StoreEntitySet="UserAvatars">
+          <ScalarProperty Name="IdUserAvatar" ColumnName="IdUserAvatar" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="UserAvatarUser" TypeName="DataBase.UserAvatarUser" StoreEntitySet="UserAvatars">
+      <EndProperty Name="User">
+        <ScalarProperty Name="IdUser" ColumnName="User_IdUser" />
+      </EndProperty>
+      <EndProperty Name="UserAvatar">
+        <ScalarProperty Name="IdUserAvatar" ColumnName="IdUserAvatar" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
