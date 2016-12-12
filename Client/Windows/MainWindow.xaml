@@ -29,7 +29,7 @@
         <Ellipse x:Name="avatar_image" Margin="10,32,224,275" MouseLeftButtonDown="MouseLeftButtonDown_avatarImage" Stretch="Fill" RenderOptions.BitmapScalingMode="Fant"/>
         <Label x:Name="laber_username" Content="" HorizontalAlignment="Left" Margin="55,33,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.089,0.311" Width="90" FontSize="14" 
                FontWeight="Bold"/>
-        <Button x:Name="buttonAdd" HorizontalAlignment="Left" Margin="243,49,0,0" VerticalAlignment="Top" Width="26" Click="buttonAdd_Click" Height="27" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" >
+        <Button x:Name="buttonAdd" HorizontalAlignment="Left" Margin="210,49,0,0" VerticalAlignment="Top" Width="26" Click="buttonAdd_Click" Height="27" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" >
             <StackPanel>
                 <Image Source ="/Images/add-user.png" Stretch="Fill"/>
             </StackPanel>
@@ -111,7 +111,10 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="button" Content="Create" HorizontalAlignment="Left" Margin="176,49,0,0" VerticalAlignment="Top" Width="52" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderBrush="Black" Click="button_Click"/>
-
+        <Button x:Name="button" HorizontalAlignment="Left" Margin="241,49,0,0" VerticalAlignment="Top" Width="28" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderBrush="Black" BorderThickness="0" Click="button_Click" Height="27">
+            <StackPanel>
+                <Image Source ="/Images/create_group.png" Stretch="Fill" Height="19" Width="20"/>
+            </StackPanel>
+        </Button>
     </Grid>
 </Window>

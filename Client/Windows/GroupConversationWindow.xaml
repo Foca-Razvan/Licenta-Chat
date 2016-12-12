@@ -19,7 +19,11 @@
                 <Image Source="/Images/share-screen.png" />
             </StackPanel>
         </Button>
-        <Button x:Name="button1" Content="Add" HorizontalAlignment="Left" Margin="340,42,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderBrush="black" Click="button1_Click"/>
+        <Button x:Name="button1" HorizontalAlignment="Left" Margin="354,22,0,0" VerticalAlignment="Top" Width="60" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderBrush="black" BorderThickness="0" Click="button1_Click" Height="50">
+            <StackPanel>
+                <Image Source ="/Images/add-user.png" Stretch="Fill" Height="43" Width="50"/>
+            </StackPanel>
+        </Button>
         <TextBox x:Name="textBoxName" HorizontalAlignment="Left" Height="23" Margin="10,11,0,0" TextWrapping="Wrap" Text="Name of the group..." VerticalAlignment="Top" Width="240"/>
         <Button x:Name="buttonCreate" Content="Ok" HorizontalAlignment="Left" Margin="79,42,0,0" VerticalAlignment="Top" Width="75"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderBrush="black" Click="buttonCreate_Click"/>
         <TextBlock x:Name="textBlockMembers" HorizontalAlignment="Left" Margin="10,11,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="50" Width="301"/>

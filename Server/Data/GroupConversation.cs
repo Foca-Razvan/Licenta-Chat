@@ -85,7 +85,6 @@ namespace Server
 
         public void SendVoiceAudio(string sender,byte[] audio,int bytesRecorded)
         {
-
             foreach (UserInformation user in AudioMembers)
                 if (user.Username != sender)
                     user.AudioCallback.SendVoiceCallback(audio, bytesRecorded);

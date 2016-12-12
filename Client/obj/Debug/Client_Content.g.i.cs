@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/call_white_smoke.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/create_group.png")]
 
 
