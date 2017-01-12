@@ -77,7 +77,6 @@ namespace Client
             if (!ClientInformation.ShareScreenWindows.ToList().Exists(x => x.Key == groupName))
             {
                 ScrenShareForm screenShareForm = new ScrenShareForm(groupName, connectionString, true);
-                //ClientInformation.ShareScreenWindows.Add(sender, screenShareForm);
                 ClientInformation.ShareScreenWindows.Add(groupName, screenShareForm);
                 screenShareForm.Show();
             }

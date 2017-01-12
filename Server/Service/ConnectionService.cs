@@ -30,13 +30,8 @@ namespace Server
                 {
                     user.Status = 1;
                     foreach (var client in Subscriber.subscribers)
-                    {
                         if (client.IsFriendWith(username))
-                            if (user.UserAvatar != null)
-                                client.CommunicationCallback.SendNotification(username, user.UserAvatar.Image);
-                            else
-                                client.CommunicationCallback.SendNotification(username, null);
-                    }
+                            client.CommunicationCallback.SendNotification(username);
                     context.SaveChanges();
                     return true;
                 }

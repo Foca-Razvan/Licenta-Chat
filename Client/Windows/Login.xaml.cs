@@ -31,6 +31,9 @@ namespace Client
         {
             InitializeComponent();
             Init();
+            string[] variables= Environment.GetCommandLineArgs();
+            if (variables.Length == 2)
+                ClientInformation.IPAdressServer = variables[1];
             ResizeMode = ResizeMode.CanMinimize;
         }
 

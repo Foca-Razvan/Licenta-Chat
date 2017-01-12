@@ -46,7 +46,7 @@ namespace Client
 
         }
 
-        public void SendNotification(string username, byte[] image)
+        public void SendNotification(string username)
         {
             ListViewItem row = new ListViewItem();
             foreach (FriendData item in MainWindow.Friends.Items)

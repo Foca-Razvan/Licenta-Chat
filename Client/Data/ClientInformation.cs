@@ -13,7 +13,7 @@ namespace Client
 {
     static class ClientInformation
     {
-        public static string IPAdressServer = "86.124.154.205";
+        public static string IPAdressServer = "79.112.4.174";
         public static string Username { get; set; }
         public static string Password { get; set; }
         public static string Email { get; set; }

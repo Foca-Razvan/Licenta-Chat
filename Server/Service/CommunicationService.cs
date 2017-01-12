@@ -283,7 +283,7 @@ namespace Server
             using (DataBaseContainer context = new DataBaseContainer())
             {
                 User user = context.Users.ToList().Find(x => x.Username == username);
-                if (user.UserAvatar != null)
+                if (user != null && user.UserAvatar != null)
                 {
                     image = user.UserAvatar.Image;
                     return image;
