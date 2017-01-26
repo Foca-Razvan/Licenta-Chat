@@ -55,6 +55,7 @@ namespace Client
             buttonClose.Visibility = Visibility.Hidden;
             ImageBrush brush = new ImageBrush(ClientInformation.MainWindow.GetImageFromFriendList(sender));
             avatarImage.Fill = brush;
+            Title = sender;
         }
 
         private void buttonAccept_Click(object sender, RoutedEventArgs e)

@@ -37,8 +37,8 @@ namespace Client
         public void SendVoiceCallback(byte[] voice, int bytesRecorded)
         {
             bwp.AddSamples(voice, 0, bytesRecorded);
-            wo.Play();
-
+            if(wo.PlaybackState == PlaybackState.Paused || wo.PlaybackState == PlaybackState.Stopped)
+                wo.Play();
         }
 
         public void ChannelAccepted(string receiver)

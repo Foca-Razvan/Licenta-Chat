@@ -31,6 +31,7 @@ namespace Client.Windows
             textBlockUsername.Text = username;
             textBoxConversation.IsReadOnly = true;
             ResizeMode = ResizeMode.CanMinimize;
+            Title = username;
         }
 
         private void textBoxMessage_PressEnterDown(object sender, KeyEventArgs e)

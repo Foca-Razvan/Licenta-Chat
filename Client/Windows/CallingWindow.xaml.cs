@@ -51,7 +51,9 @@ namespace Client
        
             avatarImage.Fill = new ImageBrush(image);
             IsGroup = isGroup;
+            Title = conversationPartner;
             Init();
+            
         }
 
         private void Init()

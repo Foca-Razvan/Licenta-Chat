@@ -8,6 +8,7 @@ using Interfaces;
 
 namespace Server
 {
+    [ServiceBehavior(InstanceContextMode=InstanceContextMode.PerCall,ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class AudioService : IAudio
     {
         public void Subscribe(string username)
@@ -45,6 +46,7 @@ namespace Server
         public void SendVoice(byte[] voice,int byteRecorded,string conversationPartner)
         {
             UserInformation user = Subscriber.subscribers.Find(x => x.Username == conversationPartner);
+            Console.WriteLine(DateTime.Now + ":"+ DateTime.Now.Millisecond + " => " + conversationPartner + ": " + byteRecorded);
             if (user != null && user.AudioCallback != null)
                 user.AudioCallback.SendVoiceCallback(voice,byteRecorded);
         }

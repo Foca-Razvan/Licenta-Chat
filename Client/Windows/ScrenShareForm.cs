@@ -36,8 +36,8 @@ namespace Client
             buttonDecline.Visible = false;
             label1.Visible = false;
 
-            this.Height = Screen.PrimaryScreen.Bounds.Height;
-            this.Width = Screen.PrimaryScreen.Bounds.Width;
+            Height = Screen.PrimaryScreen.Bounds.Height;
+            Width = Screen.PrimaryScreen.Bounds.Width;
 
             axRDPViewer1.Size =  new System.Drawing.Size(Width, Height);
             axRDPViewer1.Visible = true;
@@ -87,7 +87,6 @@ namespace Client
         public void Disconnect()
         {
             try { axRDPViewer1.Disconnect(); } catch { };
-            
             buttonAccept.Visible = false;
             buttonDecline.Visible = false;
             label1.Text = Partner + " has ended the share screen.";

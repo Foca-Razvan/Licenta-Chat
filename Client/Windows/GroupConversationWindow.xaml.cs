@@ -136,9 +136,6 @@ namespace Client.Windows
             textBoxConversation.Text += user + " has joined.\n";
             Partners.Add(user);
             textBlockMembers.Text = "";
-            /*for (int i = 0; i < Partners.Count - 1; i++)
-                textBlockMembers.Text += Partners[i] + ",";
-            textBlockMembers.Text += Partners[Partners.Count - 1];*/
         }
 
         public void UserLeft(string user)
@@ -149,10 +146,6 @@ namespace Client.Windows
             ClientInformation.CallingWindows.Remove(user);
             ClientInformation.AnswerWindows.Remove(user);
             ShareScreenPartners.Remove(user);
-            /*textBlockMembers.Text = "";
-            for(int i=0; i<Partners.Count-1;i++)
-                textBlockMembers.Text += Partners[i] + ",";
-            textBlockMembers.Text += Partners[Partners.Count - 1];*/
         }
 
         public void UserLeftShareScreen(string user)

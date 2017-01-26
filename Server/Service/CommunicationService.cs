@@ -72,7 +72,10 @@ namespace Server
 
             foreach (UserInformation user in Subscriber.subscribers)
                 if (user.Username == to)
+                {
                     user.CommunicationCallback.Send(message, information.Username);
+                    break;
+                }
         }
 
         /// <summary>
@@ -120,9 +123,6 @@ namespace Server
                 if (_user != null)
                     _user.ScreenShareCallback.SendFriendNotification(sender.Username, sender.UserAvatar.Image);
             }
-
-
-
         }
         /// <summary>
         /// Checks if the user exists.

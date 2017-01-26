@@ -28,6 +28,7 @@ namespace Client.Windows
             Partners = partners;
             GroupName = groupName;
             FriendListLoad();
+            Title = "Invitation";
         }
 
         public void FriendListLoad()

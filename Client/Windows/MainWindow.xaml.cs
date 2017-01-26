@@ -145,11 +145,6 @@ namespace Client
                 Close();
         }
 
-        private void Incoming(object partner)
-        {
-            IRDPSRAPIAttendee myGuest = (IRDPSRAPIAttendee)partner;
-            myGuest.ControlLevel = CTRL_LEVEL.CTRL_LEVEL_INTERACTIVE;
-        }
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
@@ -220,7 +215,6 @@ namespace Client
 
             if(data.Status && !ClientInformation.ShareScreenWindows.ContainsKey(data.Username))
             {
-
                 if (RdpSession == null)
                 {
                     RdpSession = new RDPSession();
@@ -238,6 +232,12 @@ namespace Client
                 ClientInformation.ShareScreenEndingWindows.Add(data.Username, window);
                 window.Show();
             }
+        }
+
+        private void Incoming(object partner)
+        {
+            IRDPSRAPIAttendee myGuest = (IRDPSRAPIAttendee)partner;
+            myGuest.ControlLevel = CTRL_LEVEL.CTRL_LEVEL_INTERACTIVE;
         }
 
         private void OnMouseRightButtonDown_Handler(object sender ,RoutedEventArgs e)
