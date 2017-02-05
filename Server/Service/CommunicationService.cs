@@ -298,6 +298,8 @@ namespace Server
         /// <param name="receiver"></param>
         public void RemoveFriend(string sender, string receiver)
         {
+            UserInformation _Sender = Subscriber.getUser(sender);
+            UserInformation _Receiver = Subscriber.getUser(receiver);
             using (DataBaseContainer context = new DataBaseContainer())
             {
                 User Sender = context.Users.ToList().Find(x => x.Username == sender);
@@ -313,15 +315,10 @@ namespace Server
                 context.Histories.Remove(history);
                 context.SaveChanges();
             }
-
-            UserInformation _Sender = Subscriber.getUser(sender);
-            UserInformation _Receiver = Subscriber.getUser(receiver);
-
             if (_Sender != null)
                 _Sender.CommunicationCallback.FriendRemoved(receiver);
             if (_Receiver != null)
                 _Receiver.CommunicationCallback.FriendRemoved(sender);
-
         }
 
         public void InviteToGroupConversation(string sender, string receiver, string groupName)
